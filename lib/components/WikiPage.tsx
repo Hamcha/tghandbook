@@ -1,7 +1,8 @@
 import { getPageHTML } from "../wiki";
 import { darken, ColorFmt, lighten } from "../darkmode";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import userscript from "../userscript";
 
 function fixup(html: string): string {
   // Convert relative links to absolute
@@ -27,9 +28,13 @@ function fixup(html: string): string {
   });
   node.querySelectorAll("*[style]").forEach((td: HTMLElement) => {
     const inlineCSS = td.getAttribute("style");
-    let bgcolor = td.style.background;
-    if (inlineCSS.includes("background-color")) {
+    let bgcolor = null;
+    if (inlineCSS.includes("background-color:")) {
       bgcolor = td.style.backgroundColor;
+    } else if (inlineCSS.includes("background:")) {
+      bgcolor = td.style.background;
+    } else {
+      return;
     }
     td.setAttribute(
       "style",
@@ -56,11 +61,42 @@ function fixup(html: string): string {
     td.setAttribute("width", "100%");
   });
 
+  // Group headers and content so stickies don't overlap
+  node.querySelectorAll("h3,h2").forEach((h3) => {
+    const parent = h3.parentNode;
+    const div = document.createElement("div");
+    parent.insertBefore(div, h3);
+    while (h3.nextSibling && !h3.nextSibling.nodeName.startsWith("H")) {
+      const sibling = h3.nextSibling;
+      parent.removeChild(sibling);
+      div.appendChild(sibling);
+    }
+    h3.parentNode.removeChild(h3);
+    div.insertBefore(h3, div.firstChild);
+    div.className = "mw-headline-cont";
+  });
+
+  node.querySelectorAll(".mw-headline").forEach((span: HTMLElement) => {
+    // Find nearest container
+    let parent = span.parentElement;
+    while (parent !== null) {
+      if (parent.classList.contains("mw-headline-cont")) {
+        parent.id = span.id;
+        span.id += "-span";
+        parent.dataset.name = span.innerText;
+      }
+      parent = parent.parentElement;
+    }
+  });
+
   return node.innerHTML;
 }
 
 export default function WikiPage({ page }) {
   const [data, setData] = useState({ loaded: false, html: "" });
+  const containerRef = useRef(null);
+
+  // Fetch page
   useEffect(() => {
     (async () => {
       let html = await getPageHTML(page);
@@ -68,11 +104,21 @@ export default function WikiPage({ page }) {
       setData({ loaded: true, html });
     })();
   }, []);
+
+  // Page fetched, instance userscript
+  useEffect(() => {
+    if (data.loaded) {
+      console.log("Injecting userscript!");
+      userscript(containerRef.current, page);
+    }
+  }, [data]);
+
   if (!data.loaded) {
     return <p>You start skimming through the manual...</p>;
   } else {
     return (
       <div
+        ref={containerRef}
         className="page"
         dangerouslySetInnerHTML={{ __html: data.html }}
       ></div>

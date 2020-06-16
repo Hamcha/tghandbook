@@ -144,7 +144,7 @@ export function darken(color: string, format: ColorFmt): string {
   const col = parseColor(color);
   const hsl = rgbToHsv(col);
   if (hsl.s < 0.15) {
-    hsl.h = 0.1;
+    hsl.h = 0.6;
     hsl.s = 0.5;
     hsl.v = Math.max(0.2, 1 - hsl.v);
   } else {

@@ -6,10 +6,31 @@ body {
   overflow: hidden;
 }
 
+.bgimage {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  img {
+    opacity: 0.4;
+  }
+}
+
+$nanotrasen: #384e68;
+
 #app {
   height: 100%;
   display: grid;
-  background: linear-gradient(to bottom, hsl(24, 40%, 16%), hsl(44, 63%, 33%));
+  background: linear-gradient(
+    to bottom,
+    darken($nanotrasen, 20%),
+    darken($nanotrasen, 10%)
+  );
   background-size: 100% 100%;
   background-attachment: fixed;
   color: #fff;
@@ -23,6 +44,7 @@ body {
   grid-row: 2;
   padding: 10pt;
   overflow-y: scroll;
+  z-index: 1;
   .page {
     a[href] {
       color: white;
@@ -33,8 +55,9 @@ body {
     h3 {
       position: sticky;
       top: -10pt;
-      background: hsl(43, 64%, 32%);
+      background: $nanotrasen;
       padding: 5px 10px;
+      z-index: 999;
     }
     #toctitle h2 {
       margin: 0;
