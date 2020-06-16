@@ -67,10 +67,14 @@ body {
 
 #tabs {
   grid-row: 2;
-  overflow-y: scroll;
   z-index: 1;
-  padding-top: 10pt;
+  display: grid;
+  overflow: hidden;
   .page {
+    padding-top: 10pt;
+    overflow-y: scroll;
+    grid-row: 1;
+    grid-column: 1;
     &.waiting {
       display: flex;
       flex-direction: column;
@@ -122,6 +126,7 @@ body {
 $tab-active: lighten($nanotrasen, 10%);
 
 .tab-list {
+  z-index: 1;
   grid-row: 1;
   display: flex;
   border-bottom: 2px solid $tab-active;
@@ -132,9 +137,13 @@ $tab-active: lighten($nanotrasen, 10%);
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
 
     &.active {
       background-color: $tab-active;
+    }
+    &.clickable {
+      cursor: pointer;
     }
   }
 }

@@ -16,12 +16,6 @@ const DEFAULT_OPTS = {
 };
 
 export default function (root: HTMLElement, docname: string) {
-  function GM_addStyle(css) {
-    const style = document.createElement("style");
-    style.innerHTML = css;
-    root.appendChild(style);
-  }
-
   // Tell user that better chemistry is loading
   const postbody = root;
   const statusMessage = document.createElement("div");
@@ -33,54 +27,9 @@ export default function (root: HTMLElement, docname: string) {
       </table>`;
   postbody.insertBefore(statusMessage, postbody.firstChild);
 
-  GM_addStyle(`
-      .bgus_hidden { display: none !important; }
-      .bgus_nobreak { white-space: nowrap; }
-    `);
-
   // TODO Refactor this mess
   function searchBox(el, search_candidate, options = DEFAULT_OPTS) {
     // Fuzzy search box
-    GM_addStyle(
-      `
-          #bgus_fz_searchbox {
-              position: fixed;
-              top: 20px;
-              left: 30%;
-              right: 30%;
-              background: rgba(10,10,10,0.8);
-              display: flex;
-              flex-direction: column;
-              z-index: 9999;
-              color: #fff;
-          }
-          #bgus_fz_searchbox input {
-              font-size: 14pt;
-              padding: 5pt 8pt;
-              border: 1px solid #555;
-              margin: 5px;
-              margin-bottom: 0;
-              background-color: #111;
-              color: #fff;
-          }
-          #bgus_fz_searchbox ul {
-              list-style: none;
-              margin: 5px;
-              padding: 0;
-          }
-          #bgus_fz_searchbox li {
-              padding: 5px;
-              cursor: pointer;
-          }
-          #bgus_fz_searchbox li:hover {
-              background-color: rgba(100, 100, 100, 0.5);
-          }
-          #bgus_fz_searchbox li.selected {
-              border-left: 3px solid white;
-          }
-          `
-    );
-
     const resultList = document.createElement("ul");
     const searchBox = document.createElement("div");
     let selected_result = null;
@@ -252,78 +201,6 @@ export default function (root: HTMLElement, docname: string) {
   }
 
   function betterChemistry() {
-    // Chem styles
-    GM_addStyle(
-      `
-        .bgus_twistie:after {
-            color: red;
-            display: inline-block;
-            font-weight: bold;
-            margin-left: .2em;
-            content: '⯆';
-        }
-        .bgus_collapsed > .bgus_nested_element > .bgus_twistie:after{
-            content: '⯈';
-        }
-        :not(.bgus_collapsed) > .bgus_nested_element + .tooltiptext {
-            z-index: unset;
-            visibility: inherit;
-            opacity: 1;
-            position: relative;
-            width: auto;
-            border-left-width: 3px;
-            background: transparent;
-            margin: 5px;
-            margin-right: 0px;
-            font-size: 8pt;
-            padding: 5px 8px;
-            line-height: 10pt;
-        }
-        .bgus_collapsable:not(.bgus_collapsed) + br {
-            display: none;
-        }
-        table.wikitable > tbody > tr > td:nth-child(2) {
-            min-width: 30%;
-            padding: 10px;
-        }
-        .bgus_fz_selected {
-            background-color: #525242;
-        }
-        input[type="checkbox"] + span[data-src] {
-            font-weight: bold;
-            cursor: text;
-        }
-        input[type="checkbox"] + span[data-src]:before {
-            display: inline-block;
-            width: 1.5em;  /* Prevent autoscroll with sudden line wraps when revealing checkboxes */
-            text-align: center;
-        }
-        input[type="checkbox"] + span[data-src]:before {
-            content: '•';
-        }
-        .bgus_cbox input[type="checkbox"] + span[data-src]:before {
-            content: '[_]';
-            margin-right: 0.5em;
-        }
-        .bgus_cbox input[type="checkbox"]:checked + span[data-src]:before {
-            content: '[X]';
-            margin-right: 0.5em;
-        }
-        .bgus_cbox input[type="checkbox"]:checked + span[data-src] {
-            text-decoration: line-through;
-        }
-        .bgus_cbox input[type="checkbox"] + span[data-src] {
-            cursor: pointer;
-        }
-        .bgus_cbox input[type="checkbox"] + span[data-src] {
-            color: orange;
-        }
-        .bgus_cbox input[type="checkbox"]:checked + span[data-src] {
-            color: green;
-        }
-        `
-    );
-
     // Fix inconsistencies with <p> on random parts
     // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
     new Set(
@@ -336,7 +213,7 @@ export default function (root: HTMLElement, docname: string) {
       const tmp = parent.cloneNode();
       // The cast to Array is necessary because, while childNodes's NodeList technically has a forEach method, it's a live list and operations mess with its lenght in the middle of the loop
       // Nodes can only have one parent so append removes them from the original NodeList and shifts the following one back into the wrong index
-      Array.from(parent.childNodes).forEach((el) => {
+      Array.from(parent.childNodes).forEach((el: HTMLElement) => {
         if (el.tagName === "P") {
           tmp.append(...el.childNodes);
         } else {
@@ -426,6 +303,7 @@ export default function (root: HTMLElement, docname: string) {
       });
     };
 
+    root.classList.add("bchem");
     // Init fuzzy search with elements
     const el = Array.from(
       root.querySelectorAll(

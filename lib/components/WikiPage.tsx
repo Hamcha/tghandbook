@@ -92,6 +92,7 @@ export default function WikiPage({ page, visible }) {
 
   // Fetch page
   useEffect(() => {
+    console.log("fetching");
     (async () => {
       let html = await getPageHTML(page);
       html = fixup(html);
@@ -103,6 +104,7 @@ export default function WikiPage({ page, visible }) {
   useEffect(() => {
     if (data.loaded) {
       userscript(containerRef.current, page);
+      console.log("userscript applied");
     }
   }, [data]);
 
@@ -127,7 +129,7 @@ export default function WikiPage({ page, visible }) {
         ref={containerRef}
         className="page"
         style={{
-          display: visible ? "block" : "none",
+          visibility: visible ? "" : "hidden",
         }}
         dangerouslySetInnerHTML={{ __html: data.html }}
       ></div>

@@ -7,21 +7,31 @@ export interface TabListItem {
 export interface TabListProps {
   tabs: TabListItem[];
   active: number;
+  tabClicked: (TabListItem, number) => void;
 }
 
-function TabItem({ name, active }) {
+function TabItem({ name, active, onClick }) {
+  const clickHandler = active ? null : onClick;
   return (
-    <div className={active ? "tab active" : "tab"}>
+    <div
+      className={active ? "tab active" : "tab clickable"}
+      onClick={clickHandler}
+    >
       {name.replace(/_/gi, " ")}
     </div>
   );
 }
 
-export default function TabList({ tabs, active }: TabListProps) {
+export default function TabList({ tabs, active, tabClicked }: TabListProps) {
   return (
     <nav className="tab-list">
       {tabs.map((tab, i) => (
-        <TabItem name={tab.page} active={i == active} />
+        <TabItem
+          key={tab.page}
+          name={tab.page}
+          active={i == active}
+          onClick={() => tabClicked(tab, i)}
+        />
       ))}
     </nav>
   );

@@ -6,15 +6,19 @@ import { useState } from "react";
 export default function App() {
   const [tabs, setTabs] = useState<TabListItem[]>([
     { page: "Guide_to_medicine" },
-    //  { page: "Guide_to_chemistry" },
+    { page: "Guide_to_chemistry" },
   ]);
   const [activeTab, setActiveTab] = useState(0);
   return (
     <React.Fragment>
-      <TabList tabs={tabs} active={activeTab} />
+      <TabList
+        tabs={tabs}
+        active={activeTab}
+        tabClicked={(_tab, i) => setActiveTab(i)}
+      />
       <section id="tabs">
         {tabs.map((tab, i) => (
-          <WikiPage page={tab.page} visible={activeTab == i} />
+          <WikiPage key={tab.page} page={tab.page} visible={activeTab == i} />
         ))}
       </section>
     </React.Fragment>
