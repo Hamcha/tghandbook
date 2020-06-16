@@ -5,8 +5,8 @@ import { useState } from "react";
 
 export default function App() {
   const [tabs, setTabs] = useState<TabListItem[]>([
-    { page: "Guide_to_medicine" },
     { page: "Guide_to_chemistry" },
+    { page: "Guide_to_medicine" },
   ]);
   const [activeTab, setActiveTab] = useState(0);
   return (

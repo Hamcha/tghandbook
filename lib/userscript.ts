@@ -263,33 +263,30 @@ export default function (root: HTMLElement, docname: string) {
   function betterChemistry() {
     // Fix inconsistencies with <p> on random parts
     // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
-    new Set(
-      Array.from(
-        root.querySelectorAll(
-          "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2) p"
-        )
-      ).map((p) => p.parentNode)
-    ).forEach((parent) => {
-      const tmp = parent.cloneNode();
-      // The cast to Array is necessary because, while childNodes's NodeList technically has a forEach method, it's a live list and operations mess with its lenght in the middle of the loop
-      // Nodes can only have one parent so append removes them from the original NodeList and shifts the following one back into the wrong index
-      Array.from(parent.childNodes).forEach((el: HTMLElement) => {
-        if (el.tagName === "P") {
-          tmp.append(...el.childNodes);
-        } else {
-          tmp.append(el);
-        }
+    document
+      .querySelectorAll(
+        "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2)"
+      )
+      .forEach((td) => {
+        const tmp = td.cloneNode();
+        // The cast to Array is necessary because, while childNodes's NodeList technically has a forEach method, it's a live list and operations mess with its lenght in the middle of the loop.
+        // Nodes can only have one parent so append removes them from the original NodeList and shifts the following one back into the wrong index.
+        Array.from(td.childNodes).forEach((el) => {
+          if (el.tagName === "P") {
+            tmp.append(...el.childNodes);
+          } else {
+            tmp.append(el);
+          }
+        });
+        td.parentNode.replaceChild(tmp, td);
       });
-      parent.parentNode.replaceChild(tmp, parent);
-    });
 
     // Enrich "x part" with checkboxes and parts
-    Array.from(root.querySelectorAll("td"))
+    Array.from(document.querySelectorAll("td"))
       .filter((el) => el.innerText.indexOf(" part") >= 0)
-      .map((el) => [el, el.innerHTML])
-      .forEach(([el, innerHTML]) => {
-        el.innerHTML = innerHTML.replace(
-          /((\d+)\s+(?:parts?|units?))(.*?(?:<\s*(\/\s*a|br\s*\/?)\s*>|\n|$))/gi,
+      .forEach((el) => {
+        el.innerHTML = el.innerHTML.replace(
+          /((\d+)\s+(?:parts?|units?))(.*?(?:<\/a>|\n|$))/gi,
           (match, ...m) =>
             `<label class="bgus_part ${
               m[2].includes("</a>") ? "bgus_part_tooltip" : ""
@@ -303,34 +300,31 @@ export default function (root: HTMLElement, docname: string) {
             )}`
         );
       });
-    Array.from(root.querySelectorAll(".bgus_nested_element")).forEach((el) => {
-      el.parentElement.classList.add("bgus_collapsable");
-    });
     // Add event to autofill child checkboxes
-    document
+    root
       .querySelectorAll(".bgus_part_tooltip > .bgus_checkbox")
       .forEach((box) => {
         const tooltip = box.parentElement.nextElementSibling;
         box.addEventListener("click", function () {
           tooltip
             .querySelectorAll(".bgus_checkbox")
-            .forEach((el: HTMLInputElement) => (el.checked = this.checked));
+            .forEach((el) => (el.checked = this.checked));
         });
       });
 
     // Add event to collapse subsections
     root.querySelectorAll(".bgus_nested_element").forEach((twistie) => {
       twistie.addEventListener("click", function (evt) {
-        twistie.parentElement.classList.toggle("bgus_collapsed");
+        twistie.classList.toggle("bgus_collapsed");
       });
     });
 
     // Wrap every recipe with extra metadata
     root.querySelectorAll(".bgus_part").forEach((el: HTMLElement) => {
       if ("parts" in el.parentElement.dataset) {
-        el.parentElement.dataset.parts = (
-          parseInt(el.parentElement.dataset.parts) + parseInt(el.dataset.amount)
-        ).toString();
+        el.parentElement.dataset.parts =
+          parseInt(el.parentElement.dataset.parts) +
+          parseInt(el.dataset.amount);
       } else {
         el.parentElement.dataset.parts = el.dataset.amount;
       }

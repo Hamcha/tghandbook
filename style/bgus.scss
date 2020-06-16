@@ -14,30 +14,29 @@
   flex-direction: column;
   z-index: 9999;
   color: #fff;
-  input {
-    font-size: 14pt;
-    padding: 5pt 8pt;
-    border: 1px solid #555;
-    margin: 5px;
-    margin-bottom: 0;
-    background-color: #111;
-    color: #fff;
-  }
-  ul {
-    list-style: none;
-    margin: 5px;
-    padding: 0;
-    li {
-      padding: 5px;
-      cursor: pointer;
-      &:hover {
-        background-color: rgba(100, 100, 100, 0.5);
-      }
-      &.selected {
-        border-left: 3px solid white;
-      }
-    }
-  }
+}
+#bgus_fz_searchbox input {
+  font-size: 14pt;
+  padding: 5pt 8pt;
+  border: 1px solid #555;
+  margin: 5px;
+  margin-bottom: 0;
+  background-color: #111;
+  color: #fff;
+}
+#bgus_fz_searchbox ul {
+  list-style: none;
+  margin: 5px;
+}
+#bgus_fz_searchbox li {
+  padding: 5px;
+  cursor: pointer;
+}
+#bgus_fz_searchbox li:hover {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+#bgus_fz_searchbox li.selected {
+  border-left: 3px solid white;
 }
 .bgus_twistie:after {
   color: red;
@@ -46,62 +45,59 @@
   margin-left: 0.2em;
   content: "⯆";
 }
-.bgus_collapsed > .bgus_nested_element > .bgus_twistie:after {
+.bgus_collapsed > .bgus_twistie:after {
   content: "⯈";
 }
-:not(.bgus_collapsed) > .bgus_nested_element + .tooltiptext {
+div.tooltiptext {
+  display: none;
+  border: 1px solid #384e68;
+  background: linear-gradient(
+    to bottom,
+    darken(#384e68, 20%),
+    darken(#384e68, 25%)
+  );
+}
+span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
   z-index: unset;
   visibility: inherit;
+  display: block;
   opacity: 1;
   position: relative;
   width: auto;
   border-left-width: 3px;
-  background: transparent;
-  margin: 5px;
-  margin-right: 0px;
+  margin-left: 5px;
+  margin-top: 5px;
   font-size: 8pt;
   padding: 5px 8px;
   line-height: 10pt;
-}
-.bgus_collapsable:not(.bgus_collapsed) + br {
-  display: none;
 }
 table.wikitable > tbody > tr > td:nth-child(2) {
   min-width: 30%;
   padding: 10px;
 }
-.bchem .bgus_fz_selected {
-  background-color: #525242;
+.bgus_fz_selected {
+  border: 3px solid yellow;
 }
-input[type="checkbox"] + span[data-src] {
+body.bgus_cbox input[type="checkbox"] + span[data-src]:before {
+  display: inline-block;
+  width: 1.5em;
+  content: "[_]";
+}
+body.bgus_cbox input[type="checkbox"]:checked + span[data-src]:before {
+  content: "[X]";
+}
+body.bgus_cbox input[type="checkbox"]:checked + span[data-src] {
+  text-decoration: line-through;
+}
+body.bgus_cbox input[type="checkbox"] + span[data-src] {
+  cursor: pointer;
+}
+body.bgus_cbox input[type="checkbox"] + span[data-src]:before,
+body.bgus_cbox input[type="checkbox"] + span[data-src] {
+  color: orange;
   font-weight: bold;
-  cursor: text;
-  &:before {
-    display: inline-block;
-    width: 1.5em; /* Prevent autoscroll with sudden line wraps when revealing checkboxes */
-    text-align: center;
-    content: "•";
-  }
 }
-.bgus_cbox {
-  input[type="checkbox"] + span[data-src]:before {
-    content: "[_]";
-    margin-right: 0.5em;
-  }
-  input[type="checkbox"]:checked + span[data-src]:before {
-    content: "[X]";
-    margin-right: 0.5em;
-  }
-  input[type="checkbox"]:checked + span[data-src] {
-    text-decoration: line-through;
-  }
-  input[type="checkbox"] + span[data-src] {
-    cursor: pointer;
-  }
-  input[type="checkbox"] + span[data-src] {
-    color: orange;
-  }
-  input[type="checkbox"]:checked + span[data-src] {
-    color: green;
-  }
+body.bgus_cbox input[type="checkbox"]:checked + span[data-src]:before,
+body.bgus_cbox input[type="checkbox"]:checked + span[data-src] {
+  color: green;
 }
