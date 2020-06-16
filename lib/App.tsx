@@ -1,15 +1,21 @@
 import * as React from "react";
-import TabItem from "./components/TabItem";
 import WikiPage from "./components/WikiPage";
+import TabList, { TabListItem } from "./components/TabList";
+import { useState } from "react";
 
 export default function App() {
+  const [tabs, setTabs] = useState<TabListItem[]>([
+    { page: "Guide_to_medicine" },
+    //  { page: "Guide_to_chemistry" },
+  ]);
+  const [activeTab, setActiveTab] = useState(0);
   return (
     <React.Fragment>
-      <nav id="tablist">
-        <TabItem name="test" />
-      </nav>
+      <TabList tabs={tabs} active={activeTab} />
       <section id="tabs">
-        <WikiPage page="Guide_to_medicine" />
+        {tabs.map((tab, i) => (
+          <WikiPage page={tab.page} visible={activeTab == i} />
+        ))}
       </section>
     </React.Fragment>
   );

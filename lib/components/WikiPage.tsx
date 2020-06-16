@@ -3,6 +3,7 @@ import { darken, ColorFmt, lighten } from "../darkmode";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import userscript from "../userscript";
+import speen from "~/assets/images/speen.svg";
 
 function fixup(html: string): string {
   // Convert relative links to absolute
@@ -27,19 +28,12 @@ function fixup(html: string): string {
     td.setAttribute("bgcolor", darken(bgcolor, ColorFmt.HEX).slice(1));
   });
   node.querySelectorAll("*[style]").forEach((td: HTMLElement) => {
-    const inlineCSS = td.getAttribute("style");
-    let bgcolor = null;
-    if (inlineCSS.includes("background-color:")) {
-      bgcolor = td.style.backgroundColor;
-    } else if (inlineCSS.includes("background:")) {
-      bgcolor = td.style.background;
-    } else {
-      return;
+    if (td.style.backgroundColor != "") {
+      td.style.backgroundColor = darken(td.style.backgroundColor, ColorFmt.RGB);
     }
-    td.setAttribute(
-      "style",
-      inlineCSS + ";background-color:" + darken(bgcolor, ColorFmt.RGB)
-    );
+    if (td.style.background != "") {
+      td.style.backgroundColor = darken(td.style.background, ColorFmt.RGB);
+    }
   });
 
   // Lighten fgcolors
@@ -53,12 +47,12 @@ function fixup(html: string): string {
 
   // Remove fixed widths
   node.querySelectorAll("table[width]").forEach((td) => {
-    const width = td.getAttribute("width");
-    if (width.includes("%")) {
-      // Leave it alone
-      return;
-    }
     td.setAttribute("width", "100%");
+  });
+  node.querySelectorAll("table[style]").forEach((td: HTMLTableElement) => {
+    if (td.style.width != "") {
+      td.style.width = "100%";
+    }
   });
 
   // Group headers and content so stickies don't overlap
@@ -92,7 +86,7 @@ function fixup(html: string): string {
   return node.innerHTML;
 }
 
-export default function WikiPage({ page }) {
+export default function WikiPage({ page, visible }) {
   const [data, setData] = useState({ loaded: false, html: "" });
   const containerRef = useRef(null);
 
@@ -108,18 +102,33 @@ export default function WikiPage({ page }) {
   // Page fetched, instance userscript
   useEffect(() => {
     if (data.loaded) {
-      console.log("Injecting userscript!");
       userscript(containerRef.current, page);
     }
   }, [data]);
 
   if (!data.loaded) {
-    return <p>You start skimming through the manual...</p>;
+    return (
+      <div className="page waiting">
+        <p
+          style={{
+            display: visible ? "block" : "none",
+          }}
+        >
+          You start skimming through the manual...
+        </p>
+        <div className="speen">
+          <img src={speen} />
+        </div>
+      </div>
+    );
   } else {
     return (
       <div
         ref={containerRef}
         className="page"
+        style={{
+          display: visible ? "block" : "none",
+        }}
         dangerouslySetInnerHTML={{ __html: data.html }}
       ></div>
     );
