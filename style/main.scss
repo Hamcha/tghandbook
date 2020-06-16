@@ -1,0 +1,51 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
+  display: grid;
+  background: linear-gradient(to bottom, hsl(24, 40%, 16%), hsl(44, 63%, 33%));
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  color: #fff;
+  font-family: "Iosevka Aile Web", sans-serif;
+  font-size: 9pt;
+  line-height: 1.6em;
+  grid-template-rows: 40px 1fr;
+}
+
+#tabs {
+  grid-row: 2;
+  padding: 10pt;
+  overflow-y: scroll;
+  .page {
+    a[href] {
+      color: white;
+    }
+    #toctitle,
+    h1,
+    h2,
+    h3 {
+      position: sticky;
+      top: -10pt;
+      background: hsl(43, 64%, 32%);
+      padding: 5px 10px;
+    }
+    #toctitle h2 {
+      margin: 0;
+    }
+    .mw-headline {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+#tablist {
+  grid-row: 1;
+}
