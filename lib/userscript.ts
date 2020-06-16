@@ -1,21 +1,81 @@
-// ==UserScript==
-// @name         Better /tg/ Guides
-// @namespace    https://faulty.equipment
-// @version      0.2.2
-// @description  Make /tg/station guides better with extra features
-// @author       Hamcha
-// @collaborator D
-// @license      ISC
-// @copyright    2020, Hamcha (https://openuserjs.org/users/Hamcha), D
-// @match        https://tgstation13.org/wiki/Guide_to_*
-// @grant        GM_addStyle
-// ==/UserScript==
+import { darken, ColorFmt, lighten } from "./darkmode";
 
 const DEFAULT_OPTS = {
   alignment: "center",
 };
 
 export default function (root: HTMLElement, docname: string) {
+  root.querySelectorAll(".mw-editsection").forEach((editLink) => {
+    editLink.parentElement.removeChild(editLink);
+  });
+
+  // Darken bgcolor
+  root.querySelectorAll("*[bgcolor]").forEach((td) => {
+    let bgcolor = td.getAttribute("bgcolor");
+    // Shitty way to detect if it's hex or not
+    // Basically, none of the css colors long 6 letters only use hex letters
+    // THANK FUCKING GOD
+    if (bgcolor.length === 6 && parseInt(bgcolor, 16) !== NaN) {
+      bgcolor = "#" + bgcolor;
+    }
+    td.setAttribute("bgcolor", darken(bgcolor, ColorFmt.HEX).slice(1));
+  });
+  root.querySelectorAll("*[style]").forEach((td: HTMLElement) => {
+    if (td.style.backgroundColor != "") {
+      td.style.backgroundColor = darken(td.style.backgroundColor, ColorFmt.RGB);
+    }
+    if (td.style.background != "") {
+      td.style.backgroundColor = darken(td.style.background, ColorFmt.RGB);
+    }
+  });
+
+  // Lighten fgcolors
+  root.querySelectorAll("*[color]").forEach((td) => {
+    let color = td.getAttribute("color");
+    if (color.length === 6 && !isNaN(parseInt(color, 16))) {
+      color = "#" + color;
+    }
+    td.setAttribute("color", lighten(color, ColorFmt.HEX).slice(1));
+  });
+
+  // Remove fixed widths
+  root.querySelectorAll("table[width]").forEach((td) => {
+    td.setAttribute("width", "100%");
+  });
+  root.querySelectorAll("table[style]").forEach((td: HTMLTableElement) => {
+    if (td.style.width != "") {
+      td.style.width = "100%";
+    }
+  });
+
+  // Group headers and content so stickies don't overlap
+  root.querySelectorAll("h3,h2").forEach((h3) => {
+    const parent = h3.parentNode;
+    const div = document.createElement("div");
+    parent.insertBefore(div, h3);
+    while (h3.nextSibling && !h3.nextSibling.nodeName.startsWith("H")) {
+      const sibling = h3.nextSibling;
+      parent.removeChild(sibling);
+      div.appendChild(sibling);
+    }
+    h3.parentNode.removeChild(h3);
+    div.insertBefore(h3, div.firstChild);
+    div.className = "mw-headline-cont";
+  });
+
+  root.querySelectorAll(".mw-headline").forEach((span: HTMLElement) => {
+    // Find nearest container
+    let parent = span.parentElement;
+    while (parent !== null) {
+      if (parent.classList.contains("mw-headline-cont")) {
+        parent.id = span.id;
+        span.id += "-span";
+        parent.dataset.name = span.innerText;
+      }
+      parent = parent.parentElement;
+    }
+  });
+
   // Tell user that better chemistry is loading
   const postbody = root;
   const statusMessage = document.createElement("div");
