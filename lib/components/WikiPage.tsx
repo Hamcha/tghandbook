@@ -5,13 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import userscript from "../userscript";
 import speen from "~/assets/images/speen.svg";
 
-function fixup(html: string): string {
-  // Convert relative links to absolute
-  html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
-
-  // Parse into node so we can do DOM majicks
-  const node = document.createElement("div");
-  node.innerHTML = html;
+function fixup(node: HTMLElement) {
   node.querySelectorAll(".mw-editsection").forEach((editLink) => {
     editLink.parentElement.removeChild(editLink);
   });
@@ -82,12 +76,14 @@ function fixup(html: string): string {
       parent = parent.parentElement;
     }
   });
-
-  return node.innerHTML;
 }
 
 export default function WikiPage({ page, visible }) {
-  const [data, setData] = useState({ loaded: false, html: "" });
+  const [data, setData] = useState({
+    loaded: false,
+    processed: false,
+    html: "",
+  });
   const containerRef = useRef(null);
 
   // Fetch page
@@ -95,29 +91,40 @@ export default function WikiPage({ page, visible }) {
     console.log("fetching");
     (async () => {
       let html = await getPageHTML(page);
-      html = fixup(html);
-      setData({ loaded: true, html });
+      // Convert relative links to absolute
+      html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
+      setData({ loaded: true, processed: false, html });
     })();
   }, []);
 
-  // Page fetched, instance userscript
+  // Process page
   useEffect(() => {
-    if (data.loaded) {
+    console.log("processing");
+    if (data.loaded == true && data.processed == false) {
+      fixup(containerRef.current);
+      console.log("fixup applied");
+
       userscript(containerRef.current, page);
       console.log("userscript applied");
     }
   }, [data]);
 
+  // Page fetched, instance userscript
+  useEffect(() => {
+    if (data.loaded) {
+      console.log("loaded!");
+    }
+  }, [data]);
+
   if (!data.loaded) {
     return (
-      <div className="page waiting">
-        <p
-          style={{
-            display: visible ? "block" : "none",
-          }}
-        >
-          You start skimming through the manual...
-        </p>
+      <div
+        className="page waiting"
+        style={{
+          visibility: visible ? "" : "hidden",
+        }}
+      >
+        <p>You start skimming through the manual...</p>
         <div className="speen">
           <img src={speen} />
         </div>
