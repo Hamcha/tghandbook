@@ -71,11 +71,16 @@ body {
   display: grid;
   overflow: hidden;
   .page {
+    visibility: hidden;
     padding-top: 10pt;
     overflow-y: scroll;
     grid-row: 1;
     grid-column: 1;
+    &.active {
+      visibility: visible;
+    }
     &.waiting {
+      user-select: none;
       position: fixed;
       top: 0;
       left: 0;
@@ -130,8 +135,8 @@ body {
 
 $tab-active: lighten($nanotrasen, 10%);
 
-.tab-list {
-  z-index: 1;
+#tab-list {
+  z-index: 2;
   grid-row: 1;
   display: flex;
   border-bottom: 2px solid $tab-active;
@@ -147,7 +152,7 @@ $tab-active: lighten($nanotrasen, 10%);
     &.active {
       background-color: $tab-active;
     }
-    &.clickable {
+    &:not(.active) {
       cursor: pointer;
     }
   }
