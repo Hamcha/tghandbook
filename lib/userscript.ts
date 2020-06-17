@@ -378,6 +378,81 @@ export default function (root: HTMLElement, docname: string) {
       name.map((e, i) => ({ id: i, str: e }))
     );
 
+    // Remove "Removed medicines" section
+    let remTable = root.querySelector(
+      "#Non-craftable_Medicines + h4 + p + table"
+    );
+    remTable.parentElement.removeChild(remTable);
+
+    root
+      .querySelectorAll("div[data-name] .wikitable.sortable tr")
+      .forEach((el: HTMLElement) => {
+        let sectionEl = el.parentElement;
+        while (!sectionEl.dataset.name) {
+          sectionEl = sectionEl.parentElement;
+        }
+        const section = sectionEl.dataset.name;
+        if (el.querySelector("td") === null) {
+          // Remove unused rows if found
+          const row = el.querySelectorAll("th");
+          row.forEach((th, i) => {
+            if (i < 2) {
+              return;
+            }
+            th.parentElement.removeChild(th);
+          });
+          return;
+        }
+        let rows = Array.from(el.querySelectorAll("td")).slice(1);
+        let treatment = null;
+        let desc = null;
+        let metabolism = null;
+        let overdose = null;
+        let addiction = null;
+        // Handle special cases
+        switch (section) {
+          case "Components":
+          case "Virology Recipes":
+            [desc] = rows;
+            break;
+          case "Narcotics":
+            [desc, metabolism, overdose, addiction] = rows;
+            break;
+          case "Explosive Strength":
+          case "Other Reagents":
+          case "Mutation Toxins":
+            [desc, metabolism] = rows;
+            break;
+          default:
+            // All fields
+            [treatment, desc, metabolism, overdose, addiction] = rows;
+        }
+        const title = el.querySelector("th");
+        let content = `<div class="reagent-header">${title.innerHTML}</div>`;
+        if (treatment) {
+          content += `<p class="treatment">${treatment.innerHTML}</p>`;
+        }
+        if (metabolism) {
+          content += `<p class="metabolism">${metabolism.innerHTML}</p>`;
+        }
+        if (addiction && addiction.innerHTML.trim() != "N/A") {
+          content += `<p class="addiction">${addiction.innerHTML}</p>`;
+        }
+        if (overdose && overdose.innerHTML.trim() != "N/A") {
+          content += `<p class="overdose">${overdose.innerHTML}</p>`;
+        }
+        if (desc) {
+          content += `<p>${desc.innerHTML}</p>`;
+        }
+        title.classList.add("reagent-ext");
+        title.innerHTML = content;
+        if (desc) desc.parentElement.removeChild(desc);
+        if (treatment) treatment.parentElement.removeChild(treatment);
+        if (metabolism) metabolism.parentElement.removeChild(metabolism);
+        if (overdose) overdose.parentElement.removeChild(overdose);
+        if (addiction) addiction.parentElement.removeChild(addiction);
+      });
+
     document.body.addEventListener("keydown", function (ev) {
       if (ev.shiftKey) {
         switch (ev.keyCode) {

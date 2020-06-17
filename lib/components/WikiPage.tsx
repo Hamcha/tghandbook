@@ -48,9 +48,9 @@ export default function WikiPage({ page, visible }) {
           visibility: visible ? "" : "hidden",
         }}
       >
-        <p>You start skimming through the manual...</p>
         <div className="speen">
           <img src={speen} />
+          <p>You start skimming through the manual...</p>
         </div>
       </div>
     );
