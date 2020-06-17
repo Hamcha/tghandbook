@@ -55,11 +55,7 @@
 div.tooltiptext {
   display: none;
   border: 1px solid #384e68;
-  background: linear-gradient(
-    to bottom,
-    darken(#384e68, 20%),
-    darken(#384e68, 25%)
-  );
+  background: linear-gradient(to bottom, darken(#384e68, 20%), darken(#384e68, 25%));
 }
 span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
   z-index: unset;
