@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: default
 
@@ -31,6 +32,8 @@ steps:
     image: node
     commands:
       - yarn build
+    environment:
+      SUBPATH: /${DRONE_COMMIT_SHA:0:8}
     when:
       event:
         - push
@@ -44,6 +47,8 @@ steps:
     image: node
     commands:
       - yarn build
+    environment:
+      SUBPATH: /pr-${DRONE_PULL_REQUEST}
     when:
       event:
         - pull_request
@@ -140,3 +145,7 @@ volumes:
   - name: cache
     host:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
+
+---
+kind: signature
+hmac: fade536706bcf207d4cf35663c985e3f457b957b743519f19fbb696549cf07f3

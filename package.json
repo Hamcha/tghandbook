@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "parcel index.html",
     "lint": "eslint lib",
-    "build": "parcel build index.html"
+    "build": "node ./build.js"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^3.3.0",
