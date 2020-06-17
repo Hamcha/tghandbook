@@ -18,15 +18,21 @@ function initWaiting(elem: HTMLElement) {
 }
 
 async function loadPage(page: string, elem: HTMLElement) {
+  // Fetch page content
   console.log(page + ": fetching");
   let html = await getPageHTML(page);
+
   // Convert relative links to absolute
   html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
-  elem.innerHTML = html;
-  console.log(page + ": processing");
-  userscript(elem, page);
-  console.log(page + ": userscript applied");
-  elem.classList.remove("waiting");
+
+  // Set as HTML content and run HTML manipulations on it
+  requestAnimationFrame(() => {
+    elem.innerHTML = html;
+    console.log(page + ": processing");
+    userscript(elem, page);
+    console.log(page + ": userscript applied");
+    elem.classList.remove("waiting");
+  });
 }
 
 type TabElements = { tabListItem: HTMLElement; tabContentItem: HTMLElement };

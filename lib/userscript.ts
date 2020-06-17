@@ -503,16 +503,14 @@ export default function (root: HTMLElement, docname: string) {
     );
   }
 
-  window.requestAnimationFrame(() => {
-    switch (docname) {
-      case "Guide_to_chemistry":
-        betterChemistry();
-        break;
-      default:
-        betterGeneric();
-        break;
-    }
-    // Everything is loaded, remove loading bar
-    statusMessage.innerHTML = "";
-  });
+  switch (docname) {
+    case "Guide_to_chemistry":
+      betterChemistry();
+      break;
+    default:
+      betterGeneric();
+      break;
+  }
+  // Everything is loaded, remove loading bar
+  statusMessage.innerHTML = "";
 }
