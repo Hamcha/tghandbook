@@ -16,8 +16,6 @@ export enum ColorFmt {
 }
 
 function hsvToRgb({ h, s, v }: ColorHSV): ColorRGB {
-  let r, g, b;
-
   const i = Math.floor(h * 6);
   const f = h * 6 - i;
   const p = v * (1 - s);
@@ -26,39 +24,20 @@ function hsvToRgb({ h, s, v }: ColorHSV): ColorRGB {
 
   switch (i % 6) {
     case 0:
-      r = v;
-      g = t;
-      b = p;
-      break;
+      return { r: v, g: t, b: p };
     case 1:
-      r = q;
-      g = v;
-      b = p;
-      break;
+      return { r: q, g: v, b: p };
     case 2:
-      r = p;
-      g = v;
-      b = t;
-      break;
+      return { r: p, g: v, b: t };
     case 3:
-      r = p;
-      g = q;
-      b = v;
-      break;
+      return { r: p, g: q, b: v };
     case 4:
-      r = t;
-      g = p;
-      b = v;
-      break;
+      return { r: t, g: p, b: v };
     case 5:
-      r = v;
-      g = p;
-      b = q;
-      break;
+      return { r: v, g: p, b: q };
     default:
       throw new Error("unreacheable");
   }
-  return { r, g, b };
 }
 
 function rgbToHsv({ r, g, b }: ColorRGB): ColorHSV {

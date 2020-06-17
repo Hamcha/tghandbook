@@ -15,7 +15,7 @@ export default function userscript(root: HTMLElement, docname: string): void {
     // Shitty way to detect if it's hex or not
     // Basically, none of the css colors long 6 letters only use hex letters
     // THANK FUCKING GOD
-    if (bgcolor.length === 6 && Number.isNaN(parseInt(bgcolor, 16))) {
+    if (bgcolor.length === 6 && !Number.isNaN(parseInt(bgcolor, 16))) {
       bgcolor = `#${bgcolor}`;
     }
     td.setAttribute("bgcolor", darken(bgcolor, ColorFmt.HEX).slice(1));
