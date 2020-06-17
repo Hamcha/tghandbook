@@ -97,7 +97,7 @@ export default function userscript(root: HTMLElement, docname: string): void {
         // The cast to Array is necessary because, while childNodes's NodeList technically has a forEach method, it's a live list and operations mess with its lenght in the middle of the loop.
         // Nodes can only have one parent so append removes them from the original NodeList and shifts the following one back into the wrong index.
         Array.from(td.childNodes).forEach((el) => {
-          if (el instanceof Element && el.tagName === "P") {
+          if (el instanceof HTMLParagraphElement) {
             tmp.append(...el.childNodes);
           } else {
             tmp.append(el);
