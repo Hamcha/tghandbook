@@ -8,7 +8,7 @@ const entryFiles = Path.join(__dirname, "./index.html");
 const options = {
   outDir: "./dist",
   outFile: "index.html",
-  publicUrl: process.env.SUBPATH,
+  publicUrl: process.env.SUBPATH + "/dist",
   watch: false,
   contentHash: false,
   scopeHoist: false,
