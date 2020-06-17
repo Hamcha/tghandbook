@@ -2,7 +2,7 @@
   "name": "tghandbook",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "ISC",
   "scripts": {
     "dev": "parcel index.html",
     "lint": "eslint lib",
