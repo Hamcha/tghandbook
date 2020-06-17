@@ -33,13 +33,6 @@ export default function WikiPage({ page, visible }) {
     }
   }, [data]);
 
-  // Page fetched, instance userscript
-  useEffect(() => {
-    if (data.loaded) {
-      console.log(page + ": loaded!");
-    }
-  }, [data]);
-
   if (!data.loaded) {
     return (
       <div

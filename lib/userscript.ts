@@ -265,7 +265,7 @@ export default function (root: HTMLElement, docname: string) {
     // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
     document
       .querySelectorAll(
-        "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2)"
+        "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2), .tooltiptext"
       )
       .forEach((td) => {
         const tmp = td.cloneNode();
@@ -397,6 +397,7 @@ export default function (root: HTMLElement, docname: string) {
           const row = el.querySelectorAll("th");
           row.forEach((th, i) => {
             if (i < 2) {
+              th.classList.add("table-head");
               return;
             }
             th.parentElement.removeChild(th);
