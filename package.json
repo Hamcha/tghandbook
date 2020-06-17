@@ -5,10 +5,19 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel index.html",
+    "lint": "eslint lib",
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "2.21.2",
+    "eslint-plugin-prettier": "^3.1.4",
     "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
     "sass": "^1.26.8",
     "typescript": "^3.9.5"
   },

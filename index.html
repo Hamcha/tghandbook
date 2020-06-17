@@ -3,7 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/fonts/iosevka/iosevka-aile.css" />
+    <link
+      rel="preload"
+      href="assets/fonts/iosevka/iosevka-aile.css"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/iosevka/woff2/iosevka-aile-regular.woff2"
+      as="font"
+    />
+    <link rel="preload" href="style/main.scss" as="style" />
+    <link rel="preload" href="style/bgus.scss" as="style" />
+    <link rel="preload" href="lib/index.ts" as="script" />
+    <link
+      rel="stylesheet"
+      href="assets/fonts/iosevka/iosevka-aile.css"
+      media="async"
+      onload="this.media='all'"
+    />
     <link rel="stylesheet" href="style/main.scss" />
     <link rel="stylesheet" href="style/bgus.scss" />
     <title>/tg/ Handbook</title>
@@ -16,6 +34,6 @@
       <nav id="tab-list"></nav>
       <section id="tabs"></section>
     </main>
-    <script src="lib/index.ts"></script>
+    <script src="lib/index.ts" async></script>
   </body>
 </html>

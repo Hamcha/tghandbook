@@ -16,48 +16,61 @@ export enum ColorFmt {
 }
 
 function hsvToRgb({ h, s, v }: ColorHSV): ColorRGB {
-  var r, g, b;
+  let r, g, b;
 
-  var i = Math.floor(h * 6);
-  var f = h * 6 - i;
-  var p = v * (1 - s);
-  var q = v * (1 - f * s);
-  var t = v * (1 - (1 - f) * s);
+  const i = Math.floor(h * 6);
+  const f = h * 6 - i;
+  const p = v * (1 - s);
+  const q = v * (1 - f * s);
+  const t = v * (1 - (1 - f) * s);
 
   switch (i % 6) {
     case 0:
-      (r = v), (g = t), (b = p);
+      r = v;
+      g = t;
+      b = p;
       break;
     case 1:
-      (r = q), (g = v), (b = p);
+      r = q;
+      g = v;
+      b = p;
       break;
     case 2:
-      (r = p), (g = v), (b = t);
+      r = p;
+      g = v;
+      b = t;
       break;
     case 3:
-      (r = p), (g = q), (b = v);
+      r = p;
+      g = q;
+      b = v;
       break;
     case 4:
-      (r = t), (g = p), (b = v);
+      r = t;
+      g = p;
+      b = v;
       break;
     case 5:
-      (r = v), (g = p), (b = q);
+      r = v;
+      g = p;
+      b = q;
       break;
+    default:
+      throw new Error("unreacheable");
   }
   return { r, g, b };
 }
 
 function rgbToHsv({ r, g, b }: ColorRGB): ColorHSV {
-  var max = Math.max(r, g, b),
-    min = Math.min(r, g, b);
-  var h,
-    s,
-    v = max;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const v = max;
 
-  var d = max - min;
-  s = max == 0 ? 0 : d / max;
+  const d = max - min;
+  const s = max === 0 ? 0 : d / max;
 
-  if (max == min) {
+  let h;
+  if (max === min) {
     h = 0; // achromatic
   } else {
     switch (max) {
@@ -70,6 +83,8 @@ function rgbToHsv({ r, g, b }: ColorRGB): ColorHSV {
       case b:
         h = (r - g) / d + 4;
         break;
+      default:
+        throw new Error("unreacheable");
     }
     h /= 6;
   }
@@ -80,13 +95,13 @@ function rgbToHsv({ r, g, b }: ColorRGB): ColorHSV {
 // Hacky way to get RGB values FOR SURE!
 function nameToRGB(name: string): ColorRGB {
   // Create fake div
-  let fakeDiv = document.createElement("div");
+  const fakeDiv = document.createElement("div");
   fakeDiv.style.color = name;
   document.body.appendChild(fakeDiv);
 
   // Get color of div
-  let cs = window.getComputedStyle(fakeDiv),
-    pv = cs.getPropertyValue("color");
+  const cs = window.getComputedStyle(fakeDiv);
+  const pv = cs.getPropertyValue("color");
 
   // Remove div after obtaining desired color value
   document.body.removeChild(fakeDiv);
@@ -98,9 +113,9 @@ function nameToRGB(name: string): ColorRGB {
 // https://stackoverflow.com/questions/11068240/what-is-the-most-efficient-way-to-parse-a-css-color-in-javascript
 function parseColor(input: string): ColorRGB {
   // Hex format
-  if (input.substr(0, 1) == "#") {
-    var collen = (input.length - 1) / 3;
-    var fact = [17, 1, 0.062272][collen - 1];
+  if (input.substr(0, 1) === "#") {
+    const collen = (input.length - 1) / 3;
+    const fact = [17, 1, 0.062272][collen - 1];
     return {
       r: Math.round(parseInt(input.substr(1, collen), 16) * fact) / 256,
       g:
@@ -132,11 +147,13 @@ function serializeColor(col: ColorRGB, format: ColorFmt): string {
     case ColorFmt.RGB:
       return `rgb(${r}, ${g}, ${b})`;
     case ColorFmt.HEX: {
-      const rhex = ("00" + r.toString(16)).slice(-2);
-      const ghex = ("00" + g.toString(16)).slice(-2);
-      const bhex = ("00" + b.toString(16)).slice(-2);
-      return "#" + rhex + ghex + bhex;
+      const rhex = `00${r.toString(16)}`.slice(-2);
+      const ghex = `00${g.toString(16)}`.slice(-2);
+      const bhex = `00${b.toString(16)}`.slice(-2);
+      return `#${rhex}${ghex}${bhex}`;
     }
+    default:
+      return "#000";
   }
 }
 
@@ -147,12 +164,10 @@ export function darken(color: string, format: ColorFmt): string {
     hsl.h = 0.6;
     hsl.s = 0.5;
     hsl.v = Math.max(0.2, 1 - hsl.v);
-  } else {
-    if (hsl.v > 0.5) {
-      hsl.v = 0.4;
-      if (hsl.s > 0.2) {
-        hsl.s = Math.min(1, hsl.s + 0.2);
-      }
+  } else if (hsl.v > 0.5) {
+    hsl.v = 0.4;
+    if (hsl.s > 0.2) {
+      hsl.s = Math.min(1, hsl.s + 0.2);
     }
   }
   const out = hsvToRgb(hsl);

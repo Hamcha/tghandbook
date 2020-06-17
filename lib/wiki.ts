@@ -1,4 +1,4 @@
-const WIKI_BASE = "https://cors-anywhere.herokuapp.com/tgstation13.org/wiki";
+const WIKI_BASE = "https://tgproxy.ovo.ovh/wiki";
 
 /**
  * Get HTML content of a page using Mediawiki Parse APIs
@@ -9,3 +9,5 @@ export async function getPageHTML(name: string): Promise<string> {
   const apiURL = `/api.php?action=parse&page=${urlname}&prop=text&format=json`;
   return (await (await fetch(WIKI_BASE + apiURL)).json()).parse.text["*"];
 }
+
+export default { getPageHTML };

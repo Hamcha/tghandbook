@@ -4,7 +4,7 @@ const DEFAULT_OPTS = {
   alignment: "center",
 };
 
-export default function (root: HTMLElement, docname: string) {
+export default function userscript(root: HTMLElement, docname: string): void {
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
     editLink.parentElement.removeChild(editLink);
   });
@@ -15,16 +15,16 @@ export default function (root: HTMLElement, docname: string) {
     // Shitty way to detect if it's hex or not
     // Basically, none of the css colors long 6 letters only use hex letters
     // THANK FUCKING GOD
-    if (bgcolor.length === 6 && parseInt(bgcolor, 16) !== NaN) {
-      bgcolor = "#" + bgcolor;
+    if (bgcolor.length === 6 && Number.isNaN(parseInt(bgcolor, 16))) {
+      bgcolor = `#${bgcolor}`;
     }
     td.setAttribute("bgcolor", darken(bgcolor, ColorFmt.HEX).slice(1));
   });
   root.querySelectorAll("*[style]").forEach((td: HTMLElement) => {
-    if (td.style.backgroundColor != "") {
+    if (td.style.backgroundColor !== "") {
       td.style.backgroundColor = darken(td.style.backgroundColor, ColorFmt.RGB);
     }
-    if (td.style.background != "") {
+    if (td.style.background !== "") {
       td.style.backgroundColor = darken(td.style.background, ColorFmt.RGB);
     }
   });
@@ -32,8 +32,8 @@ export default function (root: HTMLElement, docname: string) {
   // Lighten fgcolors
   root.querySelectorAll("*[color]").forEach((td) => {
     let color = td.getAttribute("color");
-    if (color.length === 6 && !isNaN(parseInt(color, 16))) {
-      color = "#" + color;
+    if (color.length === 6 && !Number.isNaN(parseInt(color, 16))) {
+      color = `#${color}`;
     }
     td.setAttribute("color", lighten(color, ColorFmt.HEX).slice(1));
   });
@@ -43,7 +43,7 @@ export default function (root: HTMLElement, docname: string) {
     td.setAttribute("width", "100%");
   });
   root.querySelectorAll("table[style]").forEach((td: HTMLTableElement) => {
-    if (td.style.width != "") {
+    if (td.style.width !== "") {
       td.style.width = "100%";
     }
   });
@@ -88,14 +88,14 @@ export default function (root: HTMLElement, docname: string) {
   postbody.insertBefore(statusMessage, postbody.firstChild);
 
   // TODO Refactor this mess
-  function searchBox(el, search_candidate, options = DEFAULT_OPTS) {
+  function searchBox(el, searchCandidate, options = DEFAULT_OPTS) {
     // Fuzzy search box
     const resultList = document.createElement("ul");
-    const searchBox = document.createElement("div");
-    let selected_result = null;
+    const searchBoxElem = document.createElement("div");
+    let selectedResult = null;
     let results = [];
 
-    const jumpTo = function (id) {
+    const jumpTo = (id) => {
       el[id].scrollIntoView({
         block: options.alignment,
         inline: "nearest",
@@ -103,15 +103,15 @@ export default function (root: HTMLElement, docname: string) {
       });
       document
         .querySelectorAll("table.wikitable .bgus_fz_selected")
-        .forEach((el) => el.classList.remove("bgus_fz_selected"));
+        .forEach((sel) => sel.classList.remove("bgus_fz_selected"));
       el[id].parentElement.classList.add("bgus_fz_selected");
     };
 
-    const setSelectedResult = function (i) {
-      selected_result = i;
+    const setSelectedResult = (i) => {
+      selectedResult = i;
       resultList
         .querySelectorAll(".selected")
-        .forEach((el) => el.classList.remove("selected"));
+        .forEach((sel) => sel.classList.remove("selected"));
       resultList.children[i].classList.add("selected");
       jumpTo(results[i].id);
     };
@@ -121,15 +121,13 @@ export default function (root: HTMLElement, docname: string) {
         return;
       }
       const regex = new RegExp(
-        "^(.*?)([" +
-          str
-            .split("")
-            .map((c) => (c.includes(["\\", "]", "^"]) ? "\\" + c : c))
-            .join("])(.*?)([") +
-          "])(.*?)$",
+        `^(.*?)([${str
+          .split("")
+          .map((c) => (c.includes(["\\", "]", "^"]) ? `\\${c}` : c))
+          .join("])(.*?)([")}])(.*?)$`,
         "i"
       );
-      const arr = search_candidate
+      const arr = searchCandidate
         .map((o) => {
           o.matches = (o.str.match(regex) || [])
             .slice(1)
@@ -148,7 +146,7 @@ export default function (root: HTMLElement, docname: string) {
               }
               return list;
             }, [])
-            .map((str) => str.join(""));
+            .map((cstr) => cstr.join(""));
           return o;
         })
         // Strike non-matching rows
@@ -164,7 +162,7 @@ export default function (root: HTMLElement, docname: string) {
           if (a.length !== 1 && b.length === 1) return 1;
 
           // Most complete groups (alphanumeric)
-          const clean = (el) => !/[^a-zA-Z0-9]*$/.test(el);
+          const clean = (cel) => !/[^a-zA-Z0-9]*$/.test(cel);
           const cLen = a.filter(clean).length - b.filter(clean).length;
           if (cLen !== 0) return cLen;
 
@@ -187,11 +185,11 @@ export default function (root: HTMLElement, docname: string) {
         arr.forEach(({ matches, id }) => {
           const li = document.createElement("li");
           li.innerHTML = matches
-            .map((c, i) => (i % 2 ? "<strong>" + c + "</strong>" : c))
+            .map((c, i) => (i % 2 ? `<strong>${c}</strong>` : c))
             .join("");
           li.addEventListener("click", () => {
             jumpTo(id);
-            searchBox.classList.add("bgus_hidden");
+            searchBoxElem.classList.add("bgus_hidden");
           });
           resultList.appendChild(li);
         });
@@ -203,58 +201,60 @@ export default function (root: HTMLElement, docname: string) {
 
     // Create fuzzy search box
     const sel = document.createElement("input");
-    searchBox.id = "bgus_fz_searchbox";
-    searchBox.classList.add("bgus_hidden");
-    searchBox.appendChild(sel);
-    searchBox.appendChild(resultList);
-    root.appendChild(searchBox);
+    searchBoxElem.id = "bgus_fz_searchbox";
+    searchBoxElem.classList.add("bgus_hidden");
+    searchBoxElem.appendChild(sel);
+    searchBoxElem.appendChild(resultList);
+    root.appendChild(searchBoxElem);
 
     // Bind events
     let oldValue = "";
-    sel.addEventListener("keyup", function (event) {
+    sel.addEventListener("keyup", (event) => {
       switch (event.keyCode) {
         case 27: // Escape - Hide bar
-          searchBox.classList.add("bgus_hidden");
+          searchBoxElem.classList.add("bgus_hidden");
           return;
         case 13: // Enter - Jump to first result and hide bar
           if (results.length > 0) {
-            jumpTo(results[selected_result].id);
+            jumpTo(results[selectedResult].id);
           }
-          searchBox.classList.add("bgus_hidden");
+          searchBoxElem.classList.add("bgus_hidden");
           return;
         case 40: // Down arrow - Select next result
-          if (selected_result < results.length - 1) {
-            setSelectedResult(selected_result + 1);
+          if (selectedResult < results.length - 1) {
+            setSelectedResult(selectedResult + 1);
           }
           return;
         case 38: // Up arrow - Select previous result
-          if (selected_result > 0) {
-            setSelectedResult(selected_result - 1);
+          if (selectedResult > 0) {
+            setSelectedResult(selectedResult - 1);
           }
           return;
         default:
-          if (this.value != oldValue) {
-            search(this.value);
-            oldValue = this.value;
+          if (sel.value !== oldValue) {
+            search(sel.value);
+            oldValue = sel.value;
           }
       }
     });
 
-    document.body.addEventListener("keyup", function (ev) {
+    document.body.addEventListener("keyup", (ev) => {
       if (ev.keyCode === 83) {
         sel.focus();
       }
     });
 
-    document.body.addEventListener("keydown", function (ev) {
+    document.body.addEventListener("keydown", (ev) => {
       if (ev.shiftKey) {
         switch (ev.keyCode) {
           // SHIFT+S = Fuzzy search
           case 83: {
-            searchBox.classList.remove("bgus_hidden");
+            searchBoxElem.classList.remove("bgus_hidden");
             sel.value = "";
-            return;
+            break;
           }
+          default:
+          // Do nothing
         }
       }
     });
@@ -268,14 +268,16 @@ export default function (root: HTMLElement, docname: string) {
         "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2), .tooltiptext"
       )
       .forEach((td) => {
-        const tmp = td.cloneNode();
+        const tmp = td.cloneNode() as HTMLElement;
         // The cast to Array is necessary because, while childNodes's NodeList technically has a forEach method, it's a live list and operations mess with its lenght in the middle of the loop.
         // Nodes can only have one parent so append removes them from the original NodeList and shifts the following one back into the wrong index.
         Array.from(td.childNodes).forEach((el) => {
-          if (el.tagName === "P") {
-            tmp.append(...el.childNodes);
-          } else {
-            tmp.append(el);
+          if (el instanceof HTMLElement) {
+            if (el.tagName === "P") {
+              tmp.append(...el.childNodes);
+            } else {
+              tmp.append(el);
+            }
           }
         });
         td.parentNode.replaceChild(tmp, td);
@@ -303,18 +305,20 @@ export default function (root: HTMLElement, docname: string) {
     // Add event to autofill child checkboxes
     root
       .querySelectorAll(".bgus_part_tooltip > .bgus_checkbox")
-      .forEach((box) => {
+      .forEach((box: HTMLInputElement) => {
         const tooltip = box.parentElement.nextElementSibling;
-        box.addEventListener("click", function () {
+        box.addEventListener("click", () => {
           tooltip
             .querySelectorAll(".bgus_checkbox")
-            .forEach((el) => (el.checked = this.checked));
+            .forEach((el: HTMLInputElement) => {
+              el.checked = box.checked;
+            });
         });
       });
 
     // Add event to collapse subsections
     root.querySelectorAll(".bgus_nested_element").forEach((twistie) => {
-      twistie.addEventListener("click", function (evt) {
+      twistie.addEventListener("click", () => {
         twistie.classList.toggle("bgus_collapsed");
       });
     });
@@ -322,15 +326,16 @@ export default function (root: HTMLElement, docname: string) {
     // Wrap every recipe with extra metadata
     root.querySelectorAll(".bgus_part").forEach((el: HTMLElement) => {
       if ("parts" in el.parentElement.dataset) {
-        el.parentElement.dataset.parts =
-          parseInt(el.parentElement.dataset.parts) +
-          parseInt(el.dataset.amount);
+        el.parentElement.dataset.parts = (
+          parseInt(el.parentElement.dataset.parts, 10) +
+          parseInt(el.dataset.amount, 10)
+        ).toString();
       } else {
         el.parentElement.dataset.parts = el.dataset.amount;
       }
     });
 
-    const setPartSize = function (labels, ml) {
+    const setPartSize = (labels, ml) => {
       labels.forEach((el) => {
         const part = el.parentElement.dataset.amount;
         const total = el.parentElement.parentElement.dataset.parts;
@@ -340,7 +345,7 @@ export default function (root: HTMLElement, docname: string) {
         let next = el.parentElement.nextElementSibling;
         while (next) {
           if (next.classList.contains("tooltip")) {
-            let sublabels = [];
+            const sublabels = [];
             next.querySelector(".tooltiptext").childNodes.forEach((ch) => {
               if (ch.classList && ch.classList.contains("bgus_part")) {
                 sublabels.push(ch.querySelector(".bgus_part_label"));
@@ -365,13 +370,13 @@ export default function (root: HTMLElement, docname: string) {
       )
     );
     const name = el.map((elem) => {
-      let name = "";
+      let partial = "";
       elem.childNodes.forEach((t) => {
         if (t instanceof Text) {
-          name += t.textContent;
+          partial += t.textContent;
         }
       });
-      return name.trim();
+      return partial.trim();
     });
     searchBox(
       el,
@@ -379,23 +384,23 @@ export default function (root: HTMLElement, docname: string) {
     );
 
     // Remove "Removed medicines" section
-    let remTable = root.querySelector(
+    const remTable = root.querySelector(
       "#Non-craftable_Medicines + h4 + p + table"
     );
     remTable.parentElement.removeChild(remTable);
 
     root
       .querySelectorAll("div[data-name] .wikitable.sortable tr")
-      .forEach((el: HTMLElement) => {
-        let sectionEl = el.parentElement;
+      .forEach((row: HTMLElement) => {
+        let sectionEl = row.parentElement;
         while (!sectionEl.dataset.name) {
           sectionEl = sectionEl.parentElement;
         }
         const section = sectionEl.dataset.name;
-        if (el.querySelector("td") === null) {
+        if (row.querySelector("td") === null) {
           // Remove unused rows if found
-          const row = el.querySelectorAll("th");
-          row.forEach((th, i) => {
+          const headers = row.querySelectorAll("th");
+          headers.forEach((th, i) => {
             if (i < 2) {
               th.classList.add("table-head");
               return;
@@ -404,7 +409,7 @@ export default function (root: HTMLElement, docname: string) {
           });
           return;
         }
-        let rows = Array.from(el.querySelectorAll("td")).slice(1);
+        const rows = Array.from(row.querySelectorAll("td")).slice(1);
         let treatment = null;
         let desc = null;
         let metabolism = null;
@@ -428,7 +433,7 @@ export default function (root: HTMLElement, docname: string) {
             // All fields
             [treatment, desc, metabolism, overdose, addiction] = rows;
         }
-        const title = el.querySelector("th");
+        const title = row.querySelector("th");
         let content = `<div class="reagent-header">${title.innerHTML}</div>`;
         if (treatment) {
           content += `<p class="treatment">${treatment.innerHTML}</p>`;
@@ -436,10 +441,10 @@ export default function (root: HTMLElement, docname: string) {
         if (metabolism) {
           content += `<p class="metabolism">${metabolism.innerHTML}</p>`;
         }
-        if (addiction && addiction.innerHTML.trim() != "N/A") {
+        if (addiction && addiction.innerHTML.trim() !== "N/A") {
           content += `<p class="addiction">${addiction.innerHTML}</p>`;
         }
-        if (overdose && overdose.innerHTML.trim() != "N/A") {
+        if (overdose && overdose.innerHTML.trim() !== "N/A") {
           content += `<p class="overdose">${overdose.innerHTML}</p>`;
         }
         if (desc) {
@@ -454,7 +459,7 @@ export default function (root: HTMLElement, docname: string) {
         if (addiction) addiction.parentElement.removeChild(addiction);
       });
 
-    document.body.addEventListener("keydown", function (ev) {
+    document.body.addEventListener("keydown", (ev) => {
       if (ev.shiftKey) {
         switch (ev.keyCode) {
           // SHIFT+C = Toggle checkboxes
@@ -462,28 +467,36 @@ export default function (root: HTMLElement, docname: string) {
             root.classList.toggle("bgus_cbox");
             root
               .querySelectorAll(".bgus_checkbox:checked")
-              .forEach((el: HTMLInputElement) => {
-                el.checked = false;
+              .forEach((sel: HTMLInputElement) => {
+                sel.checked = false;
               });
-            return;
+            break;
           }
 
           // SHIFT+B = Set whole size (beaker?) for parts/units
           case 66: {
-            let size = parseInt(prompt("Write target ml (0 to reset)", "90"));
-            if (isNaN(size) || size <= 0) {
+            const size = parseInt(
+              prompt("Write target ml (0 to reset)", "90"),
+              10
+            );
+            if (Number.isNaN(size) || size <= 0) {
               // Reset to parts/unit
               root
                 .querySelectorAll(".bgus_part_label")
-                .forEach((el: HTMLElement) => (el.innerHTML = el.dataset.src));
+                .forEach((sel: HTMLElement) => {
+                  sel.innerHTML = sel.dataset.src;
+                });
               return;
             }
             setPartSize(
               root.querySelectorAll("td > .bgus_part > .bgus_part_label"),
               +size
             );
-            return;
+            break;
           }
+
+          default:
+          // Do nothing
         }
       }
     });

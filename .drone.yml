@@ -1,0 +1,142 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./node_modules
+
+  - name: dependencies
+    image: node
+    failure: ignore
+    commands:
+      - yarn
+    depends_on:
+      - restore-cache
+
+  - name: lint
+    image: node
+    commands:
+      - yarn lint
+    depends_on:
+      - dependencies
+
+  - name: build_versioned
+    image: node
+    commands:
+      - yarn build
+    when:
+      event:
+        - push
+      branch:
+        exclude:
+          - master
+    depends_on:
+      - dependencies
+
+  - name: build_pr
+    image: node
+    commands:
+      - yarn build
+    when:
+      event:
+        - pull_request
+    depends_on:
+      - dependencies
+
+  - name: build_master
+    image: node
+    commands:
+      - yarn build
+    environment:
+      SUBPATH: /latest
+    when:
+      event:
+        - push
+      branch:
+        - master
+    depends_on:
+      - dependencies
+
+  - name: upload_build_versioned
+    image: plugins/s3
+    settings:
+      bucket: tghandbook
+      access_key:
+        from_secret: minio_access
+      secret_key:
+        from_secret: minio_secret
+      source: dist/**/*
+      target: /${DRONE_COMMIT_SHA:0:8}/
+      path_style: true
+      endpoint: https://artifacts.fromouter.space
+    when:
+      event:
+        - push
+      branch:
+        exclude:
+          - master
+    depends_on:
+      - build_versioned
+
+  - name: upload_build_pr
+    image: plugins/s3
+    settings:
+      bucket: tghandbook
+      access_key:
+        from_secret: minio_access
+      secret_key:
+        from_secret: minio_secret
+      source: dist/**/*
+      target: /pr-${DRONE_PULL_REQUEST}/
+      path_style: true
+      endpoint: https://artifacts.fromouter.space
+    when:
+      event:
+        - pull_request
+    depends_on:
+      - build_pr
+
+  - name: upload_build_master
+    image: plugins/s3
+    settings:
+      bucket: tghandbook
+      access_key:
+        from_secret: minio_access
+      secret_key:
+        from_secret: minio_secret
+      source: dist/**/*
+      target: /latest/
+      path_style: true
+      endpoint: https://artifacts.fromouter.space
+    when:
+      event:
+        - push
+      branch:
+        - master
+    depends_on:
+      - build_master
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    failure: ignore
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./node_modules
+    depends_on:
+      - dependencies
+
+volumes:
+  - name: cache
+    host:
+      path: /opt/gitea/drone-cache/hamcha/tghandbook

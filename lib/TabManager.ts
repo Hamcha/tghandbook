@@ -1,3 +1,4 @@
+// @ts-expect-error: Asset imports are handled by parcel
 import speen from "~/assets/images/speen.svg";
 import { getPageHTML } from "./wiki";
 import userscript from "./userscript";
@@ -19,7 +20,7 @@ function initWaiting(elem: HTMLElement) {
 
 async function loadPage(page: string, elem: HTMLElement) {
   // Fetch page content
-  console.log(page + ": fetching");
+  console.log(`${page}: fetching`);
   let html = await getPageHTML(page);
 
   // Convert relative links to absolute
@@ -28,9 +29,9 @@ async function loadPage(page: string, elem: HTMLElement) {
   // Set as HTML content and run HTML manipulations on it
   requestAnimationFrame(() => {
     elem.innerHTML = html;
-    console.log(page + ": processing");
+    console.log(`${page}: processing`);
     userscript(elem, page);
-    console.log(page + ": userscript applied");
+    console.log(`${page}: userscript applied`);
     elem.classList.remove("waiting");
   });
 }
@@ -39,7 +40,9 @@ type TabElements = { tabListItem: HTMLElement; tabContentItem: HTMLElement };
 
 export default class TabManager {
   tabListContainer: HTMLElement;
+
   tabContentContainer: HTMLElement;
+
   tabs: Record<string, TabElements> = {};
 
   constructor(tablist: HTMLElement, tabcontent: HTMLElement) {
@@ -47,7 +50,7 @@ export default class TabManager {
     this.tabContentContainer = tabcontent;
   }
 
-  openTab(page: string, setActive: boolean) {
+  openTab(page: string, setActive: boolean): void {
     // Create tab list item
     const tabListItem = document.createElement("div");
     tabListItem.className = "tab";
@@ -80,7 +83,7 @@ export default class TabManager {
     }
   }
 
-  setActive(page: string) {
+  setActive(page: string): void {
     // Make sure tab exists (why wouldn't it?!)
     if (!(page in this.tabs)) {
       throw new Error("tab not found");
