@@ -23,21 +23,19 @@ body {
   }
 }
 
-#app,
-noscript {
-  height: 100%;
-  display: grid;
-  background: linear-gradient(
-    to bottom,
-    darken($nanotrasen, 20%),
-    darken($nanotrasen, 10%)
-  );
+body {
+  background: linear-gradient(to bottom, darken($nanotrasen, 20%), darken($nanotrasen, 10%));
   background-size: 100% 100%;
   background-attachment: fixed;
   color: #fff;
   font-family: "Iosevka Aile Web", sans-serif;
   font-size: 9pt;
   line-height: 1.6em;
+}
+
+#app {
+  height: 100%;
+  display: grid;
   grid-template-rows: 40px 1fr;
 }
 
@@ -46,12 +44,7 @@ noscript {
 }
 
 ::-webkit-scrollbar-track {
-  background: linear-gradient(
-    to bottom,
-    darken($nanotrasen, 0%),
-    darken($nanotrasen, 10%),
-    darken($nanotrasen, 0%)
-  );
+  background: linear-gradient(to bottom, darken($nanotrasen, 0%), darken($nanotrasen, 10%), darken($nanotrasen, 0%));
   border: 1px solid lighten($nanotrasen, 10%);
 }
 

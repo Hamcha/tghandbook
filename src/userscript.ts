@@ -214,7 +214,7 @@ export default function userscript(root: HTMLElement, docname: string): void {
       el,
       name.map((e, i) => ({ id: i, str: e }))
     );
-    root.appendChild(box);
+    document.body.appendChild(box);
 
     // Remove "Removed medicines" section
     const remTable = root.querySelector(

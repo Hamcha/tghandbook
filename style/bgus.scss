@@ -8,23 +8,36 @@
 }
 #bgus_fz_searchbox {
   position: fixed;
-  top: 20px;
-  left: 30%;
-  right: 30%;
+  top: 50px;
+  left: 20%;
+  right: 20%;
   background: rgba(10, 10, 10, 0.8);
   display: flex;
   flex-direction: column;
-  z-index: 9999;
+  z-index: 999;
   color: #fff;
+  border-radius: 2px;
 }
+
+@media (min-width: 600px) {
+  #bgus_fz_searchbox {
+    left: 30%;
+    right: 30%;
+  }
+}
+
 #bgus_fz_searchbox input {
-  font-size: 14pt;
+  font-size: 10pt;
   padding: 5pt 8pt;
   border: 1px solid #555;
   margin: 5px;
   margin-bottom: 0;
   background-color: #111;
   color: #fff;
+  outline: none;
+  &:focus {
+    border-color: #aaa;
+  }
 }
 #bgus_fz_searchbox ul {
   list-style: none;
@@ -88,8 +101,20 @@ span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
     background-color: darken($nanotrasen, 5%) !important;
   }
 }
-.bgus_fz_selected {
-  border: 3px solid yellow;
+div.bchem .bgus_fz_selected {
+  background: $nanotrasen !important;
+  th,
+  td {
+    border-top: 2px solid lighten($nanotrasen, 20%);
+    border-bottom: 2px solid lighten($nanotrasen, 15%);
+  }
+  th {
+    background: lighten($nanotrasen, 5%) !important;
+  }
+  div.tooltiptext {
+    border-color: lighten($nanotrasen, 20%);
+    background: darken($nanotrasen, 10%);
+  }
 }
 body.bgus_cbox input[type="checkbox"] + span[data-src]:before {
   display: inline-block;
@@ -121,6 +146,9 @@ body.bgus_cbox input[type="checkbox"]:checked + span[data-src] {
     text-align: left;
     padding: 10pt;
     padding-bottom: 0;
+    span:last-child {
+      margin-left: 0.5em;
+    }
   }
   p {
     font-size: 8pt;
