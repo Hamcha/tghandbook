@@ -23,7 +23,8 @@ body {
   }
 }
 
-#app {
+#app,
+noscript {
   height: 100%;
   display: grid;
   background: linear-gradient(
@@ -156,4 +157,15 @@ $tab-active: lighten($nanotrasen, 10%);
       cursor: pointer;
     }
   }
+}
+
+noscript {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  width: 100%;
 }
