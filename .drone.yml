@@ -144,7 +144,6 @@ volumes:
   - name: cache
     host:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
-
 ---
 kind: signature
 hmac: 9f4b08596bdaa078a6c60fc63d932084bab117c340a310903bbe96f31c0122bb
