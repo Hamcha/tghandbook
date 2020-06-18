@@ -28,6 +28,15 @@
     "last 2 Firefox versions"
   ],
   "cache": {
-    "strategy": "default"
+    "strategy": "default",
+    "runtimeCaching": [
+      {
+        "urlPattern": [
+          "https://tgproxy.ovo.ovh/wiki/.*",
+          "i"
+        ],
+        "handler": "cacheFirst"
+      }
+    ]
   }
 }
