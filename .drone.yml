@@ -37,9 +37,6 @@ steps:
     when:
       event:
         - push
-      branch:
-        exclude:
-          - master
     depends_on:
       - dependencies
 
@@ -49,6 +46,7 @@ steps:
       - yarn build
     environment:
       SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}/dist
+      OUTDIR: ./dist-pr
     when:
       event:
         - pull_request
@@ -61,6 +59,7 @@ steps:
       - yarn build
     environment:
       SUBPATH: /tghandbook/latest/dist
+      OUTDIR: ./dist-master
     when:
       event:
         - push
@@ -95,7 +94,7 @@ steps:
         from_secret: minio_access
       secret_key:
         from_secret: minio_secret
-      source: dist/**/*
+      source: dist-pr/**/*
       target: /pr-${DRONE_PULL_REQUEST}/
       path_style: true
       endpoint: https://artifacts.fromouter.space
@@ -113,7 +112,7 @@ steps:
         from_secret: minio_access
       secret_key:
         from_secret: minio_secret
-      source: dist/**/*
+      source: dist-master/**/*
       target: /latest/
       path_style: true
       endpoint: https://artifacts.fromouter.space
@@ -145,4 +144,4 @@ volumes:
 
 ---
 kind: signature
-hmac: 1ec6e3a1d04e21c2492a33d789d04b8ea4cab5128ae91b1749d4aba74cd05e62
+hmac: 8673ede880d77df3453f6785035712d4fca3ee77525b107de154c891558f10f1

@@ -6,7 +6,7 @@ const entryFiles = Path.join(__dirname, "./index.html");
 
 // Bundler options
 const options = {
-  outDir: "./dist",
+  outDir: process.env.OUTDIR || "./dist",
   outFile: "index.html",
   publicUrl: process.env.SUBPATH || "/",
   watch: false,
