@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="A prettier client for the /tg/station Wiki"
+    />
     <meta name="theme-color" content="#141c26" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,5 +53,21 @@
       <h2>JavaScript support is required to run this app.</h2>
     </noscript>
     <script src="src/index.ts" async></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        const x = "sw.js";
+        navigator.serviceWorker
+          .register(x)
+          .then(function (registration) {
+            console.log(
+              "Registration successful, scope is:",
+              registration.scope
+            );
+          })
+          .catch(function (error) {
+            console.log("Service worker registration failed, error:", error);
+          });
+      }
+    </script>
   </body>
 </html>
