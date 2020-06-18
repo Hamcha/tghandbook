@@ -32,6 +32,16 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "icon512.png",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "icon152.png",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
       "filename" : "icon.svg",
       "scale" : "x"
     }
