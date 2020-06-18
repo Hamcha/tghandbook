@@ -1,5 +1,6 @@
 import { darken, ColorFmt, lighten } from "./darkmode";
 import searchBox from "./search";
+import { findParent } from "./utils";
 
 export default function userscript(root: HTMLElement, docname: string): void {
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
@@ -45,6 +46,15 @@ export default function userscript(root: HTMLElement, docname: string): void {
     }
   });
 
+  // Fixup spacing on top quotes
+  root
+    .querySelectorAll<HTMLImageElement>("table .floatright > a > img")
+    .forEach((img) => {
+      const row = findParent(img, (el) => el instanceof HTMLTableRowElement);
+      const td = document.createElement("td");
+      row.appendChild(td);
+    });
+
   // Group headers and content so stickies don't overlap
   root.querySelectorAll("h3,h2").forEach((h3) => {
     const parent = h3.parentNode;
@@ -60,17 +70,16 @@ export default function userscript(root: HTMLElement, docname: string): void {
     div.className = "mw-headline-cont";
   });
 
+  // Move id from header to container, if one is found
   root.querySelectorAll<HTMLElement>(".mw-headline").forEach((span) => {
     // Find nearest container
-    let parent = span.parentElement;
-    while (parent !== null) {
-      if (parent.classList.contains("mw-headline-cont")) {
-        parent.id = span.id;
-        span.id += "-span";
-        parent.dataset.name = span.innerText;
-        return;
-      }
-      parent = parent.parentElement;
+    const container = findParent(span, (el) =>
+      el.classList.contains("mw-headline-cont")
+    );
+    if (container) {
+      container.id = span.id;
+      span.id += "-span";
+      container.dataset.name = span.innerText;
     }
   });
 
@@ -216,10 +225,10 @@ export default function userscript(root: HTMLElement, docname: string): void {
     root
       .querySelectorAll<HTMLElement>("div[data-name] .wikitable.sortable tr")
       .forEach((row) => {
-        let sectionEl = row.parentElement;
-        while (!sectionEl.dataset.name) {
-          sectionEl = sectionEl.parentElement;
-        }
+        const sectionEl = findParent(
+          row,
+          (sel) => "name" in sel.dataset && sel.dataset.name !== ""
+        );
         const section = sectionEl.dataset.name;
         if (row.querySelector("td") === null) {
           // Remove unused rows if found
