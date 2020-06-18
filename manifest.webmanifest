@@ -32,6 +32,12 @@
       "purpose": "any maskable"
     },
     {
+      "src": "assets/images/icons-manifest/icon152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "assets/images/icons-manifest/icon168.png",
       "sizes": "168x168",
       "type": "image/png",
