@@ -14,7 +14,7 @@ defaultTabs.forEach((tab) => {
 });
 
 if ("serviceWorker" in navigator) {
-  const x = "sw.js";
+  const x = process.env.SUBPATH ? `${process.env.SUBPATH}/sw.js` : "sw.js";
   navigator.serviceWorker
     .register(x)
     .then((registration) => {

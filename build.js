@@ -8,9 +8,7 @@ const entryFiles = Path.join(__dirname, "./index.html");
 const options = {
   outDir: "./dist",
   outFile: "index.html",
-  publicUrl: process.env.SUBPATH
-    ? "/tghandbook" + process.env.SUBPATH + "/dist"
-    : "/",
+  publicUrl: process.env.SUBPATH || "/",
   watch: false,
   contentHash: false,
   scopeHoist: false,
