@@ -12,3 +12,15 @@ const defaultTabs = [
 defaultTabs.forEach((tab) => {
   manager.openTab(tab.page, tab.active);
 });
+
+if ("serviceWorker" in navigator) {
+  const x = "sw.js";
+  navigator.serviceWorker
+    .register(x)
+    .then((registration) => {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch((error) => {
+      console.log("Service worker registration failed, error:", error);
+    });
+}

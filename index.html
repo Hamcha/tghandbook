@@ -53,21 +53,5 @@
       <h2>JavaScript support is required to run this app.</h2>
     </noscript>
     <script src="src/index.ts" async></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        const x = "sw.js";
-        navigator.serviceWorker
-          .register(x)
-          .then(function (registration) {
-            console.log(
-              "Registration successful, scope is:",
-              registration.scope
-            );
-          })
-          .catch(function (error) {
-            console.log("Service worker registration failed, error:", error);
-          });
-      }
-    </script>
   </body>
 </html>
