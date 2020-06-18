@@ -33,7 +33,7 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}/dist
+      SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}
     when:
       event:
         - push
@@ -45,7 +45,7 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}/dist
+      SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}
       OUTDIR: ./dist-pr
     when:
       event:
@@ -58,7 +58,7 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/latest/dist
+      SUBPATH: /tghandbook/latest
       OUTDIR: ./dist-master
     when:
       event:
@@ -77,7 +77,8 @@ steps:
       secret_key:
         from_secret: minio_secret
       source: dist/**/*
-      target: /${DRONE_COMMIT_SHA:0:8}/
+      target: /${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}/
+      strip_prefix: dist/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
@@ -96,6 +97,7 @@ steps:
         from_secret: minio_secret
       source: dist-pr/**/*
       target: /pr-${DRONE_PULL_REQUEST}/
+      strip_prefix: dist-pr/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
@@ -114,6 +116,7 @@ steps:
         from_secret: minio_secret
       source: dist-master/**/*
       target: /latest/
+      strip_prefix: dist-master/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
@@ -144,4 +147,4 @@ volumes:
 
 ---
 kind: signature
-hmac: 8673ede880d77df3453f6785035712d4fca3ee77525b107de154c891558f10f1
+hmac: 9f4b08596bdaa078a6c60fc63d932084bab117c340a310903bbe96f31c0122bb
