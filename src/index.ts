@@ -1,17 +1,24 @@
 import TabManager from "./TabManager";
+import sections from "./sections";
 
+const sectionListContainer = document.getElementById("section-list");
 const tabListContainer = document.getElementById("tab-list");
 const tabContentContainer = document.getElementById("tabs");
-const manager = new TabManager(tabListContainer, tabContentContainer);
+const manager = new TabManager(
+  sectionListContainer,
+  tabListContainer,
+  tabContentContainer
+);
 
-const defaultTabs = [
-  { page: "Guide_to_chemistry", active: true },
-  { page: "Guide_to_medicine", active: false },
-];
-
-defaultTabs.forEach((tab) => {
-  manager.openTab(tab.page, tab.active);
+sections.forEach((section) => {
+  manager.createSection(section.name);
+  section.tabs.forEach((tab) => {
+    manager.openTab(section.name, tab.page, { icon: tab.icon, text: tab.text });
+  });
 });
+
+// Set first page as active
+manager.setActive("Medical", "Guide_to_chemistry");
 
 if ("serviceWorker" in navigator) {
   const x = process.env.SUBPATH ? `${process.env.SUBPATH}/sw.js` : "sw.js";

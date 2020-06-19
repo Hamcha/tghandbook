@@ -36,7 +36,6 @@ body {
 #app {
   height: 100%;
   display: grid;
-  grid-template-rows: 40px 1fr;
 }
 
 ::-webkit-scrollbar {
@@ -60,13 +59,12 @@ body {
 }
 
 #tabs {
-  grid-row: 2;
+  grid-row: 3;
   z-index: 1;
   display: grid;
   overflow: hidden;
   .page {
     visibility: hidden;
-    padding-top: 10pt;
     overflow-y: scroll;
     grid-row: 1;
     grid-column: 1;
@@ -97,6 +95,11 @@ body {
       }
     }
 
+    h1.pageheader {
+      margin-top: 0;
+      padding: 15pt 10pt;
+    }
+
     p,
     h2,
     h3,
@@ -107,18 +110,14 @@ body {
     a[href] {
       color: white;
     }
-    #toctitle,
     h1,
     h2,
     h3 {
       position: sticky;
-      top: -10pt;
+      top: 0;
       background: $nanotrasen;
-      padding: 10px;
+      padding: 10pt;
       z-index: 999;
-    }
-    #toctitle h2 {
-      margin: 0;
     }
     .mw-headline {
       display: flex;
@@ -127,27 +126,73 @@ body {
   }
 }
 
+$section-active: darken($nanotrasen, 5%);
 $tab-active: lighten($nanotrasen, 10%);
 
-#tab-list {
+#section-list {
   z-index: 2;
   grid-row: 1;
+  border-bottom: 2px solid $section-active;
   display: flex;
-  border-bottom: 2px solid $tab-active;
-
-  .tab {
-    max-width: 200px;
-    flex: 1;
+  .section {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     user-select: none;
+    font-size: 9pt;
+    padding: 3pt 7pt;
+    text-transform: uppercase;
+    color: lighten($nanotrasen, 60%);
+    flex: 1;
+    &.active {
+      background-color: $section-active;
+      color: white;
+    }
+    &:not(.active) {
+      cursor: pointer;
+      &:hover {
+        background-color: darken($section-active, 10%);
+      }
+    }
+  }
+}
 
+#tab-list {
+  z-index: 2;
+  grid-row: 2;
+  display: flex;
+  background-color: $section-active;
+  border-bottom: 4px solid $tab-active;
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-size: 7pt;
+    padding: 2px 4px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+
+    img {
+      height: 80%;
+      max-height: 24px;
+      margin: 0;
+    }
     &.active {
       background-color: $tab-active;
     }
     &:not(.active) {
       cursor: pointer;
+      &:hover {
+        background-color: darken($tab-active, 8%);
+      }
+    }
+
+    &.hidden {
+      display: none;
     }
   }
 }

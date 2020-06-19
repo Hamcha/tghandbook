@@ -1,0 +1,104 @@
+// @ts-expect-error: Parcel image import
+import chemistry from "~/assets/images/tab-icons/chemistry.svg";
+
+const sections = [
+  {
+    name: "Medical",
+    tabs: [
+      { page: "Guide_to_medicine", icon: null },
+      { page: "Guide_to_chemistry", icon: chemistry },
+      { page: "Guide_to_plumbing", icon: null },
+      { page: "Grenade", icon: null },
+      { page: "Guide_to_genetics", icon: null },
+      { page: "Infections", text: "VIRS", icon: null },
+      { page: "Surgery", icon: null },
+      { page: "Guide_to_Traumas", icon: null },
+      { page: "Guide_to_Wounds", icon: null },
+      { page: "Guide_to_Ghetto_Chemistry", text: "ghet", icon: null },
+    ],
+  },
+  {
+    name: "Engineering",
+    tabs: [
+      { page: "Guide_to_construction", icon: null },
+      {
+        page: "Guide_to_advanced_construction",
+        text: "mach",
+        icon: null,
+      },
+      { page: "Solars", icon: null },
+      { page: "Guide_to_the_Supermatter", text: "SUPM", icon: null },
+      { page: "Singularity_Engine", text: "SING", icon: null },
+      { page: "Tesla_Engine", text: "TESL", icon: null },
+      { page: "Gas_turbine", text: "GAS", icon: null },
+      { page: "Guide_to_power", icon: null },
+      { page: "Guide_to_Atmospherics", icon: null },
+      { page: "Guide_to_Telecommunications", icon: null, text: "tcomm" },
+    ],
+  },
+  {
+    name: "Science",
+    tabs: [
+      { page: "Guide_to_Research_and_Development", text: "R&D", icon: null },
+      { page: "Guide_to_robotics", icon: null },
+      { page: "Guide_to_toxins", icon: null },
+      { page: "Guide_to_xenobiology", icon: null },
+      { page: "Guide_to_genetics", icon: null },
+      { page: "Guide_to_telescience", icon: null },
+      { page: "Guide_to_Nanites", icon: null },
+    ],
+  },
+  {
+    name: "Security",
+    tabs: [
+      { page: "Guide_to_security", icon: null },
+      { page: "Space_Law", text: "LAW", icon: null },
+      { page: "Standard_Operating_Procedure", text: "SOP", icon: null },
+      { page: "Guide_to_Trials", icon: null },
+    ],
+  },
+  {
+    name: "Antagonists",
+    tabs: [
+      { page: "Traitor", icon: null },
+      { page: "Makeshift_weapons", icon: null },
+      { page: "Hacking", icon: null },
+      { page: "Guide_to_Combat", icon: null },
+      { page: "Syndicate_Items", text: "synd", icon: null },
+      { page: "Illicit_Access", icon: null },
+      { page: "Revolution", icon: null },
+      { page: "Cult_Basics", text: "cult", icon: null },
+      { page: "Syndicate_guide", text: "nuke", icon: null },
+      { page: "Guide_to_malfunction", icon: null },
+      { page: "Xenos", text: "xmor", icon: null },
+      { page: "Abductor", icon: null },
+      { page: "Families", icon: null },
+      { page: "Heretic", icon: null },
+    ],
+  },
+  {
+    name: "Other",
+    tabs: [
+      { page: "Ai_Modules", text: "aimo", icon: null },
+      { page: "Silicon_Policy", text: "sipo", icon: null },
+      {
+        page: "Guide_to_Awesome_Miscellaneous_Stuff",
+        text: "misc",
+        icon: null,
+      },
+      { page: "Creatures", icon: null },
+      { page: "Critters", icon: null },
+      { page: "Guide_to_races", icon: null },
+      { page: "Guide_to_food_and_drinks", text: "food", icon: null },
+      { page: "Guide_to_hydroponics", icon: null },
+      { page: "Guide_to_plants", icon: null },
+      { page: "Songs", icon: null },
+      { page: "Supply_crates", icon: null },
+      { page: "Auxiliary_Base_Construction", text: "aux", icon: null },
+      { page: "Guide_to_wire_art", text: "wire", icon: null },
+      { page: "Guide_to_Space_Exploration", icon: null },
+    ],
+  },
+];
+
+export default sections;

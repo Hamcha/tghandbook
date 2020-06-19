@@ -3,6 +3,13 @@ import searchBox from "./search";
 import { findParent } from "./utils";
 
 export default function userscript(root: HTMLElement, docname: string): void {
+  // Add header
+  const header = document.createElement("h1");
+  header.className = "pageheader";
+  header.appendChild(document.createTextNode(docname.replace(/_/g, " ")));
+  root.insertBefore(header, root.firstChild);
+
+  // Remove edit links
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
     editLink.parentElement.removeChild(editLink);
   });
@@ -55,8 +62,16 @@ export default function userscript(root: HTMLElement, docname: string): void {
       row.appendChild(td);
     });
 
+  // Fuck #toctitle
+  const toc = root.querySelector("#toc");
+  if (toc) {
+    const tocHeader = toc.querySelector("h2");
+    toc.parentNode.insertBefore(tocHeader, toc);
+    toc.removeChild(toc.querySelector("#toctitle"));
+  }
+
   // Group headers and content so stickies don't overlap
-  root.querySelectorAll("h3,h2").forEach((h3) => {
+  root.querySelectorAll("h1,h2,h3").forEach((h3) => {
     const parent = h3.parentNode;
     const div = document.createElement("div");
     parent.insertBefore(div, h3);
@@ -79,7 +94,7 @@ export default function userscript(root: HTMLElement, docname: string): void {
     if (container) {
       container.id = span.id;
       span.id += "-span";
-      container.dataset.name = span.innerText;
+      container.dataset.name = span.textContent;
     }
   });
 
@@ -117,7 +132,7 @@ export default function userscript(root: HTMLElement, docname: string): void {
 
     // Enrich "x part" with checkboxes and parts
     Array.from(document.querySelectorAll("td"))
-      .filter((el) => el.innerText.indexOf(" part") >= 0)
+      .filter((el) => el.textContent.indexOf(" part") >= 0)
       .forEach((el) => {
         el.innerHTML = el.innerHTML.replace(
           /((\d+)\s+(?:parts?|units?))(.*?(?:<\/a>|\n|$))/gi,
