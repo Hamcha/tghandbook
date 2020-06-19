@@ -63,8 +63,6 @@ steps:
     when:
       event:
         - push
-      branch:
-        - master
     depends_on:
       - dependencies
 
@@ -144,4 +142,4 @@ volumes:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
 ---
 kind: signature
-hmac: 95ed9609f0ead6f8b59dbee87b8f0a5d1e68fe8eb264fbc6410a314a7289ffff
+hmac: de6248685716ee52a8de5686a13b1ce209a84046fb278e20115738516ee7335c
