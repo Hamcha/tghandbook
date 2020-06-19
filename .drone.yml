@@ -53,13 +53,13 @@ steps:
     depends_on:
       - dependencies
 
-  - name: build_master
+  - name: build_branch
     image: node
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/latest
-      OUTDIR: ./dist-master
+      SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}
+      OUTDIR: ./dist-branch
     when:
       event:
         - push
@@ -106,7 +106,7 @@ steps:
     depends_on:
       - build_pr
 
-  - name: upload_build_master
+  - name: upload_build_branch
     image: plugins/s3
     settings:
       bucket: tghandbook
@@ -114,18 +114,16 @@ steps:
         from_secret: minio_access
       secret_key:
         from_secret: minio_secret
-      source: dist-master/**/*
-      target: /latest/
-      strip_prefix: dist-master/
+      source: dist-branch/**/*
+      target: /${DRONE_COMMIT_BRANCH/\//_}/
+      strip_prefix: dist-branch/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
       event:
         - push
-      branch:
-        - master
     depends_on:
-      - build_master
+      - build_branch
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
@@ -146,4 +144,4 @@ volumes:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
 ---
 kind: signature
-hmac: 9f4b08596bdaa078a6c60fc63d932084bab117c340a310903bbe96f31c0122bb
+hmac: 95ed9609f0ead6f8b59dbee87b8f0a5d1e68fe8eb264fbc6410a314a7289ffff

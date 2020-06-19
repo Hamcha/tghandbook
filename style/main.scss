@@ -175,6 +175,8 @@ $tab-active: lighten($nanotrasen, 10%);
     padding: 2px 4px;
     padding-bottom: 0;
     text-transform: uppercase;
+    flex: 1;
+    max-width: 100px;
 
     img {
       height: 80%;
