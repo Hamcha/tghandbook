@@ -4,7 +4,7 @@ import { findParent } from "./utils";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
-export const CURRENT_VERSION = "df914edcb5522670309ceb8dfd0195dc70fb81d4";
+export const CURRENT_VERSION = "e700bb9c309627b944618152a7d8e936ae7a05db";
 
 function chemistryFixups(root: HTMLElement) {
   // Enable page-specific CSS rules
@@ -146,6 +146,11 @@ export function processHTML(root: HTMLElement, docname: string): void {
   header.className = "pageheader";
   header.appendChild(document.createTextNode(docname.replace(/_/g, " ")));
   root.insertBefore(header, root.firstChild);
+
+  // Lazy load all images
+  root
+    .querySelectorAll<HTMLImageElement>("img")
+    .forEach((elem) => elem.setAttribute("loading", "lazy"));
 
   // Remove edit links
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
