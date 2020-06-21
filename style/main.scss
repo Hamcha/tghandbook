@@ -35,7 +35,8 @@ body {
 
 #app {
   height: 100%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
 
 ::-webkit-scrollbar {
@@ -59,7 +60,7 @@ body {
 }
 
 #tabs {
-  grid-row: 3;
+  flex: 1;
   z-index: 1;
   display: grid;
   overflow: hidden;
@@ -133,7 +134,6 @@ $tab-active: lighten($nanotrasen, 10%);
 
 #section-list {
   z-index: 2;
-  grid-row: 1;
   border-bottom: 2px solid $section-active;
   display: flex;
   .section {
@@ -162,7 +162,6 @@ $tab-active: lighten($nanotrasen, 10%);
 
 #tab-list {
   z-index: 2;
-  grid-row: 2;
   display: flex;
   background-color: $section-active;
   border-bottom: 4px solid $tab-active;
