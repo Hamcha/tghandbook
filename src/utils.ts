@@ -12,4 +12,8 @@ export function findParent(
   return parent;
 }
 
-export default { findParent };
+export function nextAnimationFrame(): Promise<void> {
+  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+}
+
+export default { findParent, nextAnimationFrame };

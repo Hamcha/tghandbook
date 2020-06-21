@@ -19,6 +19,7 @@ module.exports = {
     "no-param-reassign": "off",
     "no-alert": "off",
     "no-console": "off",
+    "func-names": "off",
     "@typescript-eslint/ban-ts-comment": [
       "error",
       {

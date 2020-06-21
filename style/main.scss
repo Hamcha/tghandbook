@@ -66,6 +66,7 @@ body {
   overflow: hidden;
   .page {
     //visibility: hidden;
+    will-change: display;
     display: none;
     overflow-y: scroll;
     grid-row: 1;

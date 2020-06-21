@@ -1,7 +1,9 @@
 // @ts-expect-error: Asset imports are handled by parcel
 import speen from "~/assets/images/speen.svg";
 import { getPageHTML } from "./wiki";
-import userscript from "./userscript";
+import { processHTML, bindFunctions, CURRENT_VERSION } from "./userscript";
+import cache from "./cache";
+import { nextAnimationFrame } from "./utils";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
@@ -22,21 +24,52 @@ function initWaiting(elem: HTMLElement) {
 }
 
 async function loadPage(page: string, elem: HTMLElement) {
+  let html: string | null = null;
+  const key = `page:${page}`;
+
+  // Check cache for pre-processed page
+  try {
+    const cachedPage = await cache.get<string>(key);
+    if (cachedPage) {
+      if (cachedPage.version === CURRENT_VERSION) {
+        console.log(`${page}: found cached entry`);
+        html = cachedPage.value;
+      } else {
+        console.log(`${page}: found outdated cache entry`);
+      }
+    }
+  } catch (e) {
+    console.log(`${page}: failed to retrieve cache entry:`, e);
+  }
+
   // Fetch page content
-  console.log(`${page}: fetching`);
-  let html = await getPageHTML(page);
+  if (!html) {
+    console.log(`${page}: fetching`);
+    html = await getPageHTML(page);
 
-  // Convert relative links to absolute
-  html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
+    // Convert relative links to absolute (and proxied)
+    html = html.replace(/"\/wiki/gi, '"//tgproxy.ovo.ovh/wiki');
 
-  // Set as HTML content and run HTML manipulations on it
-  requestAnimationFrame(() => {
+    await nextAnimationFrame();
+
+    // Set as HTML content and run HTML manipulations on it
     elem.innerHTML = html;
+
     console.log(`${page}: processing`);
-    userscript(elem, page);
-    console.log(`${page}: userscript applied`);
-    elem.classList.remove("waiting");
-  });
+    processHTML(elem, page);
+
+    // Save result to cache
+    cache.set(key, elem.innerHTML, CURRENT_VERSION).then(() => {
+      console.log(`${page}: saved to cache`);
+    });
+  } else {
+    // Set cached content as HTML
+    elem.innerHTML = html;
+  }
+
+  bindFunctions(elem, page);
+  console.log(`${page}: userscript applied`);
+  elem.classList.remove("waiting");
 }
 
 type TabElements = {
