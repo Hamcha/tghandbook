@@ -4,9 +4,12 @@ import { findParent } from "./utils";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
-export const CURRENT_VERSION = "7930f961710641f022ef0cd3ad3277ffd4eab7eb";
+export const CURRENT_VERSION = "df914edcb5522670309ceb8dfd0195dc70fb81d4";
 
 function chemistryFixups(root: HTMLElement) {
+  // Enable page-specific CSS rules
+  root.classList.add("bchem");
+
   // Fix inconsistencies with <p> on random parts
   // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
   root
@@ -135,9 +138,6 @@ function chemistryFixups(root: HTMLElement) {
       if (overdose) overdose.parentElement.removeChild(overdose);
       if (addiction) addiction.parentElement.removeChild(addiction);
     });
-
-  // Enable page-specific CSS rules
-  root.classList.add("bchem");
 }
 
 export function processHTML(root: HTMLElement, docname: string): void {

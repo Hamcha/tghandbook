@@ -59,12 +59,12 @@ async function loadPage(page: string, elem: HTMLElement) {
     processHTML(elem, page);
 
     // Save result to cache
-    cache.set(key, elem.innerHTML, CURRENT_VERSION).then(() => {
+    cache.set(key, elem.outerHTML, CURRENT_VERSION).then(() => {
       console.log(`${page}: saved to cache`);
     });
   } else {
     // Set cached content as HTML
-    elem.innerHTML = html;
+    elem.outerHTML = html;
   }
 
   bindFunctions(elem, page);
