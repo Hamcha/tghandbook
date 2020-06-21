@@ -64,33 +64,35 @@ body {
   display: grid;
   overflow: hidden;
   .page {
-    visibility: hidden;
+    //visibility: hidden;
+    display: none;
     overflow-y: scroll;
     grid-row: 1;
     grid-column: 1;
     &.active {
-      visibility: visible;
-    }
-    &.waiting {
-      user-select: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      .speen {
-        flex: 1;
+      //visibility: visible;
+      display: inherit;
+      &.waiting {
+        user-select: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 60vmin;
-          opacity: 0.9;
+        height: 100%;
+        .speen {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 60vmin;
+            opacity: 0.9;
+          }
         }
       }
     }
