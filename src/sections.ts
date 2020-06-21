@@ -1,13 +1,17 @@
 // @ts-expect-error: Parcel image import
 import chemistry from "~/assets/images/tab-icons/chemistry.svg";
+// @ts-expect-error: Parcel image import
+import medicine from "~/assets/images/tab-icons/medicine.svg";
+// @ts-expect-error: Parcel image import
+import plumbing from "~/assets/images/tab-icons/plumbing.svg";
 
 const sections = [
   {
     name: "Medical",
     tabs: [
-      { page: "Guide_to_medicine", icon: null },
+      { page: "Guide_to_medicine", icon: medicine },
       { page: "Guide_to_chemistry", icon: chemistry },
-      { page: "Guide_to_plumbing", icon: null },
+      { page: "Guide_to_plumbing", icon: plumbing },
       { page: "Grenade", text: "nade", icon: null },
       { page: "Guide_to_genetics", icon: null },
       { page: "Infections", text: "virus", icon: null },
