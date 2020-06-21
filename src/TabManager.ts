@@ -53,15 +53,20 @@ async function loadPage(page: string, elem: HTMLElement) {
     await nextAnimationFrame();
 
     // Set as HTML content and run HTML manipulations on it
-    elem.innerHTML = html;
+    const div = document.createElement("div");
+    div.className = elem.className;
+    div.innerHTML = html;
 
     console.log(`${page}: processing`);
-    processHTML(elem, page);
+    processHTML(div, page);
 
     // Save result to cache
-    cache.set(key, elem.outerHTML, CURRENT_VERSION).then(() => {
+    cache.set(key, div.outerHTML, CURRENT_VERSION).then(() => {
       console.log(`${page}: saved to cache`);
     });
+
+    elem.replaceWith(div);
+    elem = div;
   } else {
     // Set cached content as HTML
     elem.outerHTML = html;
