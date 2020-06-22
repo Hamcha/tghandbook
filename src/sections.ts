@@ -4,29 +4,58 @@ import chemistry from "~/assets/images/tab-icons/chemistry.svg";
 import medicine from "~/assets/images/tab-icons/medicine.svg";
 // @ts-expect-error: Parcel image import
 import plumbing from "~/assets/images/tab-icons/plumbing.svg";
+// @ts-expect-error: Parcel image import
+import grenade from "~/assets/images/tab-icons/grenade.svg";
+// @ts-expect-error: Parcel image import
+import genetics from "~/assets/images/tab-icons/genetics.svg";
+// @ts-expect-error: Parcel image import
+import virus from "~/assets/images/tab-icons/virus.svg";
+// @ts-expect-error: Parcel image import
+import surgery from "~/assets/images/tab-icons/surgery.svg";
+// @ts-expect-error: Parcel image import
+import trauma from "~/assets/images/tab-icons/trauma.svg";
+// @ts-expect-error: Parcel image import
+import wound from "~/assets/images/tab-icons/wound.svg";
+// @ts-expect-error: Parcel image import
+import ghetto from "~/assets/images/tab-icons/ghetto.svg";
+// @ts-expect-error: Parcel image import
+import construction from "~/assets/images/tab-icons/construction.svg";
+// @ts-expect-error: Parcel image import
+import power from "~/assets/images/tab-icons/power.svg";
 
-const sections = [
+export interface SectionInfo {
+  name: string;
+  tabs: TabInfo[];
+}
+
+export interface TabInfo {
+  page: string;
+  icon: string | null;
+  text?: string;
+}
+
+const sections: SectionInfo[] = [
   {
     name: "Medical",
     tabs: [
       { page: "Guide_to_medicine", icon: medicine },
       { page: "Guide_to_chemistry", icon: chemistry },
       { page: "Guide_to_plumbing", icon: plumbing },
-      { page: "Grenade", text: "nade", icon: null },
-      { page: "Guide_to_genetics", icon: null },
-      { page: "Infections", text: "virus", icon: null },
-      { page: "Surgery", icon: null },
-      { page: "Guide_to_Traumas", text: "trauma", icon: null },
-      { page: "Guide_to_Wounds", text: "wound", icon: null },
-      { page: "Guide_to_Ghetto_Chemistry", text: "ghetto", icon: null },
+      { page: "Grenade", text: "nade", icon: grenade },
+      { page: "Guide_to_genetics", icon: genetics },
+      { page: "Infections", text: "virus", icon: virus },
+      { page: "Surgery", icon: surgery },
+      { page: "Guide_to_Traumas", text: "trauma", icon: trauma },
+      { page: "Guide_to_Wounds", text: "wound", icon: wound },
+      { page: "Guide_to_Ghetto_Chemistry", text: "ghetto", icon: ghetto },
     ],
   },
   {
     name: "Engineering",
     tabs: [
-      { page: "Guide_to_construction", icon: null },
+      { page: "Guide_to_construction", icon: construction },
       { page: "Machines", icon: null },
-      { page: "Guide_to_power", text: "power", icon: null },
+      { page: "Guide_to_power", text: "power", icon: power },
       { page: "Solars", text: "solar", icon: null },
       { page: "Guide_to_the_Supermatter", text: "smatt", icon: null },
       { page: "Singularity_and_Tesla_engines", text: "sing/tesl", icon: null },
@@ -78,19 +107,17 @@ const sections = [
   {
     name: "Other",
     tabs: [
-      { page: "Ai_Modules", text: "aimo", icon: null },
-      { page: "Silicon_Policy", text: "sipo", icon: null },
+      { page: "Rules", text: "rules", icon: null },
+      { page: "AI_modules", text: "aimo", icon: null },
       {
         page: "Guide_to_Awesome_Miscellaneous_Stuff",
         text: "misc",
         icon: null,
       },
-      { page: "Creatures", icon: null },
       { page: "Critters", icon: null },
       { page: "Guide_to_races", icon: null },
       { page: "Guide_to_food_and_drinks", text: "food", icon: null },
       { page: "Guide_to_hydroponics", icon: null },
-      { page: "Guide_to_plants", icon: null },
       { page: "Songs", icon: null },
       { page: "Supply_crates", icon: null },
       { page: "Auxiliary_Base_Construction", text: "aux", icon: null },
