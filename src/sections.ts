@@ -21,7 +21,11 @@ import ghetto from "~/assets/images/tab-icons/ghetto.svg";
 // @ts-expect-error: Parcel image import
 import construction from "~/assets/images/tab-icons/construction.svg";
 // @ts-expect-error: Parcel image import
+import machines from "~/assets/images/tab-icons/machines.svg";
+// @ts-expect-error: Parcel image import
 import power from "~/assets/images/tab-icons/power.svg";
+// @ts-expect-error: Parcel image import
+import solar from "~/assets/images/tab-icons/solar.svg";
 
 export interface SectionInfo {
   name: string;
@@ -54,9 +58,9 @@ const sections: SectionInfo[] = [
     name: "Engineering",
     tabs: [
       { page: "Guide_to_construction", icon: construction },
-      { page: "Machines", icon: null },
+      { page: "Machines", icon: machines },
       { page: "Guide_to_power", text: "power", icon: power },
-      { page: "Solars", text: "solar", icon: null },
+      { page: "Solars", text: "solar", icon: solar },
       { page: "Guide_to_the_Supermatter", text: "smatt", icon: null },
       { page: "Singularity_and_Tesla_engines", text: "sing/tesl", icon: null },
       { page: "Gas_turbine", text: "GAS", icon: null },
