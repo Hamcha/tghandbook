@@ -30,6 +30,8 @@ import solar from "~/assets/images/tab-icons/solar.svg";
 import supermatter from "~/assets/images/tab-icons/supermatter.svg";
 // @ts-expect-error: Parcel image import
 import shield from "~/assets/images/tab-icons/shield.svg";
+// @ts-expect-error: Parcel image import
+import turbine from "~/assets/images/tab-icons/turbine.svg";
 
 export interface SectionInfo {
   name: string;
@@ -71,7 +73,7 @@ const sections: SectionInfo[] = [
         text: "sing/tesl",
         icon: shield,
       },
-      { page: "Gas_turbine", text: "GAS", icon: null },
+      { page: "Gas_turbine", text: "GAST", icon: turbine },
       { page: "Guide_to_Atmospherics", text: "atmos", icon: null },
       { page: "Guide_to_Telecommunications", icon: null, text: "tcomm" },
     ],
