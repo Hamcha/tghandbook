@@ -26,6 +26,10 @@ import machines from "~/assets/images/tab-icons/machines.svg";
 import power from "~/assets/images/tab-icons/power.svg";
 // @ts-expect-error: Parcel image import
 import solar from "~/assets/images/tab-icons/solar.svg";
+// @ts-expect-error: Parcel image import
+import supermatter from "~/assets/images/tab-icons/supermatter.svg";
+// @ts-expect-error: Parcel image import
+import shield from "~/assets/images/tab-icons/shield.svg";
 
 export interface SectionInfo {
   name: string;
@@ -61,8 +65,12 @@ const sections: SectionInfo[] = [
       { page: "Machines", icon: machines },
       { page: "Guide_to_power", text: "power", icon: power },
       { page: "Solars", text: "solar", icon: solar },
-      { page: "Guide_to_the_Supermatter", text: "smatt", icon: null },
-      { page: "Singularity_and_Tesla_engines", text: "sing/tesl", icon: null },
+      { page: "Guide_to_the_Supermatter", text: "smatt", icon: supermatter },
+      {
+        page: "Singularity_and_Tesla_engines",
+        text: "sing/tesl",
+        icon: shield,
+      },
       { page: "Gas_turbine", text: "GAS", icon: null },
       { page: "Guide_to_Atmospherics", text: "atmos", icon: null },
       { page: "Guide_to_Telecommunications", icon: null, text: "tcomm" },
