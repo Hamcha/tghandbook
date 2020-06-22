@@ -88,11 +88,11 @@ span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
     margin-left: -5px;
   }
 }
-.bchem table.wikitable > tbody > tr > td:nth-child(2) {
+div[data-tab="Guide_to_chemistry"] table.wikitable > tbody > tr > td:nth-child(2) {
   width: 45%;
   padding: 10px;
 }
-.bchem table.wikitable {
+div[data-tab="Guide_to_chemistry"] table.wikitable {
   border: 0 !important;
   .table-head {
     text-align: center;
@@ -101,7 +101,7 @@ span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
     background-color: darken($nanotrasen, 5%) !important;
   }
 }
-div.bchem .bgus_fz_selected {
+div[data-tab="Guide_to_chemistry"] .bgus_fz_selected {
   background: $nanotrasen !important;
   th,
   td {

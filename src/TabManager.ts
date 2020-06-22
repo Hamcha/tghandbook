@@ -3,7 +3,8 @@ import speen from "~/assets/images/speen.svg";
 import { getPageHTML } from "./wiki";
 import { processHTML, bindFunctions, CURRENT_VERSION } from "./userscript";
 import cache from "./cache";
-import { nextAnimationFrame } from "./utils";
+import { nextAnimationFrame, delay } from "./utils";
+import { TabInfo } from "./sections";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
@@ -15,15 +16,10 @@ function initWaiting(elem: HTMLElement) {
   const spinnerImg = document.createElement("img");
   spinnerImg.src = speen;
   spinnerContainer.appendChild(spinnerImg);
-  const spinnerText = document.createElement("p");
-  spinnerText.appendChild(
-    document.createTextNode("You start skimming through the manual...")
-  );
-  spinnerContainer.appendChild(spinnerText);
   elem.appendChild(spinnerContainer);
 }
 
-async function loadPage(page: string, elem: HTMLElement) {
+async function loadPage(page: string, elem: HTMLElement): Promise<HTMLElement> {
   let html: string | null = null;
   const key = `page:${page}`;
 
@@ -45,7 +41,18 @@ async function loadPage(page: string, elem: HTMLElement) {
   // Fetch page content
   if (!html) {
     console.log(`${page}: fetching`);
-    html = await getPageHTML(page);
+    let retries = 0;
+    while (retries < 5) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        html = await getPageHTML(page);
+        break;
+      } catch (e) {
+        retries += 1;
+        // eslint-disable-next-line no-await-in-loop
+        await delay(1000);
+      }
+    }
 
     // Convert relative links to absolute (and proxied)
     html = html.replace(/"\/wiki/gi, '"//tgproxy.ovo.ovh/wiki');
@@ -53,15 +60,14 @@ async function loadPage(page: string, elem: HTMLElement) {
     await nextAnimationFrame();
 
     // Set as HTML content and run HTML manipulations on it
-    const div = document.createElement("div");
-    div.className = elem.className;
+    const div = elem.cloneNode(false) as HTMLDivElement;
     div.innerHTML = html;
 
     console.log(`${page}: processing`);
     processHTML(div, page);
 
     // Save result to cache
-    cache.set(key, div.outerHTML, CURRENT_VERSION).then(() => {
+    cache.set(key, div.innerHTML, CURRENT_VERSION).then(() => {
       console.log(`${page}: saved to cache`);
     });
 
@@ -69,12 +75,13 @@ async function loadPage(page: string, elem: HTMLElement) {
     elem = div;
   } else {
     // Set cached content as HTML
-    elem.outerHTML = html;
+    elem.innerHTML = html;
   }
 
   bindFunctions(elem, page);
-  console.log(`${page}: userscript applied`);
   elem.classList.remove("waiting");
+
+  return elem;
 }
 
 type TabElements = {
@@ -97,6 +104,8 @@ export default class TabManager {
 
   sections: Record<string, Section> = {};
 
+  loading: boolean;
+
   constructor(
     sectionlist: HTMLElement,
     tablist: HTMLElement,
@@ -105,6 +114,25 @@ export default class TabManager {
     this.sectionListContainer = sectionlist;
     this.tabListContainer = tablist;
     this.tabContentContainer = tabcontent;
+  }
+
+  /**
+   * Set app-wide loading state
+   * @param value is app still loading?
+   */
+  setLoading(value: boolean): void {
+    if (value) {
+      document.getElementById("app").classList.add("waiting");
+      initWaiting(this.tabContentContainer);
+      const spinnerContainer = this.tabContentContainer.querySelector(".speen");
+      spinnerContainer.appendChild(
+        document.createTextNode("Loading wiki pages")
+      );
+    } else {
+      document.getElementById("app").classList.remove("waiting");
+      const elem = this.tabContentContainer.querySelector(".speen");
+      this.tabContentContainer.removeChild(elem);
+    }
   }
 
   /**
@@ -161,7 +189,7 @@ export default class TabManager {
    * @param icon Icon to show
    * @param setActive Also set the tab as active
    */
-  openTab(
+  async openTab(
     section: string,
     page: string,
     options: {
@@ -169,7 +197,8 @@ export default class TabManager {
       active?: boolean;
       text?: string;
     }
-  ): void {
+  ): Promise<void> {
+    const { icon, active, text } = options;
     // Create tab list item
     const tabListItem = document.createElement("div");
     tabListItem.className = "tab";
@@ -182,11 +211,10 @@ export default class TabManager {
       this.setActive(section, page);
     });
     const iconElement = document.createElement("img");
-    iconElement.src = options.icon || unknown;
+    iconElement.src = icon || unknown;
     tabListItem.title = page.replace(/_/gi, " ");
     tabListItem.appendChild(iconElement);
-    const shortTitle =
-      options.text || page.substr(page.lastIndexOf("_") + 1, 4);
+    const shortTitle = text || page.substr(page.lastIndexOf("_") + 1, 4);
     tabListItem.appendChild(document.createTextNode(shortTitle));
     this.tabListContainer.appendChild(tabListItem);
 
@@ -195,9 +223,6 @@ export default class TabManager {
     tabContentItem.className = "page waiting";
     tabContentItem.dataset.tab = page;
     initWaiting(tabContentItem);
-
-    // Start loading page for new tab
-    loadPage(page, tabContentItem);
 
     this.tabContentContainer.appendChild(tabContentItem);
 
@@ -209,8 +234,15 @@ export default class TabManager {
       tabListItem.classList.add("hidden");
     }
 
+    // Start loading page for new tab
+    const elem = await loadPage(page, tabContentItem);
+    // Since element can be replaced (when loading for the first time), make sure the reference is updated
+    if (elem !== tabContentItem) {
+      this.sections[section].tabs[page].tabContentItem = elem;
+    }
+
     // If asked for, set it to active
-    if (options.active) {
+    if (active) {
       this.setActive(section, page);
     }
   }

@@ -4,12 +4,9 @@ import { findParent } from "./utils";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
-export const CURRENT_VERSION = "e700bb9c309627b944618152a7d8e936ae7a05db";
+export const CURRENT_VERSION = "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4";
 
 function chemistryFixups(root: HTMLElement) {
-  // Enable page-specific CSS rules
-  root.classList.add("bchem");
-
   // Fix inconsistencies with <p> on random parts
   // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
   root
