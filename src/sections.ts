@@ -118,7 +118,7 @@ const sections: SectionInfo[] = [
     ],
   },
   {
-    name: "Antagonists",
+    name: "Antag",
     tabs: [
       { page: "Traitor", icon: null },
       { page: "Makeshift_weapons", icon: null },
