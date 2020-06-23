@@ -40,28 +40,30 @@
         <g id="nanites">
         </g>
         <g id="aimod" transform="matrix(1.10983,0,0,1.10983,-8.78671,-12.3014)">
-            <path d="M88,108C88,105.792 86.208,104 84,104L76,104C73.792,104 72,105.792 72,108L72,116C72,118.208 73.792,120 76,120L84,120C86.208,120 88,118.208 88,116L88,108Z" style="fill:none;stroke:white;stroke-width:2.7px;"/>
-            <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
-            <g transform="matrix(1,0,0,1,5.33333,0)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <path d="M88,108C88,105.792 86.208,104 84,104L76,104C73.792,104 72,105.792 72,108L72,116C72,118.208 73.792,120 76,120L84,120C86.208,120 88,118.208 88,116L88,108Z" style="fill:none;stroke:white;stroke-width:1.8px;"/>
+            <g transform="matrix(1,0,0,0.808421,0,19.4134)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.97px;"/>
             </g>
-            <g transform="matrix(1,0,0,1,0,18.6667)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(1,0,0,0.808421,5.33333,19.4134)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.97px;"/>
             </g>
-            <g transform="matrix(1,0,0,1,5.33333,18.6667)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(1,0,0,0.701988,0,49.6599)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3.13px;"/>
             </g>
-            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,192,32)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(1,0,0,0.701988,5.33333,49.6599)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3.13px;"/>
             </g>
-            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,192,37.3333)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(6.12323e-17,1,-0.787134,4.81981e-17,170.43,32)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3px;"/>
             </g>
-            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,173.333,32)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(6.12323e-17,1,-0.787134,4.81981e-17,170.43,37.3333)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3px;"/>
             </g>
-            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,173.333,37.3333)">
-                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:2.7px;"/>
+            <g transform="matrix(6.12323e-17,1,-0.744561,4.55912e-17,146.768,32)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3.07px;"/>
+            </g>
+            <g transform="matrix(6.12323e-17,1,-0.744561,4.55912e-17,146.768,37.3333)">
+                <path d="M77.333,104L77.333,101.333" style="fill:none;stroke:white;stroke-width:3.07px;"/>
             </g>
             <path d="M76.059,115.873L76.059,110.235C76.059,109.147 76.941,108.265 78.029,108.265C78.029,108.265 78.03,108.265 78.03,108.265C79.118,108.265 80,109.147 80,110.235C80,112.473 80,115.818 80,115.818" style="fill:none;stroke:white;stroke-width:2.7px;"/>
             <path d="M83.998,115.873L83.998,108.265" style="fill:none;stroke:white;stroke-width:2.7px;"/>
@@ -71,6 +73,12 @@
             <g id="tips">
                 <path d="M104.815,98.792L100.277,96.172C98.928,95.393 97.209,95.842 96.44,97.175C95.671,98.507 96.141,100.221 97.49,101L102.028,103.619C103.377,104.398 105.096,103.949 105.865,102.617C106.634,101.284 106.164,99.571 104.815,98.792Z" style="fill:white;"/>
             </g>
+        </g>
+        <g id="races">
+        </g>
+        <g id="food">
+        </g>
+        <g id="hydro">
         </g>
     </g>
 </svg>

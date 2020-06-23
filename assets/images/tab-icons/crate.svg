@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:5;">
+    <g transform="matrix(1,0,0,1,-32,-128)">
+        <g id="unknown">
+        </g>
+        <g id="plumbing">
+        </g>
+        <g id="genetics">
+        </g>
+        <g id="surgery">
+        </g>
+        <g id="trauma">
+        </g>
+        <g id="wound">
+        </g>
+        <g id="power">
+        </g>
+        <g id="solar">
+        </g>
+        <g transform="matrix(-0.836256,-0.845147,0.836256,-0.845147,371.793,207.877)">
+            <g id="machines">
+            </g>
+        </g>
+        <g id="supermatter">
+        </g>
+        <g id="shield">
+        </g>
+        <g id="turbine">
+        </g>
+        <g id="tcomm">
+        </g>
+        <g id="atmos">
+        </g>
+        <g id="xeno">
+        </g>
+        <g id="nanites">
+        </g>
+        <g id="aimod">
+        </g>
+        <g id="tips">
+        </g>
+        <g id="races">
+        </g>
+        <g id="food">
+        </g>
+        <g id="hydro">
+        </g>
+        <g id="song">
+        </g>
+        <g id="crate">
+            <g transform="matrix(1.29531,0,0,1.30772,-12.4476,-42.5682)">
+                <rect x="37.333" y="133.333" width="18.667" height="18.667" style="fill:none;stroke:white;stroke-width:1.54px;"/>
+            </g>
+            <g transform="matrix(0.800991,0,0,0.808668,10.6204,28.63)">
+                <rect x="37.333" y="133.333" width="18.667" height="18.667" style="fill:none;stroke:white;stroke-width:2.48px;"/>
+            </g>
+            <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2px;"/>
+            <g transform="matrix(1,0,0,1,19.5212,-19.5212)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2px;"/>
+            </g>
+            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,192.116,96.1159)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2px;"/>
+            </g>
+            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,211.637,115.637)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2px;"/>
+            </g>
+            <g transform="matrix(1.38378e-16,2.25989,-2.25989,1.38378e-16,397.912,55.5305)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:0.88px;"/>
+            </g>
+            <g transform="matrix(1.38378e-16,2.25989,-2.25989,1.38378e-16,393.575,59.8678)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:0.88px;"/>
+            </g>
+            <g transform="matrix(0.564972,0.564972,-0.564972,0.564972,108.532,38.1266)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2.5px;"/>
+            </g>
+            <g transform="matrix(0.624158,0.624158,-0.624158,0.624158,124.723,21.1108)">
+                <path d="M35.91,156.205L40.568,151.548" style="fill:none;stroke:white;stroke-width:2.27px;"/>
+            </g>
+        </g>
+    </g>
+</svg>

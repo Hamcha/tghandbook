@@ -52,6 +52,18 @@ import aimod from "~/assets/images/tab-icons/aimod.svg";
 import tips from "~/assets/images/tab-icons/tips.svg";
 // @ts-expect-error: Parcel image import
 import critter from "~/assets/images/tab-icons/critter.svg";
+// @ts-expect-error: Parcel image import
+import races from "~/assets/images/tab-icons/races.svg";
+// @ts-expect-error: Parcel image import
+import food from "~/assets/images/tab-icons/food.svg";
+// @ts-expect-error: Parcel image import
+import hydro from "~/assets/images/tab-icons/hydro.svg";
+// @ts-expect-error: Parcel image import
+import song from "~/assets/images/tab-icons/song.svg";
+// @ts-expect-error: Parcel image import
+import crate from "~/assets/images/tab-icons/crate.svg";
+// @ts-expect-error: Parcel image import
+import space from "~/assets/images/tab-icons/space.svg";
 
 export interface SectionInfo {
   name: string;
@@ -147,14 +159,13 @@ const sections: SectionInfo[] = [
         icon: tips,
       },
       { page: "Critters", icon: critter },
-      { page: "Guide_to_races", icon: null },
-      { page: "Guide_to_food_and_drinks", text: "food", icon: null },
-      { page: "Guide_to_hydroponics", icon: null },
-      { page: "Songs", icon: null },
-      { page: "Supply_crates", icon: null },
-      { page: "Auxiliary_Base_Construction", text: "aux", icon: null },
-      { page: "Guide_to_wire_art", text: "wire", icon: null },
-      { page: "Guide_to_Space_Exploration", icon: null },
+      { page: "Guide_to_races", icon: races },
+      { page: "Guide_to_food_and_drinks", text: "food", icon: food },
+      { page: "Guide_to_hydroponics", icon: hydro },
+      { page: "Songs", icon: song },
+      { page: "Supply_crates", icon: crate },
+      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: null },
+      { page: "Guide_to_Space_Exploration", icon: space },
     ],
   },
 ];
