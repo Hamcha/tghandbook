@@ -32,6 +32,26 @@ import supermatter from "~/assets/images/tab-icons/supermatter.svg";
 import shield from "~/assets/images/tab-icons/shield.svg";
 // @ts-expect-error: Parcel image import
 import turbine from "~/assets/images/tab-icons/turbine.svg";
+// @ts-expect-error: Parcel image import
+import atmos from "~/assets/images/tab-icons/atmos.svg";
+// @ts-expect-error: Parcel image import
+import tcomm from "~/assets/images/tab-icons/tcomm.svg";
+// @ts-expect-error: Parcel image import
+import rnd from "~/assets/images/tab-icons/rnd.svg";
+// @ts-expect-error: Parcel image import
+import toxins from "~/assets/images/tab-icons/toxins.svg";
+// @ts-expect-error: Parcel image import
+import xeno from "~/assets/images/tab-icons/xeno.svg";
+// @ts-expect-error: Parcel image import
+import nanites from "~/assets/images/tab-icons/nanites.svg";
+// @ts-expect-error: Parcel image import
+import rules from "~/assets/images/tab-icons/rules.svg";
+// @ts-expect-error: Parcel image import
+import aimod from "~/assets/images/tab-icons/aimod.svg";
+// @ts-expect-error: Parcel image import
+import tips from "~/assets/images/tab-icons/tips.svg";
+// @ts-expect-error: Parcel image import
+import critter from "~/assets/images/tab-icons/critter.svg";
 
 export interface SectionInfo {
   name: string;
@@ -52,7 +72,6 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_chemistry", icon: chemistry },
       { page: "Guide_to_plumbing", icon: plumbing },
       { page: "Grenade", text: "nade", icon: grenade },
-      { page: "Guide_to_genetics", icon: genetics },
       { page: "Infections", text: "virus", icon: virus },
       { page: "Surgery", icon: surgery },
       { page: "Guide_to_Traumas", text: "trauma", icon: trauma },
@@ -74,20 +93,19 @@ const sections: SectionInfo[] = [
         icon: shield,
       },
       { page: "Gas_turbine", text: "GAST", icon: turbine },
-      { page: "Guide_to_Atmospherics", text: "atmos", icon: null },
-      { page: "Guide_to_Telecommunications", icon: null, text: "tcomm" },
+      { page: "Guide_to_Atmospherics", text: "atmos", icon: atmos },
+      { page: "Guide_to_Telecommunications", icon: tcomm, text: "tcomm" },
     ],
   },
   {
     name: "Science",
     tabs: [
-      { page: "Guide_to_Research_and_Development", text: "R&D", icon: null },
+      { page: "Guide_to_Research_and_Development", text: "R&D", icon: rnd },
       { page: "Guide_to_robotics", icon: null },
-      { page: "Guide_to_toxins", text: "toxin", icon: null },
-      { page: "Guide_to_xenobiology", icon: null },
-      { page: "Guide_to_genetics", icon: null },
-      { page: "Guide_to_telescience", icon: null },
-      { page: "Guide_to_Nanites", text: "nanite", icon: null },
+      { page: "Guide_to_toxins", text: "toxin", icon: toxins },
+      { page: "Guide_to_xenobiology", icon: xeno },
+      { page: "Guide_to_genetics", icon: genetics },
+      { page: "Guide_to_Nanites", text: "nanite", icon: nanites },
     ],
   },
   {
@@ -121,14 +139,14 @@ const sections: SectionInfo[] = [
   {
     name: "Other",
     tabs: [
-      { page: "Rules", text: "rules", icon: null },
-      { page: "AI_modules", text: "aimo", icon: null },
+      { page: "Rules", text: "rules", icon: rules },
+      { page: "AI_modules", text: "aimo", icon: aimod },
       {
         page: "Guide_to_Awesome_Miscellaneous_Stuff",
         text: "misc",
-        icon: null,
+        icon: tips,
       },
-      { page: "Critters", icon: null },
+      { page: "Critters", icon: critter },
       { page: "Guide_to_races", icon: null },
       { page: "Guide_to_food_and_drinks", text: "food", icon: null },
       { page: "Guide_to_hydroponics", icon: null },
