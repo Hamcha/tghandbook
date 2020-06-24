@@ -72,6 +72,10 @@ import robo from "~/assets/images/tab-icons/robo.svg";
 import security from "~/assets/images/tab-icons/security.svg";
 // @ts-expect-error: Parcel image import
 import law from "~/assets/images/tab-icons/law.svg";
+// @ts-expect-error: Parcel image import
+import sop from "~/assets/images/tab-icons/sop.svg";
+// @ts-expect-error: Parcel image import
+import trial from "~/assets/images/tab-icons/trial.svg";
 
 export interface SectionInfo {
   name: string;
@@ -133,8 +137,8 @@ const sections: SectionInfo[] = [
     tabs: [
       { page: "Guide_to_security", text: "security", icon: security },
       { page: "Space_Law", text: "space law", icon: law },
-      { page: "Standard_Operating_Procedure", text: "S.O.P.", icon: null },
-      { page: "Guide_to_trials", text: "trials", icon: null },
+      { page: "Standard_Operating_Procedure", text: "S.O.P.", icon: sop },
+      { page: "Guide_to_trials", text: "trials", icon: trial },
     ],
   },
   {
