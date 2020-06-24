@@ -96,6 +96,8 @@ interface Section {
 }
 
 export default class TabManager {
+  static instance: TabManager;
+
   sectionListContainer: HTMLElement;
 
   tabListContainer: HTMLElement;
@@ -103,6 +105,8 @@ export default class TabManager {
   tabContentContainer: HTMLElement;
 
   sections: Record<string, Section> = {};
+
+  sectionMap: Record<string, string> = {};
 
   loading: boolean;
 
@@ -114,6 +118,7 @@ export default class TabManager {
     this.sectionListContainer = sectionlist;
     this.tabListContainer = tablist;
     this.tabContentContainer = tabcontent;
+    TabManager.instance = this;
   }
 
   /**
@@ -208,7 +213,7 @@ export default class TabManager {
       if (tabListItem.classList.contains("active")) {
         return;
       }
-      this.setActive(section, page);
+      this.setActive(page);
     });
     const iconElement = document.createElement("img");
     iconElement.src = icon || unknown;
@@ -228,6 +233,7 @@ export default class TabManager {
 
     // Create tab entry
     this.sections[section].tabs[page] = { tabListItem, tabContentItem };
+    this.sectionMap[page] = section;
 
     // Hide tab if section is hidden
     if (!this.sections[section].element.classList.contains("active")) {
@@ -243,17 +249,17 @@ export default class TabManager {
 
     // If asked for, set it to active
     if (active) {
-      this.setActive(section, page);
+      this.setActive(page);
     }
   }
 
   /**
    * Set a specific page to be the active/visible one
-   * @param section Section name
    * @param page Page name
    */
-  setActive(section: string, page: string): void {
+  setActive(page: string): void {
     // Make sure tab exists (why wouldn't it?!)
+    const section = this.sectionMap[page];
     if (!(section in this.sections)) {
       throw new Error("section not found");
     }
@@ -263,9 +269,6 @@ export default class TabManager {
     }
 
     // Deactivate current active tab
-    this.sectionListContainer
-      .querySelectorAll(".active")
-      .forEach((it) => it.classList.remove("active"));
     this.tabListContainer
       .querySelectorAll(".active")
       .forEach((it) => it.classList.remove("active"));
@@ -274,7 +277,10 @@ export default class TabManager {
       .forEach((it) => it.classList.remove("active"));
 
     // If section is not shown, show it!
-    if (!this.sections[section].element.classList.contains("active")) {
+    const isSectionActive = this.sections[section].element.classList.contains(
+      "active"
+    );
+    if (!isSectionActive) {
       this.showSection(section);
     }
 

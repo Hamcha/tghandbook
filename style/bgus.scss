@@ -48,6 +48,13 @@
   margin: 0;
   padding: 5px;
   cursor: pointer;
+
+  .source {
+    color: #ccc;
+    font-size: 8pt;
+    display: block;
+    line-height: 1.4em;
+  }
 }
 #bgus_fz_searchbox li:hover {
   background-color: rgba(100, 100, 100, 0.5);

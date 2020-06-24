@@ -1,29 +1,51 @@
-interface SearchOption {
+import { nextAnimationFrame } from "./utils";
+import TabManager from "./TabManager";
+
+interface SearchEntry {
+  page: string;
+  element: HTMLElement;
+  name: string;
+  id: number;
   alignment: ScrollLogicalPosition;
 }
 
-export function searchBox(
-  el: HTMLElement[],
-  searchCandidate,
-  options: SearchOption = {
-    alignment: "center",
-  }
-): HTMLElement {
+const allEntries: SearchEntry[] = [];
+
+/**
+ * Add one or more entries to the global search database
+ * @param entries Search entries to add
+ */
+export function registerSearchEntries(entries: SearchEntry[]): void {
+  allEntries.push(...entries);
+}
+
+export function searchBox(): HTMLElement {
   // Fuzzy search box
   const resultList = document.createElement("ul");
   const searchBoxElem = document.createElement("div");
-  let selectedResult = null;
+  let selectedResult = 0;
   let results = [];
-  const jumpTo = (id: number) => {
-    el[id].scrollIntoView({
-      block: options.alignment,
+  let global = false;
+
+  const jumpTo = (entry: SearchEntry) => {
+    // If page is different jump to that
+    if (global) {
+      const currentPage = document.querySelector<HTMLElement>(".page.active")
+        .dataset.tab;
+      if (currentPage !== entry.page) {
+        TabManager.instance.setActive(entry.page);
+      }
+    }
+
+    entry.element.scrollIntoView({
+      block: entry.alignment,
       inline: "nearest",
       behavior: "auto",
     });
     document
       .querySelectorAll("table.wikitable .bgus_fz_selected")
       .forEach((sel) => sel.classList.remove("bgus_fz_selected"));
-    el[id].parentElement.classList.add("bgus_fz_selected");
+    entry.element.parentElement.classList.add("bgus_fz_selected");
   };
 
   const setSelectedResult = (i) => {
@@ -32,21 +54,39 @@ export function searchBox(
       .querySelectorAll(".selected")
       .forEach((sel) => sel.classList.remove("selected"));
     resultList.children[i].classList.add("selected");
-    jumpTo(results[i].id);
+    jumpTo(results[i]);
   };
 
-  const search = (str) => {
-    if (!str) {
+  const search = async (str: string, currentPage: string) => {
+    if (!str || str.length < 1) {
       return;
     }
+    // Check for special flags
+    let entries: SearchEntry[] = allEntries;
+    global = str[0] === ",";
+
+    // Unless we're doing a global search don't show entries for other pages
+    if (!global) {
+      entries = allEntries.filter((e) => e.page === currentPage);
+    } else {
+      // Remove prefix from string
+      str = str.substr(1);
+    }
+
+    // Re-check string lenght after prefix removal
+    if (str.length < 1) {
+      return;
+    }
+
     const combinations = str
       .split("")
-      .map((c) => (c.includes(["\\", "]", "^"]) ? `\\${c}` : c))
+      .map((c) => (["\\", "]", "^"].includes(c) ? `\\${c}` : c))
       .join("])(.*?)([");
     const regex = new RegExp(`^(.*?)([${combinations}])(.*?)$`, "i");
-    const arr = searchCandidate
-      .map((o) => {
-        o.matches = (o.str.match(regex) || [])
+    results = entries
+      .map((o) => ({
+        ...o,
+        matches: (o.name.match(regex) || [])
           .slice(1)
           .reduce((list, group, i, or) => {
             // Initialize first placeholder (always empty) and first matching "sections"
@@ -62,10 +102,9 @@ export function searchBox(
               list.push([group]);
             }
             return list;
-          }, [])
-          .map((cstr) => cstr.join(""));
-        return o;
-      })
+          }, [] as string[][])
+          .map((cstr) => cstr.join("")),
+      }))
       // Strike non-matching rows
       .filter((o) => o.matches.length > 0)
       .sort((oA, oB) => {
@@ -96,24 +135,35 @@ export function searchBox(
         // Make the search stable since ECMAScript doesn't mandate it
         return iA - iB;
       });
-    results = arr;
-    window.requestAnimationFrame(() => {
-      resultList.innerHTML = "";
-      arr.forEach(({ matches, id }) => {
-        const li = document.createElement("li");
-        li.innerHTML = matches
-          .map((c, i) => (i % 2 ? `<strong>${c}</strong>` : c))
-          .join("");
-        li.addEventListener("click", () => {
-          jumpTo(id);
-          searchBoxElem.classList.add("bgus_hidden");
-        });
-        resultList.appendChild(li);
+
+    await nextAnimationFrame();
+
+    console.log(results);
+    resultList.innerHTML = "";
+    results.forEach((elem) => {
+      const li = document.createElement("li");
+      elem.matches.forEach((match, i) => {
+        const cont = document.createElement(i % 2 ? "strong" : "span");
+        cont.appendChild(document.createTextNode(match));
+        li.appendChild(cont);
       });
-      if (results.length > 0) {
-        setSelectedResult(0);
+      if (global) {
+        const source = document.createElement("span");
+        source.className = "source";
+        source.appendChild(
+          document.createTextNode(elem.page.replace(/_/g, " "))
+        );
+        li.appendChild(source);
       }
+      li.addEventListener("click", () => {
+        jumpTo(elem);
+        searchBoxElem.classList.add("bgus_hidden");
+      });
+      resultList.appendChild(li);
     });
+    if (results.length > 0) {
+      setSelectedResult(0);
+    }
   };
 
   // Create fuzzy search box
@@ -128,7 +178,7 @@ export function searchBox(
         return;
       case 13: // Enter - Jump to first result and hide bar
         if (results.length > 0) {
-          jumpTo(results[selectedResult].id);
+          jumpTo(results[selectedResult]);
         }
         searchBoxElem.classList.add("bgus_hidden");
         return;
@@ -144,7 +194,10 @@ export function searchBox(
         return;
       default:
         if (sel.value !== oldValue) {
-          search(sel.value);
+          const currentPage = document.querySelector<HTMLElement>(
+            ".page.active"
+          );
+          search(sel.value, currentPage.dataset.tab);
           oldValue = sel.value;
         }
     }
@@ -178,4 +231,4 @@ export function searchBox(
   return searchBoxElem;
 }
 
-export default searchBox;
+export default { searchBox, registerSearchEntries };

@@ -1,6 +1,7 @@
 import TabManager from "./TabManager";
 import sections from "./sections";
 import { nextAnimationFrame } from "./utils";
+import { searchBox } from "./search";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
@@ -50,7 +51,7 @@ async function load() {
     manager.setLoading(false);
 
     // Set first page as active
-    manager.setActive("Medical", "Guide_to_chemistry");
+    manager.setActive("Guide_to_chemistry");
   });
 }
 if ("serviceWorker" in navigator) {
@@ -66,3 +67,5 @@ if ("serviceWorker" in navigator) {
 }
 
 load();
+
+document.body.appendChild(searchBox());

@@ -1,5 +1,5 @@
 import { darken, ColorFmt, lighten } from "./darkmode";
-import searchBox from "./search";
+import { registerSearchEntries } from "./search";
 import { findParent } from "./utils";
 
 // This is used for cache busting when userscript changes significantly.
@@ -301,14 +301,18 @@ function chemistryScript(root: HTMLElement) {
       "table.wikitable > tbody > tr:not(:first-child) > th"
     )
   );
-  const name = el.map((elem) =>
-    elem.querySelector(".reagent-header").textContent.trim().replace("▮", "")
+  registerSearchEntries(
+    el.map((element, id) => ({
+      page: "Guide_to_chemistry",
+      name: element
+        .querySelector(".reagent-header")
+        .textContent.trim()
+        .replace("▮", ""),
+      element,
+      alignment: "center",
+      id,
+    }))
   );
-  const box = searchBox(
-    el,
-    name.map((e, i) => ({ id: i, str: e }))
-  );
-  document.body.appendChild(box);
 
   document.body.addEventListener("keydown", (ev) => {
     if (ev.shiftKey) {
@@ -353,19 +357,21 @@ function chemistryScript(root: HTMLElement) {
   });
 }
 
-function genericScript(root: HTMLElement) {
+function genericScript(root: HTMLElement, docname: string) {
   const el = Array.from(
     root.querySelectorAll<HTMLElement>("div.mw-headline-cont[id][data-name]")
   );
-  const name = el.map((elem: HTMLDivElement) => elem.dataset.name.trim());
 
   // Init fuzzy search with headlines
-  const box = searchBox(
-    el,
-    name.map((e, i) => ({ id: i, str: e })),
-    { alignment: "start" }
+  registerSearchEntries(
+    el.map((element: HTMLDivElement, id) => ({
+      id,
+      page: docname,
+      name: element.dataset.name.trim(),
+      element,
+      alignment: "start",
+    }))
   );
-  root.appendChild(box);
 }
 
 export function bindFunctions(root: HTMLElement, docname: string): void {
@@ -374,7 +380,7 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
       chemistryScript(root);
       break;
     default:
-      genericScript(root);
+      genericScript(root, docname);
       break;
   }
 }
