@@ -69,5 +69,15 @@
                 <path d="M242.012,110.827C242.012,110.827 240.13,114.405 240,116.731" style="fill:none;stroke:white;stroke-width:2px;stroke-miterlimit:5;"/>
             </g>
         </g>
+        <g id="song">
+        </g>
+        <g id="crate">
+        </g>
+        <g id="space">
+        </g>
+        <g id="aux">
+        </g>
+        <g id="security">
+        </g>
     </g>
 </svg>

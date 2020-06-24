@@ -64,6 +64,14 @@ import song from "~/assets/images/tab-icons/song.svg";
 import crate from "~/assets/images/tab-icons/crate.svg";
 // @ts-expect-error: Parcel image import
 import space from "~/assets/images/tab-icons/space.svg";
+// @ts-expect-error: Parcel image import
+import aux from "~/assets/images/tab-icons/auxbase.svg";
+// @ts-expect-error: Parcel image import
+import robo from "~/assets/images/tab-icons/robo.svg";
+// @ts-expect-error: Parcel image import
+import security from "~/assets/images/tab-icons/security.svg";
+// @ts-expect-error: Parcel image import
+import law from "~/assets/images/tab-icons/law.svg";
 
 export interface SectionInfo {
   name: string;
@@ -113,7 +121,7 @@ const sections: SectionInfo[] = [
     name: "Science",
     tabs: [
       { page: "Guide_to_Research_and_Development", text: "R&D", icon: rnd },
-      { page: "Guide_to_robotics", icon: null },
+      { page: "Guide_to_robotics", icon: robo },
       { page: "Guide_to_toxins", text: "toxin", icon: toxins },
       { page: "Guide_to_xenobiology", icon: xeno },
       { page: "Guide_to_genetics", icon: genetics },
@@ -123,8 +131,8 @@ const sections: SectionInfo[] = [
   {
     name: "Security",
     tabs: [
-      { page: "Guide_to_security", text: "security", icon: null },
-      { page: "Space_Law", text: "space law", icon: null },
+      { page: "Guide_to_security", text: "security", icon: security },
+      { page: "Space_Law", text: "space law", icon: law },
       { page: "Standard_Operating_Procedure", text: "S.O.P.", icon: null },
       { page: "Guide_to_trials", text: "trials", icon: null },
     ],
@@ -164,7 +172,7 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_hydroponics", icon: hydro },
       { page: "Songs", icon: song },
       { page: "Supply_crates", icon: crate },
-      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: null },
+      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
       { page: "Guide_to_Space_Exploration", icon: space },
     ],
   },
