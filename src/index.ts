@@ -1,7 +1,7 @@
-import TabManager from "./TabManager";
-import sections from "./sections";
+import TabManager from "./ui/TabManager";
+import sections from "./ui/sections";
 import { nextAnimationFrame } from "./utils";
-import { searchBox } from "./search";
+import { searchBox } from "./scripts/search";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
@@ -51,7 +51,7 @@ async function load() {
     manager.setLoading(false);
 
     // Set first page as active
-    manager.setActive("Guide_to_chemistry");
+    manager.setActive("Infections");
   });
 }
 if ("serviceWorker" in navigator) {

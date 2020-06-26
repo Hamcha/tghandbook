@@ -1,5 +1,5 @@
-import { nextAnimationFrame } from "./utils";
-import TabManager from "./TabManager";
+import { nextAnimationFrame } from "../utils";
+import TabManager from "../ui/TabManager";
 
 interface SearchEntry {
   page: string;

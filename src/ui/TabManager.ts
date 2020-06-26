@@ -1,10 +1,14 @@
 // @ts-expect-error: Asset imports are handled by parcel
 import speen from "~/assets/images/speen.svg";
-import { getPageHTML } from "./wiki";
-import { processHTML, bindFunctions, CURRENT_VERSION } from "./userscript";
-import cache from "./cache";
-import { nextAnimationFrame, delay } from "./utils";
-import { TabInfo } from "./sections";
+import { getPageHTML } from "../wiki";
+import {
+  processHTML,
+  bindFunctions,
+  CURRENT_VERSION,
+  postProcessHTML,
+} from "../scripts/index";
+import cache from "../cache";
+import { nextAnimationFrame, delay } from "../utils";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
@@ -76,6 +80,8 @@ async function loadPage(page: string, elem: HTMLElement): Promise<HTMLElement> {
   } else {
     // Set cached content as HTML
     elem.innerHTML = html;
+
+    postProcessHTML(elem, page); // noop in prod, used in dev for testing candidate DOM changes
   }
 
   bindFunctions(elem, page);
