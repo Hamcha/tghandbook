@@ -185,3 +185,15 @@ body.bgus_cbox input[type="checkbox"]:checked + span[data-src] {
     content: "Addiction at ";
   }
 }
+
+.page ul,
+.page ol {
+  padding-left: 25pt;
+  li {
+    margin-top: 0.6em;
+  }
+  ul,
+  ol {
+    padding-left: 12pt;
+  }
+}
