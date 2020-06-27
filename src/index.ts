@@ -46,6 +46,11 @@ async function load() {
       icons.removeChild(icons.querySelector(`img[data-tab=${tab.page}]`));
     });
   });
+
+  // DEV: If you only need one page just comment the block above and uncomment this:
+  // manager.createSection("Medical");
+  // const promises = [manager.openTab("Medical", "Infections", {})];
+
   Promise.all(promises).then(() => {
     // Remove app-wide loading
     manager.setLoading(false);

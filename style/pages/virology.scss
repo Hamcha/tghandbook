@@ -1,14 +1,10 @@
 div[data-tab="Infections"] {
-    .disease-ext {
+    .disease-ext,
+    .symptoms-ext {
         width: 100%;
         th,
         td:first-child {
             background-color: #2f4257;
-        }
-        td:nth-child(2) {
-            width: 30vw;
-            max-width: 300px;
-            text-align: center;
         }
         .disease-name {
             font-size: 12pt;
@@ -22,7 +18,27 @@ div[data-tab="Infections"] {
             font-weight: 300;
             line-height: 1.2em;
             word-spacing: -0.1em;
+            margin: 5pt 0;
         }
+
+        .bgus_fz_selected {
+            background: $nanotrasen !important;
+            th,
+            td {
+                border-top: 2px solid lighten($nanotrasen, 20%);
+                border-bottom: 2px solid lighten($nanotrasen, 15%);
+            }
+            th {
+                background: lighten($nanotrasen, 5%) !important;
+            }
+            div.tooltiptext {
+                border-color: lighten($nanotrasen, 20%);
+                background: darken($nanotrasen, 10%);
+            }
+        }
+    }
+
+    .disease-ext {
         .vector {
             font-size: 9pt;
             &:before {
@@ -44,27 +60,48 @@ div[data-tab="Infections"] {
                 font-weight: bold;
             }
         }
-        p {
-            margin: 5pt 0;
+        .description {
+            margin: 10pt 0;
+            line-height: 1.5em;
+        }
+        td:nth-child(2) {
+            width: 30vw;
+            max-width: 300px;
+            text-align: center;
+        }
+    }
+
+    .symptoms-ext {
+        .level {
+            font-size: 9pt;
+            font-weight: bold;
+            &:before {
+                content: "Level ";
+            }
         }
         .description {
             margin: 10pt 0;
             line-height: 1.5em;
         }
-
-        .bgus_fz_selected {
-            background: $nanotrasen !important;
-            th,
-            td {
-                border-top: 2px solid lighten($nanotrasen, 20%);
-                border-bottom: 2px solid lighten($nanotrasen, 15%);
-            }
+        .stats {
+            width: 100%;
+            border: 2px solid $nanotrasen;
             th {
-                background: lighten($nanotrasen, 5%) !important;
+                text-align: right;
+                padding: 3px 6px;
             }
-            div.tooltiptext {
-                border-color: lighten($nanotrasen, 20%);
-                background: darken($nanotrasen, 10%);
+            td {
+                padding: 3px 6px;
+                text-align: center;
+            }
+        }
+        .thresholds {
+            white-space: nowrap;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            span {
+                cursor: help;
             }
         }
     }

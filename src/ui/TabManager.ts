@@ -4,7 +4,7 @@ import { getPageHTML } from "../wiki";
 import {
   processHTML,
   bindFunctions,
-  CURRENT_VERSION,
+  PAGE_VERSIONS,
   postProcessHTML,
 } from "../scripts/index";
 import cache from "../cache";
@@ -31,7 +31,10 @@ async function loadPage(page: string, elem: HTMLElement): Promise<HTMLElement> {
   try {
     const cachedPage = await cache.get<string>(key);
     if (cachedPage) {
-      if (cachedPage.version === CURRENT_VERSION) {
+      // Get expected version
+      const expectedVersion =
+        page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
+      if (cachedPage.version === expectedVersion) {
         console.log(`${page}: found cached entry`);
         html = cachedPage.value;
       } else {
@@ -70,8 +73,12 @@ async function loadPage(page: string, elem: HTMLElement): Promise<HTMLElement> {
     console.log(`${page}: processing`);
     processHTML(div, page);
 
+    // Get version to set
+    const version =
+      page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
+
     // Save result to cache
-    cache.set(key, div.innerHTML, CURRENT_VERSION).then(() => {
+    cache.set(key, div.innerHTML, version).then(() => {
       console.log(`${page}: saved to cache`);
     });
 

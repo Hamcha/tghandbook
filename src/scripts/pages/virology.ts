@@ -27,8 +27,45 @@ export function processVirology(root: HTMLElement): void {
   const symptomsTable = root.querySelector<HTMLElement>(
     "#Symptoms_Table .wikitable"
   );
-  const symptoms = parseTable(symptomsTable);
-  //symptomsTable.replaceWith(document.createElement("span"));
+  const symptoms = parseTable(symptomsTable)
+    .sort(
+      (a, b) =>
+        parseInt(a["Level"].textContent, 10) -
+        parseInt(b["Level"].textContent, 10)
+    )
+    .map((row) => {
+      const symptomBlock = document.createElement("td");
+      symptomBlock.innerHTML = `
+    <div class="disease-name">${row["Symptom"].innerHTML}</div>
+    <p class="level">${row["Level"].innerHTML}</p>
+    <p class="chemical">${row["Required Chemical"].innerHTML}</p>
+    <p class="description">${row["Effect"].innerHTML}</p>
+    `;
+      const symptomStats = document.createElement("td");
+      symptomStats.innerHTML = `
+    <table class="stats">
+      <tr><th>Stealth</th><td>${row["Stealth"].innerHTML}</td></tr>
+      <tr><th>Resistance</th><td>${row["Resistance"].innerHTML}</td></tr>
+      <tr><th>Stage speed</th><td>${row["Stage speed"].innerHTML}</td></tr>
+      <tr><th>Transmission</th><td>${row["Transmission"].innerHTML}</td></tr>
+    </table>
+    `;
+      const thresholds = row["Threshold (hover mouse over for details)"];
+      thresholds.innerHTML = `<ul class="thresholds"><li>${thresholds.innerHTML
+        .split(",")
+        .join("</li><li>")}</li></ul>`;
+      return {
+        Symptom: symptomBlock,
+        Stats: symptomStats,
+        Thresholds: thresholds,
+      };
+    });
+  const symptomsBetterTable = makeTable(
+    ["Symptom", "Stats", "Thresholds"],
+    symptoms
+  );
+  symptomsBetterTable.className = "symptoms-ext wikitable";
+  symptomsTable.replaceWith(symptomsBetterTable);
 }
 
 export function virologyScript(root: HTMLElement): void {

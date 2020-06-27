@@ -5,7 +5,10 @@ import { processGlobal } from "./pages/global";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
-export const CURRENT_VERSION = "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4";
+export const PAGE_VERSIONS = {
+  Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
+  $DEFAULT: "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4",
+};
 
 const MAX_WIDTH = 440;
 
@@ -15,6 +18,9 @@ export function processHTML(root: HTMLElement, docname: string): void {
   switch (docname) {
     case "Guide_to_chemistry":
       processChemistry(root);
+      break;
+    case "Infections":
+      processVirology(root);
       break;
     default:
   }
@@ -39,9 +45,6 @@ export function postProcessHTML(root: HTMLElement, docname: string): void {
   });
 
   switch (docname) {
-    case "Infections":
-      processVirology(root);
-      break;
     default:
   }
 }
@@ -63,7 +66,7 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
 }
 
 export default {
-  CURRENT_VERSION,
+  PAGE_VERSIONS,
   postProcessHTML,
   processHTML,
   bindFunctions,
