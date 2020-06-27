@@ -1,0 +1,31 @@
+.bgus_hidden {
+  display: none !important;
+}
+.bgus_nobreak {
+  white-space: nowrap;
+}
+
+.page ul,
+.page ol {
+  padding-left: 25pt;
+  li {
+    margin-top: 0.6em;
+  }
+  ul,
+  ol {
+    padding-left: 12pt;
+  }
+}
+
+.disease-ext {
+  p {
+    font-size: 8pt;
+    font-weight: 300;
+    line-height: 1.4em;
+    word-spacing: -0.1em;
+  }
+}
+
+.thumbinner {
+  width: 100% !important;
+}
