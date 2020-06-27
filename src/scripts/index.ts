@@ -1,5 +1,5 @@
 import { chemistryScript, processChemistry } from "./pages/chemistry";
-import { virologyScript } from "./pages/virology";
+import { processVirology, virologyScript } from "./pages/virology";
 import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
 
@@ -40,7 +40,7 @@ export function postProcessHTML(root: HTMLElement, docname: string): void {
 
   switch (docname) {
     case "Infections":
-      virologyScript(root);
+      processVirology(root);
       break;
     default:
   }
@@ -49,7 +49,12 @@ export function postProcessHTML(root: HTMLElement, docname: string): void {
 export function bindFunctions(root: HTMLElement, docname: string): void {
   switch (docname) {
     case "Guide_to_chemistry":
+      genericScript(root, docname);
       chemistryScript(root);
+      break;
+    case "Infections":
+      genericScript(root, docname);
+      virologyScript(root);
       break;
     default:
       genericScript(root, docname);

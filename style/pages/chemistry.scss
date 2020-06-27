@@ -1,127 +1,136 @@
-.bgus_twistie:after {
-    color: red;
-    display: inline-block;
-    font-weight: bold;
-    margin-left: 0.2em;
-    content: "⯆";
-}
-.bgus_collapsed > .bgus_twistie:after {
-    content: "⯈";
-}
-div.tooltiptext {
-    display: none;
-    border: 1px solid #384e68;
-    background: linear-gradient(to bottom, darken(#384e68, 20%), darken(#384e68, 25%));
-}
-span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
-    z-index: unset;
-    visibility: inherit;
-    display: block;
-    opacity: 1;
-    position: relative;
-    width: auto;
-    border-left-width: 3px;
-    margin-left: 5px;
-    margin-top: 5px;
-    font-size: 8pt;
-    padding: 5px 8px;
-    line-height: 10pt;
+div[data-tab="Guide_to_chemistry"] {
+    .bgus_twistie:after {
+        color: red;
+        display: inline-block;
+        font-weight: bold;
+        margin-left: 0.2em;
+        content: "⯆";
+    }
+
+    .bgus_collapsed > .bgus_twistie:after {
+        content: "⯈";
+    }
 
     div.tooltiptext {
-        margin-left: -5px;
+        display: none;
+        border: 1px solid #384e68;
+        background: linear-gradient(to bottom, darken(#384e68, 20%), darken(#384e68, 25%));
     }
-}
-div[data-tab="Guide_to_chemistry"] {
-    table.wikitable > tbody > tr > td:nth-child(2) {
-        width: 45%;
-        padding: 10px;
+
+    span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
+        z-index: unset;
+        visibility: inherit;
+        display: block;
+        opacity: 1;
+        position: relative;
+        width: auto;
+        border-left-width: 3px;
+        margin-left: 5px;
+        margin-top: 5px;
+        font-size: 8pt;
+        padding: 5px 8px;
+        line-height: 10pt;
+
+        div.tooltiptext {
+            margin-left: -5px;
+        }
     }
+
     table.wikitable {
         border: 0 !important;
+
         .table-head {
             text-align: center;
         }
+
         th {
             background-color: darken($nanotrasen, 5%) !important;
         }
-    }
-    .bgus_fz_selected {
-        background: $nanotrasen !important;
-        th,
-        td {
-            border-top: 2px solid lighten($nanotrasen, 20%);
-            border-bottom: 2px solid lighten($nanotrasen, 15%);
-        }
-        th {
-            background: lighten($nanotrasen, 5%) !important;
-        }
-        div.tooltiptext {
-            border-color: lighten($nanotrasen, 20%);
-            background: darken($nanotrasen, 10%);
-        }
-    }
-}
-body.bgus_cbox {
-    input[type="checkbox"] + span[data-src]:before {
-        display: inline-block;
-        width: 1.5em;
-        content: "[_]";
-    }
-    input[type="checkbox"]:checked + span[data-src]:before {
-        content: "[X]";
-    }
-    input[type="checkbox"]:checked + span[data-src] {
-        text-decoration: line-through;
-    }
-    input[type="checkbox"] + span[data-src] {
-        cursor: pointer;
-    }
-    input[type="checkbox"] + span[data-src]:before,
-    input[type="checkbox"] + span[data-src] {
-        color: orange;
-        font-weight: bold;
-    }
-    input[type="checkbox"]:checked + span[data-src]:before,
-    input[type="checkbox"]:checked + span[data-src] {
-        color: green;
-    }
-}
 
-.reagent-ext {
-    .reagent-header {
-        font-size: 12pt;
-        text-align: left;
-        padding: 10pt;
-        padding-bottom: 0;
-        span:last-child {
-            margin-left: 0.5em;
+        & > tbody > tr > td:nth-child(2) {
+            width: 45%;
+            padding: 10px;
+        }
+
+        .bgus_fz_selected {
+            background: $nanotrasen !important;
+            th,
+            td {
+                border-top: 2px solid lighten($nanotrasen, 20%);
+                border-bottom: 2px solid lighten($nanotrasen, 15%);
+            }
+            th {
+                background: lighten($nanotrasen, 5%) !important;
+            }
+            div.tooltiptext {
+                border-color: lighten($nanotrasen, 20%);
+                background: darken($nanotrasen, 10%);
+            }
         }
     }
-    p {
-        font-size: 8pt;
-        font-weight: 300;
-        line-height: 1.4em;
-        word-spacing: -0.1em;
+
+    body.bgus_cbox {
+        input[type="checkbox"] + span[data-src]:before {
+            display: inline-block;
+            width: 1.5em;
+            content: "[_]";
+        }
+        input[type="checkbox"]:checked + span[data-src]:before {
+            content: "[X]";
+        }
+        input[type="checkbox"]:checked + span[data-src] {
+            text-decoration: line-through;
+        }
+        input[type="checkbox"] + span[data-src] {
+            cursor: pointer;
+        }
+        input[type="checkbox"] + span[data-src]:before,
+        input[type="checkbox"] + span[data-src] {
+            color: orange;
+            font-weight: bold;
+        }
+        input[type="checkbox"]:checked + span[data-src]:before,
+        input[type="checkbox"]:checked + span[data-src] {
+            color: green;
+        }
     }
-    .treatment {
-        font-size: 10pt;
-    }
-    .metabolism:before {
-        font-size: 9pt;
-        content: "Metabolism rate: ";
-        font-weight: bold;
-    }
-    .overdose,
-    .addiction {
-        font-size: 9pt;
-        font-weight: bold;
-    }
-    .overdose:before {
-        color: #ffae68;
-        content: "Overdose at ";
-    }
-    .addiction:before {
-        color: #ffdf97;
-        content: "Addiction at ";
+
+    .reagent-ext {
+        .reagent-header {
+            font-size: 12pt;
+            text-align: left;
+            padding: 10pt;
+            padding-bottom: 0;
+            span:last-child {
+                margin-left: 0.5em;
+            }
+        }
+        p {
+            font-size: 8pt;
+            font-weight: 300;
+            line-height: 1.4em;
+            word-spacing: -0.1em;
+        }
+        .treatment {
+            font-size: 10pt;
+        }
+        .metabolism:before {
+            font-size: 9pt;
+            content: "Metabolism rate: ";
+            font-weight: bold;
+        }
+        .overdose,
+        .addiction {
+            font-size: 9pt;
+            font-weight: bold;
+        }
+        .overdose:before {
+            color: #ffae68;
+            content: "Overdose at ";
+        }
+        .addiction:before {
+            color: #ffdf97;
+            content: "Addiction at ";
+        }
     }
 }

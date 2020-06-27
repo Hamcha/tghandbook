@@ -1,0 +1,71 @@
+div[data-tab="Infections"] {
+    .disease-ext {
+        width: 100%;
+        th,
+        td:first-child {
+            background-color: #2f4257;
+        }
+        td:nth-child(2) {
+            width: 30vw;
+            max-width: 300px;
+            text-align: center;
+        }
+        .disease-name {
+            font-size: 12pt;
+            text-align: left;
+            padding: 10pt;
+            padding-bottom: 0;
+            margin-bottom: 10pt;
+        }
+        p {
+            font-size: 8pt;
+            font-weight: 300;
+            line-height: 1.2em;
+            word-spacing: -0.1em;
+        }
+        .vector {
+            font-size: 9pt;
+            &:before {
+                content: "Vector: ";
+                font-weight: bold;
+            }
+        }
+        .source {
+            font-size: 9pt;
+            &:before {
+                content: "Source: ";
+                font-weight: bold;
+            }
+        }
+        .spread {
+            font-size: 9pt;
+            &:before {
+                content: "Spread: ";
+                font-weight: bold;
+            }
+        }
+        p {
+            margin: 5pt 0;
+        }
+        .description {
+            margin: 10pt 0;
+            line-height: 1.5em;
+        }
+
+        .bgus_fz_selected {
+            background: $nanotrasen !important;
+            th,
+            td {
+                border-top: 2px solid lighten($nanotrasen, 20%);
+                border-bottom: 2px solid lighten($nanotrasen, 15%);
+            }
+            th {
+                background: lighten($nanotrasen, 5%) !important;
+            }
+            div.tooltiptext {
+                border-color: lighten($nanotrasen, 20%);
+                background: darken($nanotrasen, 10%);
+            }
+        }
+    }
+}

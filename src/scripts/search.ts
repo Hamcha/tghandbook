@@ -43,9 +43,9 @@ export function searchBox(): HTMLElement {
       behavior: "auto",
     });
     document
-      .querySelectorAll("table.wikitable .bgus_fz_selected")
+      .querySelectorAll(".bgus_fz_selected")
       .forEach((sel) => sel.classList.remove("bgus_fz_selected"));
-    entry.element.parentElement.classList.add("bgus_fz_selected");
+    entry.element.classList.add("bgus_fz_selected");
   };
 
   const setSelectedResult = (i) => {

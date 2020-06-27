@@ -184,14 +184,14 @@ export function chemistryScript(root: HTMLElement): void {
   // Init fuzzy search with elements
   const el = Array.from(
     root.querySelectorAll<HTMLElement>(
-      "table.wikitable > tbody > tr:not(:first-child) > th"
+      "table.wikitable > tbody > tr:not(:first-child)"
     )
   );
   registerSearchEntries(
     el.map((element, id) => ({
       page: "Guide_to_chemistry",
       name: element
-        .querySelector(".reagent-header")
+        .querySelector("th .reagent-header")
         .textContent.trim()
         .replace("▮", ""),
       element,

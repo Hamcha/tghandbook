@@ -20,6 +20,7 @@ module.exports = {
     "no-alert": "off",
     "no-console": "off",
     "func-names": "off",
+    "dot-notation": ["error", { allowPattern: "^[A-Z][a-z]+$" }],
     "@typescript-eslint/ban-ts-comment": [
       "error",
       {
