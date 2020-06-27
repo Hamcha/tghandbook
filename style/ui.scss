@@ -89,7 +89,7 @@ body {
         //visibility: hidden;
         will-change: display;
         display: none;
-        overflow-y: scroll;
+        overflow-y: auto;
         grid-row: 1;
         grid-column: 1;
         &.active {

@@ -34,8 +34,10 @@ async function load() {
   );
   spinnerContainer.appendChild(icons);
 
-  const promises = sections.flatMap((section) => {
+  const promises = sections.flatMap(async (section) => {
     manager.createSection(section.name);
+    return null;
+    /*
     return section.tabs.map(async (tab) => {
       // Load page
       await manager.openTab(section.name, tab.page, {
@@ -45,8 +47,10 @@ async function load() {
       // Remove icon from loading
       icons.removeChild(icons.querySelector(`img[data-tab=${tab.page}]`));
     });
+    */
   });
 
+  manager.showSection("Medical");
   // DEV: If you only need one page just comment the block above and uncomment this:
   // manager.createSection("Medical");
   // const promises = [manager.openTab("Medical", "Infections", {})];
@@ -54,9 +58,6 @@ async function load() {
   Promise.all(promises).then(() => {
     // Remove app-wide loading
     manager.setLoading(false);
-
-    // Set first page as active
-    manager.setActive("Infections");
   });
 }
 if ("serviceWorker" in navigator) {
