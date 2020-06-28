@@ -2,6 +2,7 @@ import { chemistryScript, processChemistry } from "./pages/chemistry";
 import { processVirology, virologyScript } from "./pages/virology";
 import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
+import { welcomeScript } from "./pages/welcome";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
@@ -58,6 +59,9 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
     case "Infections":
       genericScript(root, docname);
       virologyScript(root);
+      break;
+    case "$Welcome":
+      welcomeScript(root);
       break;
     default:
       genericScript(root, docname);

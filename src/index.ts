@@ -5,6 +5,7 @@ import { searchBox } from "./scripts/search";
 
 // @ts-expect-error: Parcel image import
 import unknown from "~/assets/images/tab-icons/unknown.svg";
+import { bindFunctions } from "./scripts/index";
 
 async function load() {
   const sectionListContainer = document.getElementById("section-list");
@@ -36,8 +37,7 @@ async function load() {
 
   const promises = sections.flatMap(async (section) => {
     manager.createSection(section.name);
-    return null;
-    /*
+
     return section.tabs.map(async (tab) => {
       // Load page
       await manager.openTab(section.name, tab.page, {
@@ -47,7 +47,6 @@ async function load() {
       // Remove icon from loading
       icons.removeChild(icons.querySelector(`img[data-tab=${tab.page}]`));
     });
-    */
   });
 
   manager.showSection("Medical");
@@ -55,9 +54,14 @@ async function load() {
   // manager.createSection("Medical");
   // const promises = [manager.openTab("Medical", "Infections", {})];
 
+  const welcome = document.getElementById("Welcome");
+  bindFunctions(welcome, "$Welcome");
+
   Promise.all(promises).then(() => {
     // Remove app-wide loading
     manager.setLoading(false);
+
+    welcome.classList.add("active");
   });
 }
 if ("serviceWorker" in navigator) {
