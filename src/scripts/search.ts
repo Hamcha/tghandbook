@@ -63,7 +63,7 @@ export function searchBox(): HTMLElement {
     }
     // Check for special flags
     let entries: SearchEntry[] = allEntries;
-    global = str[0] === ",";
+    global = str[0] === "@";
 
     // Unless we're doing a global search don't show entries for other pages
     if (!global) {
