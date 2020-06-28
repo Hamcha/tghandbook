@@ -70,11 +70,25 @@ export function processVirology(root: HTMLElement): void {
 
 export function virologyScript(root: HTMLElement): void {
   // Init fuzzy search with elements
-  const el = Array.from(
+  const diseases = Array.from(
     root.querySelectorAll<HTMLElement>(".disease-ext tr:not(:first-child)")
   );
   registerSearchEntries(
-    el.map((element, id) => ({
+    diseases.map((element, id) => ({
+      page: "Infections",
+      name: element.querySelector(".disease-name").textContent.trim(),
+      element,
+      alignment: "center",
+      id,
+    }))
+  );
+  const symptoms = Array.from(
+    root.querySelectorAll<HTMLElement>(
+      ".symptoms-ext > tbody > tr:not(:first-child)"
+    )
+  );
+  registerSearchEntries(
+    symptoms.map((element, id) => ({
       page: "Infections",
       name: element.querySelector(".disease-name").textContent.trim(),
       element,
