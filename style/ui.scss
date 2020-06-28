@@ -88,13 +88,14 @@ body {
     .page {
         //visibility: hidden;
         will-change: display;
-        display: none;
+        &:not(.active) {
+            display: none;
+        }
         overflow-y: auto;
         grid-row: 1;
         grid-column: 1;
         &.active {
             //visibility: visible;
-            display: inherit;
             &.waiting {
                 user-select: none;
                 position: fixed;
