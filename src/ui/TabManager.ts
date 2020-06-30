@@ -23,26 +23,32 @@ function initWaiting(elem: HTMLElement) {
   elem.appendChild(spinnerContainer);
 }
 
-async function loadPage(page: string, elem: HTMLElement): Promise<HTMLElement> {
+async function loadPage(
+  page: string,
+  elem: HTMLElement,
+  useCache: boolean
+): Promise<HTMLElement> {
   let html: string | null = null;
   const key = `page:${page}`;
 
   // Check cache for pre-processed page
-  try {
-    const cachedPage = await cache.get<string>(key);
-    if (cachedPage) {
-      // Get expected version
-      const expectedVersion =
-        page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
-      if (cachedPage.version === expectedVersion) {
-        console.log(`${page}: found cached entry`);
-        html = cachedPage.value;
-      } else {
-        console.log(`${page}: found outdated cache entry`);
+  if (useCache) {
+    try {
+      const cachedPage = await cache.get<string>(key);
+      if (cachedPage) {
+        // Get expected version
+        const expectedVersion =
+          page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
+        if (cachedPage.version === expectedVersion) {
+          console.log(`${page}: found cached entry`);
+          html = cachedPage.value;
+        } else {
+          console.log(`${page}: found outdated cache entry`);
+        }
       }
+    } catch (e) {
+      console.log(`${page}: failed to retrieve cache entry:`, e);
     }
-  } catch (e) {
-    console.log(`${page}: failed to retrieve cache entry:`, e);
   }
 
   // Fetch page content
@@ -121,7 +127,9 @@ export default class TabManager {
 
   sectionMap: Record<string, string> = {};
 
-  loading: boolean;
+  loading = false;
+
+  cacheEnabled = true;
 
   constructor(
     sectionlist: HTMLElement,
@@ -254,7 +262,7 @@ export default class TabManager {
     }
 
     // Start loading page for new tab
-    const elem = await loadPage(page, tabContentItem);
+    const elem = await loadPage(page, tabContentItem, this.cacheEnabled);
     // Since element can be replaced (when loading for the first time), make sure the reference is updated
     if (elem !== tabContentItem) {
       this.sections[section].tabs[page].tabContentItem = elem;

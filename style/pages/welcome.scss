@@ -36,12 +36,6 @@
         transition: all 200ms;
     }
 
-    .maxw {
-        margin: 0 auto;
-        max-width: 960px;
-        text-align: left;
-    }
-
     h3 {
         font-size: 15pt;
     }
@@ -52,6 +46,9 @@
         padding-bottom: 0;
         position: relative;
         z-index: 2;
+        &:before {
+            display: none;
+        }
     }
 
     code {

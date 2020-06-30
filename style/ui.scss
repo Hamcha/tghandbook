@@ -84,14 +84,13 @@ body {
     flex: 1;
     z-index: 1;
     display: grid;
-    overflow: hidden;
+    overflow: auto;
     .page {
         //visibility: hidden;
         will-change: display;
         &:not(.active) {
             display: none;
         }
-        overflow-y: auto;
         grid-row: 1;
         grid-column: 1;
         &.active {
@@ -108,35 +107,6 @@ body {
                 flex-direction: column;
                 height: 100%;
             }
-        }
-
-        h1.pageheader {
-            margin-top: 0;
-            padding: 15pt 10pt;
-        }
-
-        p,
-        h2,
-        h3,
-        h4 {
-            padding-left: 10pt;
-            padding-right: 10pt;
-        }
-        a[href] {
-            color: white;
-        }
-        h1,
-        h2,
-        h3 {
-            position: sticky;
-            top: 0;
-            background: $nanotrasen;
-            padding: 10pt;
-            z-index: 999;
-        }
-        .mw-headline {
-            display: flex;
-            align-items: center;
         }
     }
 }

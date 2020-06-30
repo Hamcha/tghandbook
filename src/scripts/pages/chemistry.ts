@@ -82,11 +82,11 @@ export function processChemistry(root: HTMLElement): void {
         return;
       }
       const rows = Array.from(row.querySelectorAll("td")).slice(1);
-      let treatment = null;
-      let desc = null;
-      let metabolism = null;
-      let overdose = null;
-      let addiction = null;
+      let treatment: HTMLTableCellElement = null;
+      let desc: HTMLTableCellElement = null;
+      let metabolism: HTMLTableCellElement = null;
+      let overdose: HTMLTableCellElement = null;
+      let addiction: HTMLTableCellElement = null;
       // Handle special cases
       switch (section) {
         case "Components":
