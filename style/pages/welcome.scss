@@ -70,4 +70,14 @@
       margin: 10px;
     }
   }
+
+  .action_buttons {
+    padding: 10pt;
+    text-align: center;
+
+    button {
+      font-size: 12pt;
+      padding: 10pt 12pt;
+    }
+  }
 }

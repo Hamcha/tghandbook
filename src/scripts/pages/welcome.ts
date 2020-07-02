@@ -15,16 +15,22 @@ function expandPage(root: HTMLElement) {
 }
 
 export function welcomeScript(root: HTMLElement): void {
-  const expandLink = document.getElementById("welcome_expand");
-  expandLink.addEventListener("click", async () => {
-    expandPage(root);
-    const featureDiv = root.querySelector<HTMLDivElement>(".features");
-    await nextAnimationFrame();
-    featureDiv.scrollIntoView({
-      block: "start",
-      inline: "nearest",
-      behavior: "smooth",
+  const buttonContainer = root.querySelector<HTMLElement>(".action_buttons");
+  root.querySelectorAll<HTMLDivElement>("div[data-name]").forEach((sec) => {
+    const { name } = sec.dataset;
+    const button = document.createElement("button");
+    button.className = "pretty-button";
+    button.appendChild(document.createTextNode(name));
+    button.addEventListener("click", async () => {
+      expandPage(root);
+      await nextAnimationFrame();
+      sec.scrollIntoView({
+        block: "start",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     });
+    buttonContainer.appendChild(button);
   });
 }
 

@@ -223,3 +223,18 @@ noscript {
     max-width: 32px;
   }
 }
+
+.pretty-button {
+  font-family: "Iosevka Aile Web", sans-serif;
+  background-color: darken($nanotrasen, 10%);
+  border: 1px solid lighten($nanotrasen, 30%);
+  color: white;
+  padding: 6pt 10pt;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 100ms;
+  &:hover {
+    background-color: $nanotrasen;
+    border: 1px solid lighten($nanotrasen, 50%);
+  }
+}
