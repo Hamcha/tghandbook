@@ -35,7 +35,7 @@ async function load() {
   );
   spinnerContainer.appendChild(icons);
 
-  const promises = sections.flatMap(async (section) => {
+  const promises = sections.flatMap((section) => {
     manager.createSection(section.name);
 
     return section.tabs.map(async (tab) => {
@@ -60,7 +60,6 @@ async function load() {
   Promise.all(promises).then(() => {
     // Remove app-wide loading
     manager.setLoading(false);
-
     welcome.classList.add("active");
   });
 }
