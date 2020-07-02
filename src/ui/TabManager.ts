@@ -31,6 +31,9 @@ async function loadPage(
   let html: string | null = null;
   const key = `page:${page}`;
 
+  const wrapper = document.createElement("div");
+  wrapper.className = "wrapper";
+
   // Check cache for pre-processed page
   if (useCache) {
     try {
@@ -73,30 +76,27 @@ async function loadPage(
     await nextAnimationFrame();
 
     // Set as HTML content and run HTML manipulations on it
-    const div = elem.cloneNode(false) as HTMLDivElement;
-    div.innerHTML = html;
+    wrapper.innerHTML = html;
 
     console.log(`${page}: processing`);
-    processHTML(div, page);
+    processHTML(wrapper, page);
 
     // Get version to set
     const version =
       page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
 
     // Save result to cache
-    cache.set(key, div.innerHTML, version).then(() => {
+    cache.set(key, wrapper.innerHTML, version).then(() => {
       console.log(`${page}: saved to cache`);
     });
-
-    elem.replaceWith(div);
-    elem = div;
   } else {
     // Set cached content as HTML
-    elem.innerHTML = html;
+    wrapper.innerHTML = html;
 
     postProcessHTML(elem, page); // noop in prod, used in dev for testing candidate DOM changes
   }
 
+  elem.innerHTML = wrapper.outerHTML;
   bindFunctions(elem, page);
   elem.classList.remove("waiting");
 

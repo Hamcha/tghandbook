@@ -34,9 +34,6 @@ $max-width: 960px;
 }
 
 .page {
-  max-width: $max-width;
-  margin: 0 auto;
-
   h1.pageheader {
     margin-top: 0;
     padding: 15pt 10pt;
@@ -77,4 +74,9 @@ $max-width: 960px;
     display: flex;
     align-items: center;
   }
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: $max-width;
 }
