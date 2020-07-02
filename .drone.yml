@@ -145,4 +145,4 @@ volumes:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
 ---
 kind: signature
-hmac: de6248685716ee52a8de5686a13b1ce209a84046fb278e20115738516ee7335c
+hmac: 55dfd5c47c79e51394c5cdfaa9b98a6f6acd84e751e92964c202ac19b46c0373
