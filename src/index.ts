@@ -75,6 +75,13 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+// Start loading pages
 load();
 
+// Add search box
 document.body.appendChild(searchBox());
+
+// Add revision info
+document
+  .getElementById("tgh-version")
+  .appendChild(document.createTextNode(process.env.REVISION || "unknown"));

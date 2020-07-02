@@ -1,68 +1,73 @@
 #Welcome {
-    display: flex;
-    flex-direction: column;
-    &.center {
-        align-items: center;
-        justify-content: center;
-    }
-    &:not(.center) {
-        header {
-            margin-top: 20px;
-        }
-    }
-    font-size: 12pt;
-    line-height: 1.4em;
+  display: flex;
+  flex-direction: column;
+  &.center {
+    align-items: center;
+    justify-content: center;
+  }
+  &:not(.center) {
     header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 20pt;
-        .icon {
-            max-width: 25vw;
-            width: 200px;
-            margin-right: 20px;
-        }
-        .type {
-            max-width: 50vw;
-            width: 400px;
-        }
+      margin-top: 20px;
     }
+  }
+  font-size: 12pt;
+  line-height: 1.4em;
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 20pt;
+    .icon {
+      max-width: 25vw;
+      width: 200px;
+      margin-right: 20px;
+    }
+    .type {
+      max-width: 50vw;
+      width: 400px;
+    }
+  }
 
-    .features {
-        width: 100%;
-        opacity: 0;
-        display: none;
-        transition: all 200ms;
-    }
+  .hidden {
+    width: 100%;
+    opacity: 0;
+    display: none;
+    transition: all 200ms;
+  }
 
-    h3 {
-        font-size: 15pt;
-    }
+  h1,
+  h2 {
+    margin-top: 2em;
+  }
 
-    h3.nobg {
-        background: transparent;
-        margin-bottom: 0;
-        padding-bottom: 0;
-        position: relative;
-        z-index: 2;
-        &:before {
-            display: none;
-        }
-    }
+  h3 {
+    font-size: 15pt;
+  }
 
-    code {
-        display: inline-block;
-        background-color: #222;
-        border-radius: 3px;
-        padding: 2px 5px;
+  h3.nobg {
+    background: transparent;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    position: relative;
+    z-index: 2;
+    &:before {
+      display: none;
     }
+  }
 
-    .images {
-        display: flex;
-        flex-wrap: wrap;
-        img {
-            margin: 10px;
-        }
+  code {
+    display: inline-block;
+    background-color: #222;
+    border-radius: 3px;
+    padding: 2px 5px;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    img {
+      margin: 10px;
     }
+  }
 }

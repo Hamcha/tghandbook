@@ -49,7 +49,7 @@
       <nav id="section-list"></nav>
       <nav id="tab-list"></nav>
       <section id="tabs">
-        <div class="page center" id="Welcome" data-tab="$Welcome">
+        <div class="page special center" id="Welcome" data-tab="$Welcome">
           <div class="wrapper">
             <header>
               <img class="icon" src="assets/images/outline.svg" />
@@ -72,13 +72,11 @@
                   are not as polished as they should be.
                 </li>
               </ul>
-              <p>
-                Click any guide in the top menu to open it or
-                <a href="#" id="welcome_expand">click here</a> to learn about
-                some of the extra features packed in.
-              </p>
+              <div class="action_buttons">
+                <button id="welcome_expand">Extra features</button>
+              </div>
             </div>
-            <div class="features">
+            <div class="features hidden">
               <h2>
                 Extra Features
               </h2>
@@ -122,6 +120,24 @@
                   sense.
                 </p>
               </div>
+            </div>
+            <div class="credits hidden">
+              <h2>
+                Other infos
+              </h2>
+              <p>
+                Thanks to /tg/station and every wiki contributor who did most of
+                the work!
+              </p>
+              <p>
+                This thing is Open Source:
+                <a href="https://git.fromouter.space/hamcha/tghandbook"
+                  >git.fromouter.space/hamcha/tghandbook</a
+                >
+              </p>
+              <p>
+                /tg/station handbook revision: <span id="tgh-version"></span>
+              </p>
             </div>
           </div>
         </div>

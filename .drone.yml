@@ -34,6 +34,7 @@ steps:
       - yarn build
     environment:
       SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}
+      REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - push
@@ -47,6 +48,7 @@ steps:
     environment:
       SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}
       OUTDIR: ./dist-pr
+      REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - pull_request
@@ -60,6 +62,7 @@ steps:
     environment:
       SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}
       OUTDIR: ./dist-branch
+      REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - push

@@ -76,6 +76,12 @@ $max-width: 960px;
   }
 }
 
+.page:not(.special) img {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
 .wrapper {
   margin: 0 auto;
   max-width: $max-width;
