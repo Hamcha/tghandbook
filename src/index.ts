@@ -8,7 +8,7 @@ import unknown from "~/assets/images/tab-icons/unknown.svg";
 import { bindFunctions } from "./scripts/index";
 
 // Enable single page mode for developing scripts
-const devSinglePage = null; //["Other", "Guide_to_food_and_drinks"];
+const devSinglePage = null; // ["Other", "Guide_to_food_and_drinks"];
 
 async function load() {
   const sectionListContainer = document.getElementById("section-list");
