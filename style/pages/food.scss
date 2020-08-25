@@ -1,0 +1,134 @@
+div[data-tab="Guide_to_food_and_drinks"] {
+	.drink-ext,
+	.food-base-ext,
+	.book-ext,
+	.recipe-ext {
+		width: 100%;
+		th,
+		td:first-child {
+			background-color: #2f4257;
+		}
+		.food-pic {
+			float: left;
+			min-width: 64px;
+			min-height: 64px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.food-name {
+			font-size: 12pt;
+			text-align: left;
+			padding: 10pt;
+			padding-bottom: 0;
+			margin-bottom: 10pt;
+		}
+		p {
+			font-size: 8pt;
+			font-weight: 300;
+			line-height: 1.2em;
+			word-spacing: -0.1em;
+			margin: 5pt 0;
+		}
+
+		.bgus_fz_selected {
+			background: $nanotrasen !important;
+			th,
+			td {
+				border-top: 2px solid lighten($nanotrasen, 20%);
+				border-bottom: 2px solid lighten($nanotrasen, 15%);
+			}
+			th {
+				background: lighten($nanotrasen, 5%) !important;
+			}
+			div.tooltiptext {
+				border-color: lighten($nanotrasen, 20%);
+				background: darken($nanotrasen, 10%);
+			}
+		}
+	}
+
+	.drink-ext {
+		p {
+			font-size: 9pt;
+		}
+		.strength {
+			font-size: 9pt;
+			&:before {
+				content: "Strength: ";
+				font-weight: bold;
+			}
+		}
+		.description,
+		.notes {
+			margin: 10pt 0;
+			line-height: 1.5em;
+		}
+		td:nth-child(2) {
+			width: 30vw;
+			max-width: 300px;
+			text-align: center;
+		}
+	}
+
+	.food-base-ext {
+		td:nth-child(1) {
+			width: 30vw;
+			max-width: 300px;
+			text-align: center;
+		}
+		.food-pic {
+			float: none;
+			min-width: 64px;
+			min-height: 64px;
+			display: inline-block;
+		}
+		.food-block {
+			display: flex;
+			align-items: center;
+		}
+		td:nth-child(2) {
+			padding: 5pt;
+			font-size: 10pt;
+		}
+	}
+
+	.book-ext {
+		p {
+			font-size: 9pt;
+		}
+		.description,
+		.notes {
+			margin: 10pt 0;
+			line-height: 1.5em;
+		}
+		.unlocks {
+			&:before {
+				content: "Unlocks: ";
+				font-weight: bold;
+			}
+		}
+		td:nth-child(2) {
+			width: 30vw;
+			max-width: 300px;
+			text-align: center;
+			p {
+				font-size: 9pt;
+			}
+		}
+	}
+
+	.recipe-ext {
+		p {
+			font-size: 9pt;
+		}
+		td:nth-child(2) {
+			width: 30vw;
+			max-width: 300px;
+		}
+		.notes {
+			margin: 10pt 0;
+			line-height: 1.5em;
+		}
+	}
+}

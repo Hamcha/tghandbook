@@ -1,5 +1,6 @@
 import { chemistryScript, processChemistry } from "./pages/chemistry";
 import { processVirology, virologyScript } from "./pages/virology";
+import { processFood, foodScript } from "./pages/food";
 import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
 import { welcomeScript } from "./pages/welcome";
@@ -8,6 +9,7 @@ import { welcomeScript } from "./pages/welcome";
 // Only change it when you made changes to the processHTML part!
 export const PAGE_VERSIONS = {
   Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
+  Guide_to_food_and_drinks: "131e010df66ed689d31df53c3ca17ad16635a827",
   $DEFAULT: "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4",
 };
 
@@ -22,6 +24,9 @@ export function processHTML(root: HTMLElement, docname: string): void {
       break;
     case "Infections":
       processVirology(root);
+      break;
+    case "Guide_to_food_and_drinks":
+      processFood(root);
       break;
     default:
   }
@@ -62,6 +67,10 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
       break;
     case "$Welcome":
       welcomeScript(root);
+      break;
+    case "Guide_to_food_and_drinks":
+      genericScript(root, docname);
+      foodScript(root);
       break;
     default:
       genericScript(root, docname);

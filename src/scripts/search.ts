@@ -138,7 +138,6 @@ export function searchBox(): HTMLElement {
 
     await nextAnimationFrame();
 
-    console.log(results);
     resultList.innerHTML = "";
     results.forEach((elem) => {
       const li = document.createElement("li");
