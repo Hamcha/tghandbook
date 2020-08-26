@@ -76,6 +76,22 @@ import law from "~/assets/images/tab-icons/law.svg";
 import sop from "~/assets/images/tab-icons/sop.svg";
 // @ts-expect-error: Parcel image import
 import trial from "~/assets/images/tab-icons/trial.svg";
+// @ts-expect-error: Parcel image import
+import traitor from "~/assets/images/tab-icons/traitor.svg";
+// @ts-expect-error: Parcel image import
+import hacking from "~/assets/images/tab-icons/hacking.svg";
+// @ts-expect-error: Parcel image import
+import weapons from "~/assets/images/tab-icons/weapons.svg";
+// @ts-expect-error: Parcel image import
+import uplink from "~/assets/images/tab-icons/uplink.svg";
+// @ts-expect-error: Parcel image import
+import rev from "~/assets/images/tab-icons/rev.svg";
+// @ts-expect-error: Parcel image import
+import cult from "~/assets/images/tab-icons/cult.svg";
+// @ts-expect-error: Parcel image import
+import nuke from "~/assets/images/tab-icons/nuke.svg";
+// @ts-expect-error: Parcel image import
+import malf from "~/assets/images/tab-icons/malf.svg";
 
 export interface SectionInfo {
   name: string;
@@ -144,16 +160,16 @@ const sections: SectionInfo[] = [
   {
     name: "Antag",
     tabs: [
-      { page: "Traitor", icon: null },
-      { page: "Makeshift_weapons", icon: null },
-      { page: "Hacking", icon: null },
+      { page: "Traitor", icon: traitor },
+      { page: "Makeshift_weapons", icon: weapons },
+      { page: "Hacking", icon: hacking },
       { page: "Guide_to_Combat", icon: null },
-      { page: "Syndicate_Items", text: "synd", icon: null },
+      { page: "Syndicate_Items", text: "uplk", icon: uplink },
       { page: "Illicit_Access", icon: null },
-      { page: "Revolutionary", icon: null },
-      { page: "Blood_Cult", text: "cult", icon: null },
-      { page: "Nuclear_Operative", text: "nuke", icon: null },
-      { page: "Guide_to_malfunction", icon: null },
+      { page: "Revolutionary", icon: rev },
+      { page: "Blood_Cult", text: "cult", icon: cult },
+      { page: "Nuclear_Operative", text: "nuke", icon: nuke },
+      { page: "Guide_to_malfunction", icon: malf },
       { page: "Xenos", text: "xmor", icon: null },
       { page: "Abductor", icon: null },
       { page: "Families", icon: null },
