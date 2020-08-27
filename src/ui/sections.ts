@@ -92,6 +92,16 @@ import cult from "~/assets/images/tab-icons/cult.svg";
 import nuke from "~/assets/images/tab-icons/nuke.svg";
 // @ts-expect-error: Parcel image import
 import malf from "~/assets/images/tab-icons/malf.svg";
+// @ts-expect-error: Parcel image import
+import combat from "~/assets/images/tab-icons/combat.svg";
+// @ts-expect-error: Parcel image import
+import access from "~/assets/images/tab-icons/access.svg";
+// @ts-expect-error: Parcel image import
+import xmorph from "~/assets/images/tab-icons/xmorph.svg";
+// @ts-expect-error: Parcel image import
+import abduction from "~/assets/images/tab-icons/abduction.svg";
+// @ts-expect-error: Parcel image import
+import mafia from "~/assets/images/tab-icons/mafia.svg";
 
 export interface SectionInfo {
   name: string;
@@ -163,16 +173,16 @@ const sections: SectionInfo[] = [
       { page: "Traitor", icon: traitor },
       { page: "Makeshift_weapons", icon: weapons },
       { page: "Hacking", icon: hacking },
-      { page: "Guide_to_Combat", icon: null },
+      { page: "Guide_to_Combat", icon: combat },
       { page: "Syndicate_Items", text: "uplk", icon: uplink },
-      { page: "Illicit_Access", icon: null },
+      { page: "Illicit_Access", icon: access },
       { page: "Revolutionary", icon: rev },
       { page: "Blood_Cult", text: "cult", icon: cult },
       { page: "Nuclear_Operative", text: "nuke", icon: nuke },
       { page: "Guide_to_malfunction", icon: malf },
-      { page: "Xenos", text: "xmor", icon: null },
-      { page: "Abductor", icon: null },
-      { page: "Families", icon: null },
+      { page: "Xenos", text: "xmor", icon: xmorph },
+      { page: "Abductor", icon: abduction },
+      { page: "Families", icon: mafia },
       { page: "Heretic", icon: null },
     ],
   },
