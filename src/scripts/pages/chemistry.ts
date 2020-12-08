@@ -56,7 +56,7 @@ export function processChemistry(root: HTMLElement): void {
 
   // Remove "Removed medicines" section
   const remTable = root.querySelector(
-    "#Non-craftable_Medicines + h4 + p + table"
+    "#Non-craftable_Medicines + h4 + p + div"
   );
   remTable.parentElement.removeChild(remTable);
 

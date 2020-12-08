@@ -176,7 +176,7 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_Combat", icon: combat },
       { page: "Syndicate_Items", text: "uplk", icon: uplink },
       { page: "Illicit_Access", icon: access },
-      { page: "Revolutionary", icon: rev },
+      { page: "Revolutionary", text: "rev", icon: rev },
       { page: "Blood_Cult", text: "cult", icon: cult },
       { page: "Nuclear_Operative", text: "nuke", icon: nuke },
       { page: "Guide_to_malfunction", icon: malf },
