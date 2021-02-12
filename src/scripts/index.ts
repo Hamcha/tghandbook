@@ -10,7 +10,7 @@ import { welcomeScript } from "./pages/welcome";
 export const PAGE_VERSIONS = {
   Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
   Guide_to_food_and_drinks: "131e010df66ed689d31df53c3ca17ad16635a827",
-  Guide_to_chemistry: "20971ee185888fd37128bdc1c097a740982e94b2",
+  Guide_to_chemistry: "8583fc3b707920eb5cc3a814ec934cfff88803a5",
   $DEFAULT: "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4",
 };
 

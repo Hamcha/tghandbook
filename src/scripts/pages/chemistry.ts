@@ -123,7 +123,7 @@ export function processChemistry(root: HTMLElement): void {
         content += `<p>${desc.innerHTML}</p>`;
       }
       if (ph) {
-        content += `<p class="ph">${ph.innerHTML}</p>`;
+        content += `<div class="ph">${ph.innerHTML}</div>`;
       }
       title.classList.add("reagent-ext");
       title.innerHTML = content;
@@ -191,12 +191,7 @@ export function chemistryScript(root: HTMLElement): void {
       "table.wikitable > tbody > tr:not(:first-child)"
     )
   );
-  const test = el
-    .map((element, id) => [
-      element,
-      element.querySelector("th .reagent-header"),
-    ])
-    .filter(([a, b]) => !b);
+
   registerSearchEntries(
     el.map((element, id) => ({
       page: "Guide_to_chemistry",
@@ -250,6 +245,52 @@ export function chemistryScript(root: HTMLElement): void {
         // Do nothing
       }
     }
+  });
+
+  // Prettify reaction conditions
+  const reactionPropertyRegexp = /<b>(.+):<\/b>(.+)/i;
+  el.forEach((element, id) => {
+    element.querySelectorAll<HTMLElement>(".ph").forEach((ph) => {
+      // Prepare table
+      const extras = [];
+      const table = document.createElement("table");
+      const tableHeaderRow = document.createElement("tr");
+      const tableValueRow = document.createElement("tr");
+      table.appendChild(tableHeaderRow);
+      table.appendChild(tableValueRow);
+
+      // Parse parameters
+      ph.innerHTML.split("<br>").forEach((prop) => {
+        if (prop.trim() === "N/A") {
+          return;
+        }
+
+        const matcher = reactionPropertyRegexp.exec(prop);
+        if (!matcher) {
+          extras.push(prop);
+          return;
+        }
+
+        const [reactionProperty, propValue] = matcher
+          .slice(1)
+          .map((s) => s.trim());
+
+        const header = document.createElement("th");
+        header.appendChild(document.createTextNode(reactionProperty));
+        tableHeaderRow.appendChild(header);
+        const value = document.createElement("td");
+        value.appendChild(document.createTextNode(propValue));
+        tableValueRow.append(value);
+      });
+
+      // Clear and re-add prettified data
+      ph.innerHTML = "";
+      if (tableHeaderRow.children.length > 0) {
+        ph.appendChild(table);
+      }
+      ph.innerHTML += `<p>${extras.join("<br>")}</p>`;
+      ph.classList.add("ph-ext");
+    });
   });
 }
 
