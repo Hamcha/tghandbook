@@ -54,12 +54,6 @@ export function processChemistry(root: HTMLElement): void {
     }
   });
 
-  // Remove "Removed medicines" section
-  const remTable = root.querySelector(
-    "#Non-craftable_Medicines + h4 + p + div"
-  );
-  remTable.parentElement.removeChild(remTable);
-
   // Restructure recipes to work in a narrow window
   root
     .querySelectorAll<HTMLElement>("div[data-name] .wikitable.sortable tr")
@@ -82,28 +76,34 @@ export function processChemistry(root: HTMLElement): void {
         return;
       }
       const rows = Array.from(row.querySelectorAll("td")).slice(1);
+      let ph: HTMLTableCellElement = null;
       let treatment: HTMLTableCellElement = null;
       let desc: HTMLTableCellElement = null;
       let metabolism: HTMLTableCellElement = null;
       let overdose: HTMLTableCellElement = null;
       let addiction: HTMLTableCellElement = null;
       // Handle special cases
+      console.log(section);
       switch (section) {
         case "Components":
+          [ph, desc] = rows;
+          break;
         case "Virology Recipes":
           [desc] = rows;
           break;
         case "Narcotics":
-          [desc, metabolism, overdose, addiction] = rows;
+          [ph, desc, metabolism, overdose, addiction] = rows;
+          break;
+        case "Other Reagents":
+          [ph, desc, metabolism] = rows;
           break;
         case "Explosive Strength":
-        case "Other Reagents":
         case "Mutation Toxins":
           [desc, metabolism] = rows;
           break;
         default:
           // All fields
-          [treatment, desc, metabolism, overdose, addiction] = rows;
+          [ph, treatment, desc, metabolism, overdose, addiction] = rows;
       }
       const title = row.querySelector("th");
       let content = `<div class="reagent-header">${title.innerHTML}</div>`;
@@ -122,6 +122,9 @@ export function processChemistry(root: HTMLElement): void {
       if (desc) {
         content += `<p>${desc.innerHTML}</p>`;
       }
+      if (ph) {
+        content += `<p class="ph">${ph.innerHTML}</p>`;
+      }
       title.classList.add("reagent-ext");
       title.innerHTML = content;
       if (desc) desc.parentElement.removeChild(desc);
@@ -129,6 +132,7 @@ export function processChemistry(root: HTMLElement): void {
       if (metabolism) metabolism.parentElement.removeChild(metabolism);
       if (overdose) overdose.parentElement.removeChild(overdose);
       if (addiction) addiction.parentElement.removeChild(addiction);
+      if (ph) ph.parentElement.removeChild(ph);
     });
 }
 
@@ -187,6 +191,12 @@ export function chemistryScript(root: HTMLElement): void {
       "table.wikitable > tbody > tr:not(:first-child)"
     )
   );
+  const test = el
+    .map((element, id) => [
+      element,
+      element.querySelector("th .reagent-header"),
+    ])
+    .filter(([a, b]) => !b);
   registerSearchEntries(
     el.map((element, id) => ({
       page: "Guide_to_chemistry",

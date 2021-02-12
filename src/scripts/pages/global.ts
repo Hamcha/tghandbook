@@ -1,6 +1,10 @@
 import { findParent } from "../utils";
 import { darken, ColorFmt, lighten } from "../darkmode";
 
+function isHeader(nodeName: string) {
+  return nodeName === "H1" || nodeName === "H2" || nodeName === "H3";
+}
+
 export function processGlobal(root: HTMLElement, docname: string): void {
   // Add header
   const header = document.createElement("h1");
@@ -79,7 +83,7 @@ export function processGlobal(root: HTMLElement, docname: string): void {
     const parent = h3.parentNode;
     const div = document.createElement("div");
     parent.insertBefore(div, h3);
-    while (h3.nextSibling && !h3.nextSibling.nodeName.startsWith("H")) {
+    while (h3.nextSibling && !isHeader(h3.nextSibling.nodeName)) {
       const sibling = h3.nextSibling;
       parent.removeChild(sibling);
       div.appendChild(sibling);
