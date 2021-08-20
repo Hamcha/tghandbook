@@ -76,6 +76,8 @@ export function processChemistry(root: HTMLElement): void {
         return;
       }
       const rows = Array.from(row.querySelectorAll("td")).slice(1);
+      let conditions: HTMLTableCellElement = null;
+      let explosive: HTMLTableCellElement = null;
       let ph: HTMLTableCellElement = null;
       let treatment: HTMLTableCellElement = null;
       let desc: HTMLTableCellElement = null;
@@ -83,7 +85,6 @@ export function processChemistry(root: HTMLElement): void {
       let overdose: HTMLTableCellElement = null;
       let addiction: HTMLTableCellElement = null;
       // Handle special cases
-      console.log(section);
       switch (section) {
         case "Components":
           [ph, desc] = rows;
@@ -98,6 +99,8 @@ export function processChemistry(root: HTMLElement): void {
           [ph, desc, metabolism] = rows;
           break;
         case "Explosive Strength":
+          [conditions, desc, explosive] = rows;
+          break;
         case "Mutation Toxins":
           [desc, metabolism] = rows;
           break;
@@ -112,6 +115,12 @@ export function processChemistry(root: HTMLElement): void {
       }
       if (metabolism) {
         content += `<p class="metabolism">${metabolism.innerHTML}</p>`;
+      }
+      if (conditions) {
+        content += `<p class="conditions">${conditions.innerHTML}</p>`;
+      }
+      if (explosive) {
+        content += `<p class="explosive">${explosive.innerHTML}</p>`;
       }
       if (addiction && addiction.innerHTML.trim() !== "N/A") {
         content += `<p class="addiction">${addiction.innerHTML}</p>`;
@@ -130,6 +139,8 @@ export function processChemistry(root: HTMLElement): void {
       if (desc) desc.parentElement.removeChild(desc);
       if (treatment) treatment.parentElement.removeChild(treatment);
       if (metabolism) metabolism.parentElement.removeChild(metabolism);
+      if (conditions) conditions.parentElement.removeChild(conditions);
+      if (explosive) explosive.parentElement.removeChild(explosive);
       if (overdose) overdose.parentElement.removeChild(overdose);
       if (addiction) addiction.parentElement.removeChild(addiction);
       if (ph) ph.parentElement.removeChild(ph);

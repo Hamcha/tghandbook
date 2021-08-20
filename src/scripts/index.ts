@@ -1,6 +1,7 @@
 import { chemistryScript, processChemistry } from "./pages/chemistry";
 import { processVirology, virologyScript } from "./pages/virology";
 import { processFood, foodScript } from "./pages/food";
+import { processDrinks, drinkScript } from "./pages/drinks";
 import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
 import { welcomeScript } from "./pages/welcome";
@@ -10,8 +11,8 @@ import { welcomeScript } from "./pages/welcome";
 export const PAGE_VERSIONS = {
   Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
   Guide_to_food_and_drinks: "131e010df66ed689d31df53c3ca17ad16635a827",
-  Guide_to_chemistry: "8583fc3b707920eb5cc3a814ec934cfff88803a5",
-  $DEFAULT: "bb7abd544a19369d4b6b7e3dde3eb3cc34c023d4",
+  Guide_to_chemistry: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
+  $DEFAULT: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
 };
 
 const MAX_WIDTH = 440;
@@ -26,8 +27,11 @@ export function processHTML(root: HTMLElement, docname: string): void {
     case "Infections":
       processVirology(root);
       break;
-    case "Guide_to_food_and_drinks":
+    case "Guide_to_food":
       processFood(root);
+      break;
+    case "Guide_to_drinks":
+      processDrinks(root);
       break;
     default:
   }
@@ -69,9 +73,13 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
     case "$Welcome":
       welcomeScript(root);
       break;
-    case "Guide_to_food_and_drinks":
+    case "Guide_to_food":
       genericScript(root, docname);
       foodScript(root);
+      break;
+    case "Guide_to_drinks":
+      genericScript(root, docname);
+      drinkScript(root);
       break;
     default:
       genericScript(root, docname);
