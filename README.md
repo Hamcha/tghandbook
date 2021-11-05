@@ -1,6 +1,6 @@
 # /tg/ handbook
 
-[![Build Status](https://drone.zyg.ovh/api/badges/Hamcha/tghandbook/status.svg)](https://drone.zyg.ovh/Hamcha/tghandbook)
+[![Build Status](https://ci.fromouter.space/api/badges/Hamcha/tghandbook/status.svg)](https://ci.fromouter.space/Hamcha/tghandbook)
 
 ## Building
 
