@@ -204,11 +204,11 @@ export function chemistryScript(root: HTMLElement): void {
   );
 
   registerSearchEntries(
-    el.map((element, id) => ({
+    Array.from(root.querySelectorAll<HTMLElement>("table.wikitable > tbody > tr:not(:first-child) th .reagent-header")).map((element, id) => ({
       page: "Guide_to_chemistry",
       name: element
-        .querySelector("th .reagent-header")
         .textContent.trim()
+        .replace(/\n.+$/gm, "")
         .replace("▮", ""),
       element,
       alignment: "center",

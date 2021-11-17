@@ -41,6 +41,7 @@ export function processFood(root: HTMLElement): void {
   ];
   baseFoodTables.forEach(({ selector, title, process }) => {
     const table = root.querySelector<HTMLElement>(`${selector} .wikitable`);
+    if (!table) return;
     const foods = parseTable(table).map((row) => {
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `<div class="food-block">
@@ -108,6 +109,7 @@ export function processFood(root: HTMLElement): void {
   ];
   foodRecipesTables.forEach((selector) => {
     const table = root.querySelector<HTMLElement>(`${selector} .wikitable`);
+    if (!table) return;
     const recipes = parseTable(table).map((row) => {
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `

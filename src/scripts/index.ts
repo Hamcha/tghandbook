@@ -18,22 +18,30 @@ export const PAGE_VERSIONS = {
 const MAX_WIDTH = 440;
 
 export function processHTML(root: HTMLElement, docname: string): void {
-  processGlobal(root, docname);
+  try {
+    processGlobal(root, docname);
+  } catch (e) {
+    console.error(`Error processing page: ${docname}`);
+  }
 
-  switch (docname) {
-    case "Guide_to_chemistry":
-      processChemistry(root);
-      break;
-    case "Infections":
-      processVirology(root);
-      break;
-    case "Guide_to_food":
-      processFood(root);
-      break;
-    case "Guide_to_drinks":
-      processDrinks(root);
-      break;
-    default:
+  try {
+    switch (docname) {
+      case "Guide_to_chemistry":
+        processChemistry(root);
+        break;
+      case "Infections":
+        processVirology(root);
+        break;
+      case "Guide_to_food":
+        processFood(root);
+        break;
+      case "Guide_to_drinks":
+        processDrinks(root);
+        break;
+      default:
+    }
+  } catch (e) {
+    console.error(`Error processing page: ${docname} (specific enhancements)`);
   }
 }
 

@@ -2,7 +2,7 @@ import { registerSearchEntries } from "../search";
 
 export function genericScript(root: HTMLElement, docname: string): void {
   const el = Array.from(
-    root.querySelectorAll<HTMLElement>("div.mw-headline-cont[id][data-name]")
+    root.querySelectorAll<HTMLElement>(".mw-headline-cont[id][data-name]")
   );
 
   // Init fuzzy search with headlines
