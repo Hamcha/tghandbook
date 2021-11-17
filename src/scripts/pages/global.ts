@@ -75,7 +75,7 @@ export function processGlobal(root: HTMLElement, docname: string): void {
   if (toc) {
     const tocHeader = toc.querySelector("h2");
     toc.parentNode.insertBefore(tocHeader, toc);
-    const tocTitle = toc.querySelector("#toctitle")
+    const tocTitle = toc.querySelector("#toctitle");
     if (tocTitle != null) {
       toc.removeChild(tocTitle);
     }
@@ -102,7 +102,10 @@ export function processGlobal(root: HTMLElement, docname: string): void {
     const container = findParent(span, (el) =>
       el.classList.contains("mw-headline-cont")
     );
-    if (container && container.querySelectorAll<HTMLElement>(".mw-headline").length === 1) {
+    if (
+      container &&
+      container.querySelectorAll<HTMLElement>(".mw-headline").length === 1
+    ) {
       container.id = span.id;
       span.id += "-span";
       container.dataset.name = span.textContent;
