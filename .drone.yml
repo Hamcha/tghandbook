@@ -33,8 +33,8 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}
-      REVISION: ${DRONE_COMMIT_SHA}
+      VITE_SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}-${DRONE_COMMIT_SHA:0:8}
+      VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - push
@@ -46,9 +46,9 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}
+      VITE_SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}
       OUTDIR: ./dist-pr
-      REVISION: ${DRONE_COMMIT_SHA}
+      VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - pull_request
@@ -60,9 +60,9 @@ steps:
     commands:
       - yarn build
     environment:
-      SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}
+      VITE_SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}
       OUTDIR: ./dist-branch
-      REVISION: ${DRONE_COMMIT_SHA}
+      VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
         - push

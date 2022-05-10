@@ -1,5 +1,4 @@
-// @ts-expect-error: Asset imports are handled by parcel
-import speen from "~/assets/images/speen.svg";
+import speen from "@/assets/images/speen.svg";
 import { getPageHTML } from "../wiki";
 import {
   processHTML,
@@ -10,8 +9,7 @@ import {
 import cache from "../cache";
 import { nextAnimationFrame, delay } from "../utils";
 
-// @ts-expect-error: Parcel image import
-import unknown from "~/assets/images/tab-icons/unknown.svg";
+import unknown from "@/assets/images/tab-icons/unknown.svg";
 
 function initWaiting(elem: HTMLElement) {
   // Add spinner
@@ -187,9 +185,8 @@ export default class TabManager {
    * @param name Section name
    */
   showSection(name: string): void {
-    const active = this.sectionListContainer.querySelector<HTMLElement>(
-      ".active"
-    );
+    const active =
+      this.sectionListContainer.querySelector<HTMLElement>(".active");
     if (active) {
       // De-activate current section
       active.classList.remove("active");
@@ -298,9 +295,8 @@ export default class TabManager {
       .forEach((it) => it.classList.remove("active"));
 
     // If section is not shown, show it!
-    const isSectionActive = this.sections[section].element.classList.contains(
-      "active"
-    );
+    const isSectionActive =
+      this.sections[section].element.classList.contains("active");
     if (!isSectionActive) {
       this.showSection(section);
     }

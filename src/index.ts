@@ -3,8 +3,7 @@ import sections from "./ui/sections";
 import { nextAnimationFrame } from "./utils";
 import { searchBox } from "./scripts/search";
 
-// @ts-expect-error: Parcel image import
-import unknown from "~/assets/images/tab-icons/unknown.svg";
+import unknown from "@/assets/images/tab-icons/unknown.svg";
 import { bindFunctions } from "./scripts/index";
 
 // Enable single page mode for developing scripts
@@ -74,7 +73,9 @@ async function load() {
   });
 }
 if ("serviceWorker" in navigator) {
-  const x = process.env.SUBPATH ? `${process.env.SUBPATH}/sw.js` : "sw.js";
+  const x = import.meta.env.VITE_SUBDIR
+    ? `${import.meta.env.VITE_SUBDIR}/sw.js`
+    : "sw.js";
   navigator.serviceWorker
     .register(x)
     .then((registration) => {
@@ -94,4 +95,6 @@ document.body.appendChild(searchBox());
 // Add revision info
 document
   .getElementById("tgh-version")
-  .appendChild(document.createTextNode(process.env.REVISION || "unknown"));
+  .appendChild(
+    document.createTextNode(import.meta.env.VITE_APP_REVISION || "unknown")
+  );

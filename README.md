@@ -4,8 +4,8 @@
 
 ## Building
 
-`yarn build`
+`npm run build`
 
 ## Development
 
-`yarn dev`
+`npm start`
