@@ -28,7 +28,7 @@ steps:
     depends_on:
       - dependencies
 
-  - name: build_versioned
+  - name: build
     image: node
     commands:
       - npm run build
@@ -37,33 +37,9 @@ steps:
       VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
     when:
       event:
-        - push
-    depends_on:
-      - dependencies
-
-  - name: build_pr
-    image: node
-    commands:
-      - npm run build-pr
-    environment:
-      VITE_SUBPATH: /tghandbook/pr-${DRONE_PULL_REQUEST}
-      VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
-    when:
-      event:
-        - pull_request
-    depends_on:
-      - dependencies
-
-  - name: build_branch
-    image: node
-    commands:
-      - npm run build-branch
-    environment:
-      VITE_SUBPATH: /tghandbook/${DRONE_COMMIT_BRANCH/\//_}
-      VITE_APP_REVISION: ${DRONE_COMMIT_SHA}
-    when:
-      event:
-        - push
+        include:
+          - push
+          - pull_request
     depends_on:
       - dependencies
 
@@ -84,7 +60,7 @@ steps:
       event:
         - push
     depends_on:
-      - build_versioned
+      - build
 
   - name: upload_build_pr
     image: plugins/s3
@@ -94,16 +70,16 @@ steps:
         from_secret: minio_access
       secret_key:
         from_secret: minio_secret
-      source: dist-pr/**/*
+      source: dist/**/*
       target: /pr-${DRONE_PULL_REQUEST}/
-      strip_prefix: dist-pr/
+      strip_prefix: dist/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
       event:
         - pull_request
     depends_on:
-      - build_pr
+      - build
 
   - name: upload_build_branch
     image: plugins/s3
@@ -113,16 +89,16 @@ steps:
         from_secret: minio_access
       secret_key:
         from_secret: minio_secret
-      source: dist-branch/**/*
+      source: dist/**/*
       target: /${DRONE_COMMIT_BRANCH/\//_}/
-      strip_prefix: dist-branch/
+      strip_prefix: dist/
       path_style: true
       endpoint: https://artifacts.fromouter.space
     when:
       event:
         - push
     depends_on:
-      - build_branch
+      - build
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
@@ -149,5 +125,3 @@ trigger:
 ---
 kind: signature
 hmac: 80f0ae9213a4857606e7a6f2e64b9f1f47f1b80186f9ecd5b7aada7481a75db4
-
-...
