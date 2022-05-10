@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "lint": "eslint src",
-    "build": "vite build"
+    "build": "vite build --base=./"
   },
   "dependencies": {
     "@types/node": "^17.0.31",
