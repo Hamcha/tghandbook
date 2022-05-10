@@ -157,7 +157,7 @@ $tab-active: lighten($nanotrasen, 10%);
   display: flex;
   background-color: $section-active;
   border-bottom: 4px solid $tab-active;
-
+  
   .tab {
     display: flex;
     flex-direction: column;
@@ -170,7 +170,7 @@ $tab-active: lighten($nanotrasen, 10%);
     text-transform: uppercase;
     flex: 1;
     max-width: 100px;
-
+  
     img {
       height: 80%;
       max-height: 24px;
