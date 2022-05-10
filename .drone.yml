@@ -143,6 +143,11 @@ volumes:
   - name: cache
     host:
       path: /opt/gitea/drone-cache/hamcha/tghandbook
+
+trigger:
+  event:
+    - push
+    - pull_request
 ---
 kind: signature
-hmac: 55dfd5c47c79e51394c5cdfaa9b98a6f6acd84e751e92964c202ac19b46c0373
+hmac: c7b6e232691aff687451a9f85599852d4af0e3b63198c41116be4e09e7d82e93
