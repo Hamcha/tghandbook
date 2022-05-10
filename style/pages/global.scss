@@ -35,8 +35,9 @@ $max-width: 960px;
 
 .page {
   h1.pageheader {
-    margin-top: 0;
+    margin:auto;
     padding: 15pt 10pt;
+    position:relative;
   }
 
   img {
