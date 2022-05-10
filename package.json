@@ -7,7 +7,9 @@
   "scripts": {
     "start": "vite",
     "lint": "eslint src",
-    "build": "vite build --base=./"
+    "build": "vite build --base=./",
+    "build-branch": "vite build --base=./ --outDir=dist-branch",
+    "build-pr": "vite build --base=./ --outDir=dist-pr"
   },
   "dependencies": {
     "@types/node": "^17.0.31",
