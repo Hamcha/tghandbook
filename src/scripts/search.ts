@@ -30,8 +30,8 @@ export function searchBox(): HTMLElement {
   const jumpTo = (entry: SearchEntry) => {
     // If page is different jump to that
     if (global) {
-      const currentPage = document.querySelector<HTMLElement>(".page.active")
-        .dataset.tab;
+      const currentPage =
+        document.querySelector<HTMLElement>(".page.active").dataset.tab;
       if (currentPage !== entry.page) {
         TabManager.instance.setActive(entry.page);
       }
@@ -193,9 +193,8 @@ export function searchBox(): HTMLElement {
         return;
       default:
         if (sel.value !== oldValue) {
-          const currentPage = document.querySelector<HTMLElement>(
-            ".page.active"
-          );
+          const currentPage =
+            document.querySelector<HTMLElement>(".page.active");
           search(sel.value, currentPage.dataset.tab);
           oldValue = sel.value;
         }

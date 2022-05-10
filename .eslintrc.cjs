@@ -19,7 +19,9 @@ module.exports = {
     "no-param-reassign": "off",
     "no-alert": "off",
     "no-console": "off",
+    "no-shadow": "off",
     "func-names": "off",
+    "default-param-last": "off",
     "dot-notation": ["error", { allowPattern: "^[A-Z][a-z]+$" }],
     "@typescript-eslint/ban-ts-comment": [
       "error",
@@ -27,5 +29,7 @@ module.exports = {
         "ts-expect-error": "allow-with-description",
       },
     ],
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/default-param-last": ["error"],
   },
 };

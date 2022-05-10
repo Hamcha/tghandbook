@@ -8,6 +8,7 @@ interface CacheEntry<T> {
 export class Store {
   readonly dbp: Promise<IDBDatabase>;
 
+  // eslint-disable-next-line default-param-last
   constructor(dbName = "tg-cache", readonly storeName = "keyval") {
     this.dbp = new Promise((resolve, reject) => {
       const openreq = indexedDB.open(dbName, 1);
@@ -51,8 +52,8 @@ export function get<Type>(
 ): Promise<CacheEntry<Type>> {
   let req: IDBRequest;
   return store
-    .withIDBStore("readonly", (store) => {
-      req = store.get(key);
+    .withIDBStore("readonly", (idbstore) => {
+      req = idbstore.get(key);
     })
     .then(() => req.result);
 }
@@ -63,8 +64,8 @@ export function set<Type>(
   version: string,
   store = getDefaultStore()
 ): Promise<void> {
-  return store.withIDBStore("readwrite", (store) => {
-    store.put({ version, value }, key);
+  return store.withIDBStore("readwrite", (idbstore) => {
+    idbstore.put({ version, value }, key);
   });
 }
 
@@ -72,14 +73,14 @@ export function del(
   key: IDBValidKey,
   store = getDefaultStore()
 ): Promise<void> {
-  return store.withIDBStore("readwrite", (store) => {
-    store.delete(key);
+  return store.withIDBStore("readwrite", (idbstore) => {
+    idbstore.delete(key);
   });
 }
 
 export function clear(store = getDefaultStore()): Promise<void> {
-  return store.withIDBStore("readwrite", (store) => {
-    store.clear();
+  return store.withIDBStore("readwrite", (idbstore) => {
+    idbstore.clear();
   });
 }
 
@@ -87,16 +88,15 @@ export function keys(store = getDefaultStore()): Promise<IDBValidKey[]> {
   const dbkeys: IDBValidKey[] = [];
 
   return store
-    .withIDBStore("readonly", (store) => {
+    .withIDBStore("readonly", (idbstore) => {
       // This would be store.getAllKeys(), but it isn't supported by Edge or Safari.
       // And openKeyCursor isn't supported by Safari.
-      (store.openKeyCursor || store.openCursor).call(
-        store
-      ).onsuccess = function () {
-        if (!this.result) return;
-        dbkeys.push(this.result.key);
-        this.result.continue();
-      };
+      (idbstore.openKeyCursor || idbstore.openCursor).call(idbstore).onsuccess =
+        function () {
+          if (!this.result) return;
+          dbkeys.push(this.result.key);
+          this.result.continue();
+        };
     })
     .then(() => dbkeys);
 }
