@@ -1,4 +1,4 @@
-name: Publish on GitHub Pages
+name: Lint
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  deploy:
+  lint:
     runs-on: ubuntu-20.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
@@ -22,12 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build --if-present
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+      - name: Lint
+        run: npm run lint
