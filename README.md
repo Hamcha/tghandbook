@@ -6,6 +6,8 @@ A fancier way to browse the /tg/ wiki. This handbook is a single page applicatio
 
 It adapts the pages layout to be narrow as it's meant to be used in a small window, much like a PDA or an in-game book.
 
+The main focus is Chemistry, but the handbook is also good if you need to cross-reference multiple guides at the same time thanks to its fuzzy-search functionality.
+
 ## Development
 
 Start hot-reloading server with `npm start`
