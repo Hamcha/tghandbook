@@ -1,6 +1,6 @@
 # /tg/station handbook
 
-[![Publish on GitHub Pages](https://github.com/Hamcha/tghandbook/actions/workflows/publish.yml/badge.svg)](https://github.com/Hamcha/tghandbook/actions/workflows/publish.yml)
+[![Publish on GitHub Pages](https://github.com/Hamcha/tghandbook/actions/workflows/publish.yml/badge.svg)](https://github.com/Hamcha/tghandbook/actions/workflows/publish.yml) [![Lint](https://github.com/Hamcha/tghandbook/actions/workflows/lint.yml/badge.svg)](https://github.com/Hamcha/tghandbook/actions/workflows/lint.yml)
 
 A fancier way to browse the /tg/ wiki. This handbook is a single page application that downloads 20+ pages from the /tg/station wiki (currently using a CORS proxy), adds some fancy filtering and Nanotrasen styling.
 

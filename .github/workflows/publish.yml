@@ -25,9 +25,16 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
-      - name: Deploy
+      - name: Deploy to main
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+      - name: Deploy to subdir
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ${{ github.ref_name }}-${{ github.run_number }}
