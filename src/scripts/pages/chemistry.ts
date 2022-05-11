@@ -109,7 +109,16 @@ export function processChemistry(root: HTMLElement): void {
           [ph, treatment, desc, metabolism, overdose, addiction] = rows;
       }
       const title = row.querySelector("th");
+      // Split chem name from ph related info
+      const purity = title.querySelector("p");
+      const purityData = purity?.innerHTML;
+      if (purity) {
+        title.removeChild(purity);
+      }
       let content = `<div class="reagent-header">${title.innerHTML}</div>`;
+      if (purityData) {
+        content += `<p class="ph-data">${purityData}</p>`;
+      }
       if (treatment) {
         content += `<p class="treatment">${treatment.innerHTML}</p>`;
       }
@@ -211,7 +220,7 @@ export function chemistryScript(root: HTMLElement): void {
     ).map((element, id) => ({
       page: "Guide_to_chemistry",
       name: element.textContent.trim().replace(/\n.+$/gm, "").replace("▮", ""),
-      element,
+      element: element.parentElement,
       alignment: "center",
       id,
     }))
