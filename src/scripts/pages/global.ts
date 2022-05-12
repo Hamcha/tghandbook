@@ -97,23 +97,29 @@ export function processGlobal(root: HTMLElement, docname: string): void {
   });
 
   // Move id from header to container, if one is found
-  root.querySelectorAll<HTMLElement>(".mw-headline").forEach((span) => {
-    // Find nearest container
-    const container = findParent(span, (el) =>
-      el.classList.contains("mw-headline-cont")
-    );
-    if (
-      container &&
-      container.querySelectorAll<HTMLElement>(".mw-headline").length === 1
-    ) {
-      container.id = span.id;
-      span.id += "-span";
-      container.dataset.name = span.textContent;
-    } else {
-      span.dataset.name = span.textContent;
-      span.classList.add("mw-headline-cont");
-    }
-  });
+  root
+    .querySelectorAll<HTMLElement>(
+      "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline"
+    )
+    .forEach((span) => {
+      // Find nearest container
+      const container = findParent(span, (el) =>
+        el.classList.contains("mw-headline-cont")
+      );
+      if (
+        container &&
+        container.querySelectorAll<HTMLElement>(
+          "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline"
+        ).length === 1
+      ) {
+        container.id = span.id;
+        span.id += "-span";
+        container.dataset.name = span.textContent;
+      } else {
+        span.dataset.name = span.textContent;
+        span.classList.add("mw-headline-cont");
+      }
+    });
 }
 
 export default { processGlobal };
