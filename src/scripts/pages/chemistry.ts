@@ -28,14 +28,10 @@ export function processChemistry(root: HTMLElement): void {
     .forEach((el) => {
       el.innerHTML = el.innerHTML.replace(
         /((\d+)\s+(?:parts?|units?))(.*?(?:<\/a>|\n|$))/gi,
-        (match, ...m) =>
+        (_, ...[text, amount, reagent]) =>
           `<label class="bgus_part ${
-            m[2].includes("</a>") ? "bgus_part_tooltip" : ""
-          }" data-amount="${
-            m[1]
-          }"><input type="checkbox" class='bgus_checkbox bgus_hidden'/> <span class="bgus_part_label" data-src="${
-            m[0]
-          }">${m[0]}</span></label>${m[2].replace(
+            reagent.includes("</a>") ? "bgus_part_tooltip" : ""
+          }" data-amount="${amount}"><input type="checkbox" class='bgus_checkbox bgus_hidden'/> <span class="bgus_part_label" data-src="${text}">${text}</span></label>${reagent.replace(
             /(<a .+?<\/a>)/gi,
             '<span class="bgus_nobreak bgus_nested_element">$1<span class="bgus_twistie"></span></span>'
           )}`
@@ -270,7 +266,7 @@ export function chemistryScript(root: HTMLElement): void {
 
   // Prettify reaction conditions
   const reactionPropertyRegexp = /<b>(.+):<\/b>(.+)/i;
-  el.forEach((element, id) => {
+  el.forEach((element) => {
     element.querySelectorAll<HTMLElement>(".ph").forEach((ph) => {
       // Prepare table
       const extras = [];
