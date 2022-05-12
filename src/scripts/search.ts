@@ -171,22 +171,22 @@ export function searchBox(): HTMLElement {
   // Bind events
   let oldValue = "";
   sel.addEventListener("keyup", (event) => {
-    switch (event.keyCode) {
-      case 27: // Escape - Hide bar
+    switch (event.code) {
+      case "Escape": // Escape - Hide bar
         searchBoxElem.classList.add("bgus_hidden");
         return;
-      case 13: // Enter - Jump to first result and hide bar
+      case "Enter": // Enter - Jump to first result and hide bar
         if (results.length > 0) {
           jumpTo(results[selectedResult]);
         }
         searchBoxElem.classList.add("bgus_hidden");
         return;
-      case 40: // Down arrow - Select next result
+      case "ArrowDown": // Down arrow - Select next result
         if (selectedResult < results.length - 1) {
           setSelectedResult(selectedResult + 1);
         }
         return;
-      case 38: // Up arrow - Select previous result
+      case "ArrowUp": // Up arrow - Select previous result
         if (selectedResult > 0) {
           setSelectedResult(selectedResult - 1);
         }
@@ -202,16 +202,16 @@ export function searchBox(): HTMLElement {
   });
 
   document.body.addEventListener("keyup", (ev) => {
-    if (ev.keyCode === 83) {
+    if (ev.code === "KeyS") {
       sel.focus();
     }
   });
 
   document.body.addEventListener("keydown", (ev) => {
     if (ev.shiftKey) {
-      switch (ev.keyCode) {
+      switch (ev.code) {
         // SHIFT+S = Fuzzy search
-        case 83: {
+        case "KeyS": {
           searchBoxElem.classList.remove("bgus_hidden");
           sel.value = "";
           break;

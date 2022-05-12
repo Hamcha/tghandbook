@@ -228,9 +228,9 @@ export function chemistryScript(root: HTMLElement): void {
 
   document.body.addEventListener("keydown", (ev) => {
     if (ev.shiftKey) {
-      switch (ev.keyCode) {
+      switch (ev.code) {
         // SHIFT+C = Toggle checkboxes
-        case 67: {
+        case "KeyC": {
           root.classList.toggle("bgus_cbox");
           root
             .querySelectorAll(".bgus_checkbox:checked")
@@ -241,7 +241,7 @@ export function chemistryScript(root: HTMLElement): void {
         }
 
         // SHIFT+B = Set whole size (beaker?) for parts/units
-        case 66: {
+        case "KeyB": {
           const size = parseInt(
             prompt("Write target ml (0 to reset)", "90"),
             10
