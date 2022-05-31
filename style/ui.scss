@@ -129,16 +129,16 @@ $tab-active: lighten($nanotrasen, 10%);
   border-bottom: 2px solid $section-active;
   display: flex;
   .section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     user-select: none;
     font-size: 9pt;
     padding: 3pt 7pt;
     text-transform: uppercase;
     color: lighten($nanotrasen, 60%);
-    flex: 1;
+    flex: 1 1;
+    overflow: hidden;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     &.active {
       background-color: $section-active;
       color: white;
