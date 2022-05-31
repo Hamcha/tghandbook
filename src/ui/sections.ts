@@ -87,7 +87,7 @@ const sections: SectionInfo[] = [
         text: "DISP",
         icon: null, // TODO: add icon
       },
-      { page: "Gas_turbine", text: "GAST", icon: turbine },
+      { page: "Gas_turbine", text: "TURB", icon: turbine },
       { page: "Guide_to_Atmospherics", text: "atmos", icon: atmos },
       { page: "Guide_to_Telecommunications", icon: tcomm, text: "tcomm" },
     ],
@@ -114,12 +114,32 @@ const sections: SectionInfo[] = [
     ],
   },
   {
+    name: "Service",
+    tabs: [
+      { page: "Guide_to_food", text: "food", icon: food },
+      {
+        page: "Guide_to_drinks",
+        text: "drnk",
+        icon: food, // TODO: add icon
+      },
+      {
+        page: "Guide_to_Restaurant",
+        text: "TOUR",
+        icon: null, // TODO: add icon
+      },
+      { page: "Guide_to_hydroponics", icon: hydro },
+      { page: "Supply_crates", icon: crate },
+      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
+    ],
+  },
+  {
     name: "Security",
     tabs: [
       { page: "Guide_to_security", text: "security", icon: security },
       { page: "Space_Law", text: "space law", icon: law },
       { page: "Standard_Operating_Procedure", text: "S.O.P.", icon: sop },
       { page: "Guide_to_trials", text: "trials", icon: trial },
+      { page: "Guide_to_Combat", icon: combat },
     ],
   },
   {
@@ -127,8 +147,6 @@ const sections: SectionInfo[] = [
     tabs: [
       { page: "Traitor", icon: traitor },
       { page: "Makeshift_weapons", icon: weapons },
-      { page: "Hacking", icon: hacking },
-      { page: "Guide_to_Combat", icon: combat },
       { page: "Syndicate_Items", text: "uplk", icon: uplink },
       { page: "Illicit_Access", icon: access },
       { page: "Revolutionary", text: "rev", icon: rev },
@@ -156,18 +174,15 @@ const sections: SectionInfo[] = [
         icon: tips,
       },
       */
+      { page: "Hacking", icon: hacking },
       { page: "Critters", icon: critter },
       { page: "Guide_to_races", icon: races },
-      { page: "Guide_to_food", text: "food", icon: food },
       {
-        page: "Guide_to_drinks",
-        text: "drnk",
-        icon: food, // TODO: add icon
+        page: "Paper_Markdown",
+        text: "PAPER",
+        icon: null, // TODO: add icon
       },
-      { page: "Guide_to_hydroponics", icon: hydro },
       { page: "Songs", icon: song },
-      { page: "Supply_crates", icon: crate },
-      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
       { page: "Guide_to_Space_Exploration", icon: space },
       {
         page: "Mafia",

@@ -129,6 +129,7 @@ $tab-active: lighten($nanotrasen, 10%);
   border-bottom: 2px solid $section-active;
   display: flex;
   .section {
+    text-align: center;
     user-select: none;
     font-size: 9pt;
     padding: 3pt 7pt;
