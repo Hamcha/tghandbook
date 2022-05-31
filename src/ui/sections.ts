@@ -13,17 +13,14 @@ import machines from "@/assets/images/tab-icons/machines.svg";
 import power from "@/assets/images/tab-icons/power.svg";
 import solar from "@/assets/images/tab-icons/solar.svg";
 import supermatter from "@/assets/images/tab-icons/supermatter.svg";
-import shield from "@/assets/images/tab-icons/shield.svg";
 import turbine from "@/assets/images/tab-icons/turbine.svg";
 import atmos from "@/assets/images/tab-icons/atmos.svg";
 import tcomm from "@/assets/images/tab-icons/tcomm.svg";
 import rnd from "@/assets/images/tab-icons/rnd.svg";
 import toxins from "@/assets/images/tab-icons/toxins.svg";
 import xeno from "@/assets/images/tab-icons/xeno.svg";
-import nanites from "@/assets/images/tab-icons/nanites.svg";
 import rules from "@/assets/images/tab-icons/rules.svg";
 import aimod from "@/assets/images/tab-icons/aimod.svg";
-import tips from "@/assets/images/tab-icons/tips.svg";
 import critter from "@/assets/images/tab-icons/critter.svg";
 import races from "@/assets/images/tab-icons/races.svg";
 import food from "@/assets/images/tab-icons/food.svg";
@@ -86,9 +83,9 @@ const sections: SectionInfo[] = [
       { page: "Solars", text: "solar", icon: solar },
       { page: "Guide_to_the_Supermatter", text: "smatt", icon: supermatter },
       {
-        page: "Singularity_and_Tesla_engines",
-        text: "sing/tesl",
-        icon: shield,
+        page: "Guide_to_disposals",
+        text: "DISP",
+        icon: null, // TODO: add icon
       },
       { page: "Gas_turbine", text: "GAST", icon: turbine },
       { page: "Guide_to_Atmospherics", text: "atmos", icon: atmos },
@@ -101,9 +98,19 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_Research_and_Development", text: "R&D", icon: rnd },
       { page: "Guide_to_robotics", icon: robo },
       { page: "Guide_to_toxins", text: "toxin", icon: toxins },
-      { page: "Guide_to_xenobiology", icon: xeno },
+      { page: "Guide_to_xenobiology", text: "XBIO", icon: xeno },
       { page: "Guide_to_genetics", icon: genetics },
-      { page: "Guide_to_Nanites", text: "nanite", icon: nanites },
+      {
+        page: "Guide_to_cytology",
+        text: "cyto",
+        icon: null, // TODO: add icon
+      },
+      {
+        page: "Guide_to_Circuits",
+        text: "circ",
+        icon: null, // TODO: add icon
+      },
+      // { page: "Guide_to_Nanites", text: "nanite", icon: nanites },
     ],
   },
   {
@@ -128,10 +135,13 @@ const sections: SectionInfo[] = [
       { page: "Blood_Cult", text: "cult", icon: cult },
       { page: "Nuclear_Operative", text: "nuke", icon: nuke },
       { page: "Guide_to_malfunction", icon: malf },
-      { page: "Xenos", text: "xmor", icon: xmorph },
+      { page: "Xenos", text: "XENO", icon: xmorph },
       { page: "Abductor", icon: abduction },
       { page: "Families", icon: mafia },
-      { page: "Heretic", icon: null },
+      {
+        page: "Heretic",
+        icon: null, // TODO: add icon
+      },
     ],
   },
   {
@@ -139,20 +149,31 @@ const sections: SectionInfo[] = [
     tabs: [
       { page: "Rules", text: "rules", icon: rules },
       { page: "AI_modules", text: "aimo", icon: aimod },
+      /*
       {
         page: "Guide_to_Awesome_Miscellaneous_Stuff",
         text: "misc",
         icon: tips,
       },
+      */
       { page: "Critters", icon: critter },
       { page: "Guide_to_races", icon: races },
       { page: "Guide_to_food", text: "food", icon: food },
-      { page: "Guide_to_drinks", text: "drnk", icon: food },
+      {
+        page: "Guide_to_drinks",
+        text: "drnk",
+        icon: food, // TODO: add icon
+      },
       { page: "Guide_to_hydroponics", icon: hydro },
       { page: "Songs", icon: song },
       { page: "Supply_crates", icon: crate },
       { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
       { page: "Guide_to_Space_Exploration", icon: space },
+      {
+        page: "Mafia",
+        text: "mfia",
+        icon: null, // TODO: add icon
+      },
     ],
   },
 ];
