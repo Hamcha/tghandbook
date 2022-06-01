@@ -47,6 +47,8 @@ import access from "@/assets/images/tab-icons/access.svg";
 import xmorph from "@/assets/images/tab-icons/xmorph.svg";
 import abduction from "@/assets/images/tab-icons/abduction.svg";
 import mafia from "@/assets/images/tab-icons/mafia.svg";
+import cyto from "@/assets/images/tab-icons/cyto.svg";
+import circuits from "@/assets/images/tab-icons/circuit.svg";
 
 export interface SectionInfo {
   name: string;
@@ -100,16 +102,8 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_toxins", text: "toxin", icon: toxins },
       { page: "Guide_to_xenobiology", text: "XBIO", icon: xeno },
       { page: "Guide_to_genetics", icon: genetics },
-      {
-        page: "Guide_to_cytology",
-        text: "cyto",
-        icon: null, // TODO: add icon
-      },
-      {
-        page: "Guide_to_Circuits",
-        text: "circ",
-        icon: null, // TODO: add icon
-      },
+      { page: "Guide_to_cytology", text: "cyto", icon: cyto },
+      { page: "Guide_to_Circuits", text: "circ", icon: circuits },
       // { page: "Guide_to_Nanites", text: "nanite", icon: nanites },
     ],
   },
@@ -184,11 +178,7 @@ const sections: SectionInfo[] = [
       },
       { page: "Songs", icon: song },
       { page: "Guide_to_Space_Exploration", icon: space },
-      {
-        page: "Mafia",
-        text: "mfia",
-        icon: null, // TODO: add icon
-      },
+      { page: "Mafia", text: "mfia", icon: mafia },
     ],
   },
 ];
