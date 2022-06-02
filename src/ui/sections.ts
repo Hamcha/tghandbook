@@ -49,6 +49,8 @@ import abduction from "@/assets/images/tab-icons/abduction.svg";
 import mafia from "@/assets/images/tab-icons/mafia.svg";
 import cyto from "@/assets/images/tab-icons/cyto.svg";
 import circuits from "@/assets/images/tab-icons/circuit.svg";
+import tourist from "@/assets/images/tab-icons/tourist.svg";
+import drink from "@/assets/images/tab-icons/drink.svg";
 
 export interface SectionInfo {
   name: string;
@@ -111,16 +113,8 @@ const sections: SectionInfo[] = [
     name: "Service",
     tabs: [
       { page: "Guide_to_food", text: "food", icon: food },
-      {
-        page: "Guide_to_drinks",
-        text: "drnk",
-        icon: food, // TODO: add icon
-      },
-      {
-        page: "Guide_to_Restaurant",
-        text: "TOUR",
-        icon: null, // TODO: add icon
-      },
+      { page: "Guide_to_drinks", text: "drnk", icon: drink },
+      { page: "Guide_to_Restaurant", text: "TOUR", icon: tourist },
       { page: "Guide_to_hydroponics", icon: hydro },
       { page: "Supply_crates", icon: crate },
       { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
