@@ -21,6 +21,9 @@ async function load() {
   );
   manager.setLoading(true);
 
+  // De-comment to disable caching and force processing
+  // manager.cacheEnabled = false;
+
   await nextAnimationFrame();
 
   // Add loading "bar"

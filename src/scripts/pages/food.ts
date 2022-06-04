@@ -2,75 +2,50 @@ import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
 
 export function processFood(root: HTMLElement): void {
-  const baseFoodTables = [
-    {
-      selector: "#Butchering",
-      title: "Food name",
-      process: "How to acquire",
-    },
-    {
-      selector: "#Knife_\\.26_Rolling_Pin",
-      title: "Food name",
-      process: "How to acquire",
-    },
-    {
-      selector: "#Processor",
-      title: "Processes",
-      process: "Condiments",
-    },
-    {
-      selector: "#All-In-One-Grinder",
-      title: "Blends",
-      process: "How to acquire",
-    },
-    {
-      selector: "#Microwave_Oven",
-      title: "Cooked food",
-      process: "How to acquire",
-    },
-    {
-      selector: "#Junk_Food",
-      title: "Dispenses",
-      process: "Description",
-    },
-    {
-      selector: "#Other_food",
-      title: "Item",
-      process: "Description",
-    },
-  ];
-  baseFoodTables.forEach(({ selector, title, process }) => {
-    const table = root.querySelector<HTMLElement>(`${selector} .wikitable`);
-    if (!table) return;
-    const foods = parseTable(table).map((row) => {
+  // Set up the two kinds of tables and populate them
+  const baseFoodTables: HTMLTableElement[] = [],
+    foodRecipesTables: HTMLTableElement[] = [];
+  root.querySelectorAll<HTMLTableElement>(".wikitable").forEach((table) => {
+    const row = table.querySelector("tr");
+    // Make sure one of the rows is the picture (so we don't get random tables)
+    if (!row.innerHTML.includes("Picture")) {
+      return;
+    }
+
+    // Base food has 3 rows (picture, name, how to acquire)
+    if (row.childElementCount === 3) {
+      baseFoodTables.push(table);
+    }
+    // Food recipes has 5 rows (picture, name, ingredients, nutrition, notes)
+    if (row.childElementCount > 3) {
+      foodRecipesTables.push(table);
+    }
+  });
+
+  baseFoodTables.forEach((table) => {
+    const headers = table
+      .querySelector("tr")
+      .querySelectorAll<HTMLTableRowElement>("th,td");
+    const title = headers[1].innerText.trim();
+    const process = headers[2].innerText.trim();
+    const foods = [];
+    table.querySelectorAll("tr:not(:first-child)").forEach((row) => {
+      const fields = row.querySelectorAll("th,td");
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `<div class="food-block">
-<div class="food-pic">${row["Picture"].innerHTML}</div>
-<div class="food-name">${row[title].innerHTML}</div>
+<div class="food-pic">${fields[0].innerHTML}</div>
+<div class="food-name">${fields[1].innerHTML}</div>
 </div>
 `;
-      const out = {};
-      out[title] = foodBlock;
-      out[process] = row[process];
-      return out;
+      foods.push({
+        [title]: foodBlock,
+        [process]: fields[2],
+      });
     });
     const betterTable = makeTable([title, process], foods);
     betterTable.className = "food-base-ext wikitable";
     table.replaceWith(betterTable);
   });
-
-  const customTable = root.querySelector<HTMLElement>(
-    `#Custom_Recipes .wikitable`
-  );
-  const customFood = parseTable(customTable).map((row) => {
-    row[
-      "Custom food"
-    ].innerHTML = `<div class="food-name">${row["Custom food"].innerHTML}</div>`;
-    return row;
-  });
-  const betterCustomTable = makeTable(Object.keys(customFood[0]), customFood);
-  betterCustomTable.className = "food-base-ext wikitable";
-  customTable.replaceWith(betterCustomTable);
 
   const recipeBookTable = root.querySelector<HTMLElement>(
     `#Recipe_Books .wikitable`
@@ -88,33 +63,18 @@ export function processFood(root: HTMLElement): void {
   betterBookTable.className = "book-ext wikitable";
   recipeBookTable.replaceWith(betterBookTable);
 
-  const foodRecipesTables = [
-    "#Burgers",
-    "#Breads",
-    "#Cakes",
-    "#Egg-Based_Food",
-    "#Snowcones",
-    "#Lizard_Cuisine",
-    "#Seafood",
-    "#Mexican",
-    "#Savory",
-    "#Waffles",
-    "#Pies",
-    "#Pizzas",
-    "#Salads",
-    "#Sandwiches",
-    "#Soups_\\.26_Stews",
-    "#Spaghettis",
-    "#Icecream_Vat",
-  ];
-  foodRecipesTables.forEach((selector) => {
-    const table = root.querySelector<HTMLElement>(`${selector} .wikitable`);
-    if (!table) return;
+  foodRecipesTables.forEach((table) => {
+    const headers = table
+      .querySelector("tr")
+      .querySelectorAll<HTMLTableRowElement>("td,th");
+    const picture = headers[0].innerText.trim();
+    const title = headers[1].innerText.trim();
+    const ingredients = headers[2].innerText.trim();
     const recipes = parseTable(table).map((row) => {
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `
-<div class="food-pic">${row["Picture"].innerHTML}</div>
-<div class="food-name">${row["Recipe"].innerHTML}</div>
+<div class="food-pic">${row[picture].innerHTML}</div>
+<div class="food-name">${row[title].innerHTML}</div>
 ${
   "Nutritional Value" in row
     ? `<p class="nutrition">${row["Nutritional Value"].innerHTML}</p>`
@@ -122,19 +82,40 @@ ${
 }
 ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
 `;
-      const ingredients = row["Ingredients"].innerHTML
+      const ingredientList = row[ingredients].innerHTML
         .split(/,|\+/gi)
         .map((s) => `<p>${s.trim()}</p>`);
-      row["Ingredients"].innerHTML = ingredients.join("");
-      return { Drink: foodBlock, Ingredients: row["Ingredients"] };
+
+      row[ingredients].innerHTML = ingredientList.join("");
+      return { Food: foodBlock, Ingredients: row[ingredients] };
     });
-    const betterTable = makeTable(["Drink", "Ingredients"], recipes);
+    const betterTable = makeTable(["Food", "Ingredients"], recipes);
     betterTable.className = "recipe-ext wikitable";
     table.replaceWith(betterTable);
   });
+
+  const customTable = root.querySelector<HTMLElement>(
+    `#Custom_Recipes .wikitable`
+  );
+  const customFood = parseTable(customTable).map((row) => {
+    row[
+      "Custom food"
+    ].innerHTML = `<div class="food-name">${row["Custom food"].innerHTML}</div>`;
+    return row;
+  });
+  const betterCustomTable = makeTable(Object.keys(customFood[0]), customFood);
+  betterCustomTable.className = "food-base-ext wikitable";
+  customTable.replaceWith(betterCustomTable);
 }
 
 export function foodScript(root: HTMLElement): void {
+  // Add event to collapse subsections
+  root.querySelectorAll(".bgus_nested_element").forEach((twistie) => {
+    twistie.addEventListener("click", () => {
+      twistie.classList.toggle("bgus_collapsed");
+    });
+  });
+
   // Init fuzzy search with elements
   const foodEntries = Array.from(
     root.querySelectorAll<HTMLElement>(

@@ -1,44 +1,5 @@
 div[data-tab="Guide_to_chemistry"] {
-  .bgus_twistie:after {
-    color: red;
-    display: inline-block;
-    font-weight: bold;
-    margin-left: 0.2em;
-    content: "⯆";
-  }
-
-  .bgus_collapsed > .bgus_twistie:after {
-    content: "⯈";
-  }
-
-  div.tooltiptext {
-    display: none;
-    border: 1px solid #384e68;
-    background: linear-gradient(
-      to bottom,
-      darken(#384e68, 20%),
-      darken(#384e68, 25%)
-    );
-  }
-
-  span.bgus_nested_element:not(.bgus_collapsed) + div.tooltiptext {
-    z-index: unset;
-    visibility: inherit;
-    display: block;
-    opacity: 1;
-    position: relative;
-    width: auto;
-    border-left-width: 3px;
-    margin-left: 5px;
-    margin-top: 5px;
-    font-size: 8pt;
-    padding: 5px 8px;
-    line-height: 10pt;
-
-    div.tooltiptext {
-      margin-left: -5px;
-    }
-  }
+  @import "../utils/tooltips.scss";
 
   table.wikitable {
     border: 0 !important;
@@ -58,7 +19,9 @@ div[data-tab="Guide_to_chemistry"] {
 
     .bgus_fz_selected {
       background: $nanotrasen !important;
-      .ph-ext table { background-color: lighten($nanotrasen, 10%) !important; }
+      .ph-ext table {
+        background-color: lighten($nanotrasen, 10%) !important;
+      }
       th {
         background: lighten($nanotrasen, 5%) !important;
       }

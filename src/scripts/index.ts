@@ -10,7 +10,8 @@ import { welcomeScript } from "./pages/welcome";
 // Only change it when you made changes to the processHTML part!
 export const PAGE_VERSIONS = {
   Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
-  Guide_to_food_and_drinks: "131e010df66ed689d31df53c3ca17ad16635a827",
+  Guide_to_food: "7602c610eae1cc9f04670781f78470dfcb62d8ae",
+  Guide_to_drinks: "7602c610eae1cc9f04670781f78470dfcb62d8ae",
   Guide_to_chemistry: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
   $DEFAULT: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
 };
@@ -42,6 +43,7 @@ export function processHTML(root: HTMLElement, docname: string): void {
     }
   } catch (e) {
     console.error(`Error processing page: ${docname} (specific enhancements)`);
+    console.error(e);
   }
 }
 
