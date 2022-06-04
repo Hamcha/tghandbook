@@ -58,7 +58,7 @@ export function drinkScript(root: HTMLElement): void {
   // Init fuzzy search with elements
   const foodEntries = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child)"
+      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child), .junk-ext tr:not(:first-child)"
     )
   );
   registerSearchEntries(
