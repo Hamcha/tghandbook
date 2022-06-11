@@ -33,6 +33,7 @@ export function parseTable(table: HTMLElement): TableData {
     const obj = {};
     tr.querySelectorAll<HTMLElement>("td,th").forEach((val, i) => {
       obj[headers[i]] = val;
+      obj[`$row${i}`] = val;
     });
     return obj;
   });

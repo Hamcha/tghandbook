@@ -1,0 +1,12 @@
+div[data-tab="Critters"] {
+  .description {
+    clear: both;
+    padding-top: 10px;
+  }
+  .btab-pic + .btab-name {
+    padding-top: 22px;
+  }
+  .critter-ext td:nth-child(2) {
+    width: 55vw;
+  }
+}
