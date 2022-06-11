@@ -10,7 +10,7 @@ import { mafiaScript, processMafia } from "./pages/mafia";
 import { crittersScript, processCritters } from "./pages/critters";
 
 // This is used for cache busting when userscript changes significantly.
-// Only change it when you made changes to the processHTML part!
+// Only change it when making changes to the processHTML scripts!
 export const PAGE_VERSIONS = {
   Infections: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
   Guide_to_food: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
