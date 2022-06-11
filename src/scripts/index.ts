@@ -6,6 +6,7 @@ import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
 import { welcomeScript } from "./pages/welcome";
 import { ghettochemScript, processGhettochem } from "./pages/ghettochem";
+import { mafiaScript, processMafia } from "./pages/mafia";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
@@ -15,6 +16,7 @@ export const PAGE_VERSIONS = {
   Guide_to_drinks: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
   Guide_to_chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
   Guide_to_Ghetto_Chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  Mafia: "87d3bd9890395d4c01e435e895ac05aac3515047",
   $DEFAULT: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
 };
 
@@ -43,6 +45,9 @@ export function processHTML(root: HTMLElement, docname: string): void {
         break;
       case "Guide_to_Ghetto_Chemistry":
         processGhettochem(root);
+        break;
+      case "Mafia":
+        processMafia(root);
         break;
       default:
     }
@@ -99,6 +104,10 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
     case "Guide_to_Ghetto_Chemistry":
       genericScript(root, docname);
       ghettochemScript(root);
+      break;
+    case "Mafia":
+      genericScript(root, docname);
+      mafiaScript(root);
       break;
     default:
       genericScript(root, docname);
