@@ -10,11 +10,12 @@ import { ghettochemScript, processGhettochem } from "./pages/ghettochem";
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
 export const PAGE_VERSIONS = {
-  Infections: "fcebeda2fddb46d924f4538cd9c0daeb55aa4c9b",
-  Guide_to_food: "7602c610eae1cc9f04670781f78470dfcb62d8ae",
-  Guide_to_drinks: "7602c610eae1cc9f04670781f78470dfcb62d8ae",
-  Guide_to_chemistry: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
-  $DEFAULT: "5074d6180fc8b283bac00b99c6aa2325b797da6b",
+  Infections: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  Guide_to_food: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  Guide_to_drinks: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  Guide_to_chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  Guide_to_Ghetto_Chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
+  $DEFAULT: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
 };
 
 const MAX_WIDTH = 440;
