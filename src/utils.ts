@@ -10,4 +10,11 @@ export function delay(ms: number): Promise<void> {
   });
 }
 
+export function stripStart(str: string, start: string): string {
+  if (str.startsWith(start)) {
+    return str.slice(start.length);
+  }
+  return str;
+}
+
 export default { nextAnimationFrame, delay };

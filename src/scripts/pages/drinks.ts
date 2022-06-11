@@ -24,8 +24,8 @@ export function processDrinks(root: HTMLElement): void {
     const drinks = parseTable(table).map((row) => {
       const drinkBlock = document.createElement("td");
       drinkBlock.innerHTML = `
-<div class="food-pic">${row["Picture"].innerHTML}</div>
-<div class="food-name">${row["Cocktail"].innerHTML}</div>
+<div class="food-pic btab-pic">${row["Picture"].innerHTML}</div>
+<div class="food-name btab-name">${row["Cocktail"].innerHTML}</div>
 <p class="strength">${row["Strength"].innerHTML}</p>
 <p class="description">${row["Drink Description"].innerHTML}</p>
 ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
@@ -37,19 +37,19 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
       return { Drink: drinkBlock, Ingredients: row["Ingredients"] };
     });
     const betterTable = makeTable(["Drink", "Ingredients"], drinks);
-    betterTable.className = "drink-ext wikitable";
+    betterTable.className = "drink-ext tgh-btab wikitable";
     table.replaceWith(betterTable);
   });
 
   junkDrinks.forEach((table) => {
     const recipeBook = parseTable(table).map((row) => {
       const bookBlock = document.createElement("td");
-      bookBlock.innerHTML = `<div class="food-pic">${row["Picture"].innerHTML}</div>
-      <div class="food-name">${row["Dispenses"].innerHTML}</div>`;
+      bookBlock.innerHTML = `<div class="food-pic btab-pic">${row["Picture"].innerHTML}</div>
+      <div class="food-name btab-name">${row["Dispenses"].innerHTML}</div>`;
       return { Dispenses: bookBlock, Description: row["Description"] };
     });
     const betterBookTable = makeTable(["Dispenses", "Description"], recipeBook);
-    betterBookTable.className = "junk-ext wikitable";
+    betterBookTable.className = "junk-ext tgh-btab wikitable";
     table.replaceWith(betterBookTable);
   });
 }

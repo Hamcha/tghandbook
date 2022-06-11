@@ -1,0 +1,56 @@
+.tgh-btab {
+  width: 100%;
+  border: 0 !important;
+  background-color: rgba(26, 36, 51, 0.7);
+
+  th {
+    background-color: darken($nanotrasen, 5%) !important;
+  }
+  th,
+  td:first-child {
+    background-color: #2f4257;
+  }
+  .btab-pic {
+    margin: 0 12px;
+    float: left;
+    min-width: 64px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btab-name {
+    font-size: 12pt;
+    text-align: left;
+    padding: 10pt;
+    padding-bottom: 0;
+    margin-bottom: 10pt;
+  }
+  p {
+    font-size: 8pt;
+    font-weight: 300;
+    line-height: 1.2em;
+    word-spacing: -0.1em;
+    margin: 5pt 0;
+  }
+
+  .table-head {
+    text-align: center;
+  }
+
+  & > tbody > tr > td:nth-child(2) {
+    width: 45%;
+    padding: 10px;
+  }
+
+  .bgus_fz_selected {
+    background: $nanotrasen !important;
+    th {
+      background: lighten($nanotrasen, 5%) !important;
+    }
+    div.tooltiptext {
+      border-color: lighten($nanotrasen, 20%);
+      background: darken($nanotrasen, 10%);
+    }
+  }
+}

@@ -65,12 +65,15 @@ export function makeTable(
   // Make rows
   data.forEach((row) => {
     const tableRow = document.createElement("tr");
-    headers.forEach((key) => {
+    headers.forEach((key, index) => {
       let cell = null;
       if (row[key].tagName === "TD" || row[key].tagName === "TH") {
         cell = row[key];
       } else {
         cell = document.createElement("td");
+        if (index === 0) {
+          cell.classList.add("btab-name");
+        }
         cell.appendChild(row[key]);
       }
       tableRow.appendChild(cell);

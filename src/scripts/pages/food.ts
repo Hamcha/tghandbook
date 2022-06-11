@@ -33,8 +33,8 @@ export function processFood(root: HTMLElement): void {
       const fields = row.querySelectorAll("th,td");
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `<div class="food-block">
-<div class="food-pic">${fields[0].innerHTML}</div>
-<div class="food-name">${fields[1].innerHTML}</div>
+<div class="food-pic btab-pic">${fields[0].innerHTML}</div>
+<div class="food-name btab-name">${fields[1].innerHTML}</div>
 </div>
 `;
       foods.push({
@@ -43,7 +43,7 @@ export function processFood(root: HTMLElement): void {
       });
     });
     const betterTable = makeTable([title, process], foods);
-    betterTable.className = "food-base-ext wikitable";
+    betterTable.className = "food-base-ext tgh-btab wikitable";
     table.replaceWith(betterTable);
   });
 
@@ -52,8 +52,8 @@ export function processFood(root: HTMLElement): void {
   );
   const recipeBook = parseTable(recipeBookTable).map((row) => {
     const bookBlock = document.createElement("td");
-    bookBlock.innerHTML = `<div class="food-pic">${row["Picture"].innerHTML}</div>
-<div class="food-name">${row["Book"].innerHTML}</div>
+    bookBlock.innerHTML = `<div class="food-pic btab-pic">${row["Picture"].innerHTML}</div>
+<div class="food-name btab-name">${row["Book"].innerHTML}</div>
 <p class="unlocks">${row["Unlocks"].innerHTML}</p>
 <p class="notes">${row["Notes"].innerHTML}</p>
 `;
@@ -73,8 +73,8 @@ export function processFood(root: HTMLElement): void {
     const recipes = parseTable(table).map((row) => {
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `
-<div class="food-pic">${row[picture].innerHTML}</div>
-<div class="food-name">${row[title].innerHTML}</div>
+<div class="food-pic btab-pic">${row[picture].innerHTML}</div>
+<div class="food-name btab-name">${row[title].innerHTML}</div>
 ${
   "Nutritional Value" in row
     ? `<p class="nutrition">${row["Nutritional Value"].innerHTML}</p>`
@@ -90,7 +90,7 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
       return { Food: foodBlock, Ingredients: row[ingredients] };
     });
     const betterTable = makeTable(["Food", "Ingredients"], recipes);
-    betterTable.className = "recipe-ext wikitable";
+    betterTable.className = "recipe-ext tgh-btab wikitable";
     table.replaceWith(betterTable);
   });
 
@@ -104,7 +104,7 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
     return row;
   });
   const betterCustomTable = makeTable(Object.keys(customFood[0]), customFood);
-  betterCustomTable.className = "food-base-ext wikitable";
+  betterCustomTable.className = "food-base-ext tgh-btab wikitable";
   customTable.replaceWith(betterCustomTable);
 }
 

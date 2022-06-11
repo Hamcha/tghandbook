@@ -1,5 +1,6 @@
 import { registerSearchEntries } from "../search";
 import { findParent } from "../utils";
+import { stripStart } from "../../utils";
 
 export function processChemistry(root: HTMLElement): void {
   // Fix inconsistencies with <p> on random parts
@@ -111,9 +112,9 @@ export function processChemistry(root: HTMLElement): void {
       if (purity) {
         title.removeChild(purity);
       }
-      let content = `<div class="reagent-header">${title.innerHTML}</div>`;
+      let content = `<div class="reagent-header btab-name">${title.innerHTML}</div>`;
       if (purityData) {
-        content += `<p class="ph-data">${purityData}</p>`;
+        content += `<p class="ph-data">${stripStart(purityData, "<br>")}</p>`;
       }
       if (treatment) {
         content += `<p class="treatment">${treatment.innerHTML}</p>`;
@@ -150,6 +151,11 @@ export function processChemistry(root: HTMLElement): void {
       if (addiction) addiction.parentElement.removeChild(addiction);
       if (ph) ph.parentElement.removeChild(ph);
     });
+
+  // Set every table to be "better" format
+  root.querySelectorAll<HTMLElement>(".wikitable.sortable").forEach((table) => {
+    table.classList.add("tgh-btab");
+  });
 }
 
 export function chemistryScript(root: HTMLElement): void {

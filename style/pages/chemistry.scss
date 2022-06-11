@@ -2,32 +2,9 @@ div[data-tab="Guide_to_chemistry"] {
   @import "../utils/tooltips.scss";
 
   table.wikitable {
-    border: 0 !important;
-
-    .table-head {
-      text-align: center;
-    }
-
-    th {
-      background-color: darken($nanotrasen, 5%) !important;
-    }
-
-    & > tbody > tr > td:nth-child(2) {
-      width: 45%;
-      padding: 10px;
-    }
-
     .bgus_fz_selected {
-      background: $nanotrasen !important;
       .ph-ext table {
         background-color: lighten($nanotrasen, 10%) !important;
-      }
-      th {
-        background: lighten($nanotrasen, 5%) !important;
-      }
-      div.tooltiptext {
-        border-color: lighten($nanotrasen, 20%);
-        background: darken($nanotrasen, 10%);
       }
     }
   }
@@ -60,20 +37,13 @@ div[data-tab="Guide_to_chemistry"] {
 
   .reagent-ext {
     .reagent-header {
-      font-size: 12pt;
-      text-align: left;
-      padding: 10pt;
-      padding-bottom: 0;
-
       span[style] {
         margin-left: 0.5em;
       }
     }
     p {
-      font-size: 8pt;
-      font-weight: 300;
       line-height: 1.4em;
-      word-spacing: -0.1em;
+      margin: 12px 0;
     }
     .treatment {
       font-size: 10pt;
@@ -95,6 +65,9 @@ div[data-tab="Guide_to_chemistry"] {
     .addiction:before {
       color: #ffdf97;
       content: "Addiction at ";
+    }
+    .ph-data {
+      margin-top: 0;
     }
   }
 
