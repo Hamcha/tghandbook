@@ -5,6 +5,7 @@ import { processDrinks, drinkScript } from "./pages/drinks";
 import { genericScript } from "./pages/generic";
 import { processGlobal } from "./pages/global";
 import { welcomeScript } from "./pages/welcome";
+import { ghettochemScript, processGhettochem } from "./pages/ghettochem";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when you made changes to the processHTML part!
@@ -38,6 +39,9 @@ export function processHTML(root: HTMLElement, docname: string): void {
         break;
       case "Guide_to_drinks":
         processDrinks(root);
+        break;
+      case "Guide_to_Ghetto_Chemistry":
+        processGhettochem(root);
         break;
       default:
     }
@@ -90,6 +94,10 @@ export function bindFunctions(root: HTMLElement, docname: string): void {
     case "Guide_to_drinks":
       genericScript(root, docname);
       drinkScript(root);
+      break;
+    case "Guide_to_Ghetto_Chemistry":
+      genericScript(root, docname);
+      ghettochemScript(root);
       break;
     default:
       genericScript(root, docname);
