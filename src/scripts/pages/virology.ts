@@ -8,7 +8,7 @@ export function processVirology(root: HTMLElement): void {
   const diseases = parseTable(diseaseTable).map((row) => {
     const diseaseBlock = document.createElement("td");
     diseaseBlock.innerHTML = `
-    <div class="disease-name">${row["Disease Name"].innerHTML}</div>
+    <div class="disease-name btab-name">${row["Disease Name"].innerHTML}</div>
     <p class="vector">${row["Vector Name"].innerHTML}</p>
     <p class="source">${row["Source"].innerHTML}</p>
     <p class="spread">${row["Spread"].innerHTML}</p>
@@ -21,7 +21,7 @@ export function processVirology(root: HTMLElement): void {
   });
 
   const diseaseBetterTable = makeTable(["Disease", "Cure"], diseases);
-  diseaseBetterTable.className = "disease-ext wikitable";
+  diseaseBetterTable.className = "disease-ext tgh-btab wikitable";
   diseaseTable.replaceWith(diseaseBetterTable);
 
   const symptomsTable = root.querySelector<HTMLElement>(
@@ -36,7 +36,7 @@ export function processVirology(root: HTMLElement): void {
     .map((row) => {
       const symptomBlock = document.createElement("td");
       symptomBlock.innerHTML = `
-    <div class="disease-name">${row["Symptom"].innerHTML}</div>
+    <div class="disease-name btab-name">${row["Symptom"].innerHTML}</div>
     <p class="level">${row["Level"].innerHTML}</p>
     <p class="chemical">${row["Required Chemical"].innerHTML}</p>
     <p class="description">${row["Effect"].innerHTML}</p>
@@ -64,7 +64,7 @@ export function processVirology(root: HTMLElement): void {
     ["Symptom", "Stats", "Thresholds"],
     symptoms
   );
-  symptomsBetterTable.className = "symptoms-ext wikitable";
+  symptomsBetterTable.className = "symptoms-ext tgh-btab wikitable";
   symptomsTable.replaceWith(symptomsBetterTable);
 }
 
