@@ -24,6 +24,11 @@ async function load() {
   // De-comment to disable caching and force processing
   // manager.cacheEnabled = false;
 
+  // If using single page we're probably in development mode so disable caching
+  if (devSinglePage) {
+    manager.cacheEnabled = false;
+  }
+
   await nextAnimationFrame();
 
   // Add loading "bar"
