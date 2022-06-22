@@ -92,7 +92,7 @@
         "email": "hamcha@crunchy.rocks",
         "date": "2022-06-22T10:47:03Z"
       },
-      "message": "Remove annoying List of locations\n\nCL\nfix: Removed broken list of locations from the bottom of some pages\n/CL",
+      "message": "Remove annoying List of locations\n\nCL\nfix: Removed broken list of locations from the bottom of some pages\nadd: fake entry for testing\nqol: fake entry for testing\n/CL",
       "tree": {
         "sha": "15ab4f1bbba68730f408402a9cfa1c996e2ab567",
         "url": "https://api.github.com/repos/Hamcha/tghandbook/git/trees/15ab4f1bbba68730f408402a9cfa1c996e2ab567"
