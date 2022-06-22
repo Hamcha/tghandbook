@@ -179,7 +179,10 @@ const sections: SectionInfo[] = [
   },
   {
     name: META,
-    tabs: [{ page: "$Welcome", text: "HOME", icon: null }],
+    tabs: [
+      { page: "$Welcome", text: "HOME", icon: null },
+      { page: "$Changelog", text: "LOG", icon: null },
+    ],
   },
 ];
 

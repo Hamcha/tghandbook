@@ -1,0 +1,66 @@
+div.special[data-tab="$Changelog"] {
+  .tgh-change-entry {
+    font-size: 11pt;
+    margin-bottom: 1rem;
+
+    @media (min-width: 600px) {
+      margin-left: 20pt;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      margin-left: 10pt;
+      img {
+        max-height: 24px;
+        border-radius: 50%;
+        margin: 0 0.5rem;
+      }
+      .author {
+        font-weight: bold;
+      }
+      margin-bottom: 1rem;
+    }
+
+    .tgh-change-info {
+      padding: 2pt 10pt;
+
+      .tgh-change-tag {
+        display: inline-block;
+        text-transform: uppercase;
+        background-color: black;
+        border-radius: 3px;
+        padding: 1pt 4pt;
+        font-size: 9pt;
+        margin-right: 0.5rem;
+        border: 1px solid gray;
+
+        &.tag-add {
+          background-color: #1d6833;
+          border-color: #299964;
+        }
+        &.tag-fix {
+          background-color: #0e4c60;
+          border-color: #23a4b9;
+        }
+        &.tag-del {
+          background-color: #600e34;
+          border-color: #b9234d;
+        }
+        &.tag-qol {
+          background-color: #5d600e;
+          border-color: #b99b23;
+        }
+      }
+
+      .tgh-change-more {
+        margin-left: 0.5rem;
+        text-decoration: none;
+      }
+
+      @media (min-width: 600px) {
+        margin-left: 20pt;
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { nextAnimationFrame, delay } from "../utils";
 import { META } from "./sections";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
-import icon from "@/assets/images/icon-meta.svg";
+import metaIcon from "@/assets/images/icon-meta.svg";
 
 function initWaiting(elem: HTMLElement) {
   // Add spinner
@@ -181,7 +181,7 @@ export default class TabManager {
     sectionItem.dataset.section = name;
     if (name === META) {
       const img = document.createElement("img");
-      img.src = icon;
+      img.src = metaIcon;
       img.className = "meta-icon";
       sectionItem.appendChild(img);
     } else {

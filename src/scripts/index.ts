@@ -1,13 +1,18 @@
+// Global script
 import "./pages/global";
+
+// Page-specific processing/scripts
 import "./pages/chemistry";
 import "./pages/virology";
 import "./pages/food";
 import "./pages/drinks";
-import "./pages/generic";
-import "./pages/welcome";
 import "./pages/ghettochem";
 import "./pages/mafia";
 import "./pages/critters";
+
+// Meta pages scripts
+import "./pages/welcome";
+import "./pages/changelog";
 
 // This is used for cache busting when userscript changes significantly.
 // Only change it when making changes to the processHTML scripts!

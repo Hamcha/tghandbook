@@ -248,10 +248,8 @@ noscript {
 
 #section-list .section[data-section="$META"] {
   max-width: 0.5rem;
-}
 
-@media (min-width: 600px) {
-  #section-list .section[data-section="$META"] {
+  @media (min-width: 600px) {
     max-width: 1rem;
   }
 }

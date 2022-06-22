@@ -1,10 +1,9 @@
 import TabManager from "./ui/TabManager";
-import sections from "./ui/sections";
+import sections, { META } from "./ui/sections";
 import { nextAnimationFrame } from "./utils";
 import { searchBox } from "./scripts/search";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
-import { script } from "./scripts/register";
 
 // Enable single page mode for developing scripts
 // const devSinglePage = ["Medical", "Infections"];
@@ -66,8 +65,6 @@ async function load() {
       });
     });
   }
-  //const welcome = document.getElementById("Welcome");
-  //script("$Welcome", welcome);
 
   Promise.all(promises).then(() => {
     // Remove app-wide loading
@@ -77,7 +74,6 @@ async function load() {
     } else {
       manager.setActive("$Welcome");
       manager.showSection("Medical");
-      //welcome.classList.add("active");
     }
   });
 }

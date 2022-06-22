@@ -1,6 +1,7 @@
-import { GLOBAL, registerProcess } from "../register";
+import { GLOBAL, registerProcess, registerScript } from "../register";
 import { findParent } from "../utils";
 import { darken, ColorFmt, lighten } from "../darkmode";
+import { registerSearchEntries } from "../search";
 
 function isHeader(nodeName: string) {
   return nodeName === "H1" || nodeName === "H2" || nodeName === "H3";
@@ -21,6 +22,11 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
   // Remove edit links
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
     editLink.parentElement.removeChild(editLink);
+  });
+
+  // Make every link go to a new page
+  root.querySelectorAll("a").forEach((a) => {
+    a.target = "_blank";
   });
 
   // Darken bgcolor
@@ -133,4 +139,21 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
       node.classList.contains("tabs-tabbox")
     )?.remove();
   }
+});
+
+registerScript(GLOBAL, (root, docname) => {
+  const el = Array.from(
+    root.querySelectorAll<HTMLElement>(".mw-headline-cont[id][data-name]")
+  );
+
+  // Init fuzzy search with headlines
+  registerSearchEntries(
+    el.map((element: HTMLDivElement, id) => ({
+      id,
+      page: docname,
+      name: element.dataset.name.trim(),
+      element,
+      alignment: "start",
+    }))
+  );
 });

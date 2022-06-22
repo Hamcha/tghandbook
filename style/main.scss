@@ -2,10 +2,14 @@ $nanotrasen: #384e68;
 
 @import "ui.scss";
 @import "search.scss";
+
 @import "pages/global.scss";
+
 @import "pages/chemistry.scss";
 @import "pages/food.scss";
 @import "pages/virology.scss";
 @import "pages/mafia.scss";
 @import "pages/critters.scss";
+
+@import "pages/changelog.scss";
 @import "pages/welcome.scss";

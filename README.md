@@ -22,6 +22,8 @@ Start hot-reloading server with `npm start`
 
 Build with `npm run build`
 
+Note: While in development mode some compile-time variables (e.g. the changelog data) will use a locally downloaded version (not up to date) to avoid making requests to GitHub API (as the quota is really low).
+
 ## License
 
 The project is licensed under ISC (SPDX identifier). Please see the LICENSE file for details.
