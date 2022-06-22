@@ -4,8 +4,10 @@ import { PAGE_VERSIONS, postProcessHTML } from "../scripts/index";
 import { process, script } from "../scripts/register";
 import cache from "../cache";
 import { nextAnimationFrame, delay } from "../utils";
+import { META } from "./sections";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
+import icon from "@/assets/images/icon-meta.svg";
 
 function initWaiting(elem: HTMLElement) {
   // Add spinner
@@ -22,6 +24,14 @@ async function loadPage(
   elem: HTMLElement,
   useCache: boolean
 ): Promise<HTMLElement> {
+  // Meta pages don't need loading, they are baked in.
+  // However they might have scripts we want to run.
+  if (page.startsWith("$")) {
+    script(page, elem);
+    elem.classList.remove("waiting");
+    return elem;
+  }
+
   let html: string | null = null;
   const key = `page:${page}`;
 
@@ -169,7 +179,14 @@ export default class TabManager {
     const sectionItem = document.createElement("div");
     sectionItem.className = "section";
     sectionItem.dataset.section = name;
-    sectionItem.appendChild(document.createTextNode(name));
+    if (name === META) {
+      const img = document.createElement("img");
+      img.src = icon;
+      img.className = "meta-icon";
+      sectionItem.appendChild(img);
+    } else {
+      sectionItem.appendChild(document.createTextNode(name));
+    }
     sectionItem.addEventListener("click", () => {
       if (sectionItem.classList.contains("active")) {
         return;
@@ -194,7 +211,7 @@ export default class TabManager {
 
       // Hide all tabs
       this.tabListContainer
-        .querySelectorAll(`div[data-section=${active.dataset.section}]`)
+        .querySelectorAll(`div[data-section='${active.dataset.section}']`)
         .forEach((tab) => tab.classList.add("hidden"));
     }
     // Set section as active
@@ -202,7 +219,7 @@ export default class TabManager {
 
     // Show all tabs of that section
     this.tabListContainer
-      .querySelectorAll(`div[data-section=${name}]`)
+      .querySelectorAll(`div[data-section='${name}']`)
       .forEach((tab) => tab.classList.remove("hidden"));
   }
 
@@ -242,12 +259,25 @@ export default class TabManager {
     tabListItem.appendChild(document.createTextNode(shortTitle));
     this.tabListContainer.appendChild(tabListItem);
 
+    // Meta pages are already in the container
+    if (page.startsWith("$")) {
+      const tabContentItem =
+        this.tabContentContainer.querySelector<HTMLDivElement>(
+          `div[data-tab='${page}']`
+        );
+
+      // Create tab entry
+      this.sections[section].tabs[page] = { tabListItem, tabContentItem };
+      this.sectionMap[page] = section;
+      await loadPage(page, tabContentItem, this.cacheEnabled);
+      return;
+    }
+
     // Create tab content container
     const tabContentItem = document.createElement("div");
     tabContentItem.className = "page waiting";
     tabContentItem.dataset.tab = page;
     initWaiting(tabContentItem);
-
     this.tabContentContainer.appendChild(tabContentItem);
 
     // Create tab entry

@@ -62,12 +62,12 @@ async function load() {
           text: tab.text,
         });
         // Remove icon from loading
-        icons.removeChild(icons.querySelector(`img[data-tab=${tab.page}]`));
+        icons.removeChild(icons.querySelector(`img[data-tab='${tab.page}']`));
       });
     });
   }
-  const welcome = document.getElementById("Welcome");
-  script("$Welcome", welcome);
+  //const welcome = document.getElementById("Welcome");
+  //script("$Welcome", welcome);
 
   Promise.all(promises).then(() => {
     // Remove app-wide loading
@@ -75,8 +75,9 @@ async function load() {
     if (devSinglePage) {
       manager.setActive(devSinglePage[1]);
     } else {
+      manager.setActive("$Welcome");
       manager.showSection("Medical");
-      welcome.classList.add("active");
+      //welcome.classList.add("active");
     }
   });
 }

@@ -63,6 +63,8 @@ export interface TabInfo {
   text?: string;
 }
 
+export const META = "$META";
+
 const sections: SectionInfo[] = [
   {
     name: "Medical",
@@ -174,6 +176,10 @@ const sections: SectionInfo[] = [
       { page: "Guide_to_Space_Exploration", icon: space },
       { page: "Mafia", text: "mfia", icon: mafia },
     ],
+  },
+  {
+    name: META,
+    tabs: [{ page: "$Welcome", text: "HOME", icon: null }],
   },
 ];
 
