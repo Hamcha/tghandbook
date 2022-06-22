@@ -1,3 +1,4 @@
+import { registerScript } from "../register";
 import { nextAnimationFrame } from "../../utils";
 
 function expandPage(root: HTMLElement) {
@@ -14,7 +15,7 @@ function expandPage(root: HTMLElement) {
   root.classList.remove("center");
 }
 
-export function welcomeScript(root: HTMLElement): void {
+registerScript("$Welcome", (root) => {
   const buttonContainer = root.querySelector<HTMLElement>(".action_buttons");
   root.querySelectorAll<HTMLDivElement>("div[data-name]").forEach((sec) => {
     const { name } = sec.dataset;
@@ -32,6 +33,4 @@ export function welcomeScript(root: HTMLElement): void {
     });
     buttonContainer.appendChild(button);
   });
-}
-
-export default { welcomeScript };
+});

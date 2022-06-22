@@ -1,7 +1,10 @@
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
+import { registerProcess, registerScript } from "../register";
 
-export function processDrinks(root: HTMLElement): void {
+const page = "Guide_to_drinks";
+
+registerProcess(page, (root) => {
   const mixDrinks: HTMLTableElement[] = [],
     junkDrinks: HTMLTableElement[] = [];
   root.querySelectorAll<HTMLTableElement>(".wikitable").forEach((table) => {
@@ -52,9 +55,9 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
     betterBookTable.className = "junk-ext tgh-btab wikitable";
     table.replaceWith(betterBookTable);
   });
-}
+});
 
-export function drinkScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   // Init fuzzy search with elements
   const foodEntries = Array.from(
     root.querySelectorAll<HTMLElement>(
@@ -70,9 +73,4 @@ export function drinkScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processDrinks,
-  drinkScript,
-};
+});

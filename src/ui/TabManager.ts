@@ -1,11 +1,7 @@
 import speen from "@/assets/images/speen.svg";
 import { getPageHTML } from "../wiki";
-import {
-  processHTML,
-  bindFunctions,
-  PAGE_VERSIONS,
-  postProcessHTML,
-} from "../scripts/index";
+import { PAGE_VERSIONS, postProcessHTML } from "../scripts/index";
+import { process, script } from "../scripts/register";
 import cache from "../cache";
 import { nextAnimationFrame, delay } from "../utils";
 
@@ -77,7 +73,12 @@ async function loadPage(
     wrapper.innerHTML = html;
 
     console.log(`${page}: processing`);
-    processHTML(wrapper, page);
+    try {
+      process(page, wrapper);
+    } catch (e) {
+      console.error(`Error processing page: ${page}`);
+      console.error(e);
+    }
 
     // Get version to set
     const version =
@@ -95,7 +96,7 @@ async function loadPage(
   }
 
   elem.innerHTML = wrapper.outerHTML;
-  bindFunctions(elem, page);
+  script(page, elem);
   elem.classList.remove("waiting");
 
   return elem;

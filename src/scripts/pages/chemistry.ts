@@ -1,8 +1,11 @@
 import { registerSearchEntries } from "../search";
+import { registerProcess, registerScript } from "../register";
 import { findParent } from "../utils";
 import { stripStart } from "../../utils";
 
-export function processChemistry(root: HTMLElement): void {
+const page = "Guide_to_chemistry";
+
+registerProcess(page, (root) => {
   // Fix inconsistencies with <p> on random parts
   // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
   root
@@ -156,9 +159,9 @@ export function processChemistry(root: HTMLElement): void {
   root.querySelectorAll<HTMLElement>(".wikitable.sortable").forEach((table) => {
     table.classList.add("tgh-btab");
   });
-}
+});
 
-export function chemistryScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   // Add event to autofill child checkboxes
   root
     .querySelectorAll(".bgus_part_tooltip > .bgus_checkbox")
@@ -315,6 +318,4 @@ export function chemistryScript(root: HTMLElement): void {
       ph.classList.add("ph-ext");
     });
   });
-}
-
-export default { chemistryScript, processChemistry };
+});

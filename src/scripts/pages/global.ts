@@ -1,3 +1,4 @@
+import { GLOBAL, registerProcess } from "../register";
 import { findParent } from "../utils";
 import { darken, ColorFmt, lighten } from "../darkmode";
 
@@ -5,7 +6,7 @@ function isHeader(nodeName: string) {
   return nodeName === "H1" || nodeName === "H2" || nodeName === "H3";
 }
 
-export function processGlobal(root: HTMLElement, docname: string): void {
+registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
   // Add header
   const header = document.createElement("h1");
   header.className = "pageheader";
@@ -120,6 +121,4 @@ export function processGlobal(root: HTMLElement, docname: string): void {
         span.classList.add("mw-headline-cont");
       }
     });
-}
-
-export default { processGlobal };
+});

@@ -1,6 +1,7 @@
+import { GLOBAL, registerScript } from "../register";
 import { registerSearchEntries } from "../search";
 
-export function genericScript(root: HTMLElement, docname: string): void {
+registerScript(GLOBAL, (root, docname) => {
   const el = Array.from(
     root.querySelectorAll<HTMLElement>(".mw-headline-cont[id][data-name]")
   );
@@ -15,6 +16,4 @@ export function genericScript(root: HTMLElement, docname: string): void {
       alignment: "start",
     }))
   );
-}
-
-export default { genericScript };
+});

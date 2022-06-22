@@ -1,7 +1,10 @@
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
+import { registerProcess, registerScript } from "../register";
 
-export function processCritters(root: HTMLElement): void {
+const page = "Critters";
+
+registerProcess(page, (root) => {
   const tables = root.querySelectorAll<HTMLElement>(".wikitable");
   // Only process tables with a valid header
   Array.from(tables)
@@ -25,9 +28,9 @@ export function processCritters(root: HTMLElement): void {
       betterRoleTable.className = "critter-ext tgh-btab wikitable";
       table.replaceWith(betterRoleTable);
     });
-}
+});
 
-export function crittersScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   const roles = Array.from(
     root.querySelectorAll<HTMLElement>(
       ".critter-ext > tbody > tr:not(:first-child)"
@@ -42,9 +45,4 @@ export function crittersScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processCritters,
-  crittersScript,
-};
+});

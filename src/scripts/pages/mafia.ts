@@ -1,7 +1,10 @@
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
+import { registerProcess, registerScript } from "../register";
 
-export function processMafia(root: HTMLElement): void {
+const page = "Mafia";
+
+registerProcess(page, (root) => {
   const tables = root.querySelectorAll<HTMLElement>(".wikitable");
   // Only process tables with a "Role" header
   Array.from(tables)
@@ -22,9 +25,9 @@ export function processMafia(root: HTMLElement): void {
       betterRoleTable.className = "role-ext tgh-btab wikitable";
       table.replaceWith(betterRoleTable);
     });
-}
+});
 
-export function mafiaScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   const roles = Array.from(
     root.querySelectorAll<HTMLElement>(
       ".role-ext > tbody > tr:not(:first-child)"
@@ -39,9 +42,4 @@ export function mafiaScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processMafia,
-  mafiaScript,
-};
+});

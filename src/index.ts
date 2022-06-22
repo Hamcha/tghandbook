@@ -4,10 +4,10 @@ import { nextAnimationFrame } from "./utils";
 import { searchBox } from "./scripts/search";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
-import { bindFunctions } from "./scripts/index";
+import { script } from "./scripts/register";
 
 // Enable single page mode for developing scripts
-// const devSinglePage = ["Medical", "Guide_to_chemistry"];
+// const devSinglePage = ["Medical", "Infections"];
 const devSinglePage = null;
 
 async function load() {
@@ -67,7 +67,7 @@ async function load() {
     });
   }
   const welcome = document.getElementById("Welcome");
-  bindFunctions(welcome, "$Welcome");
+  script("$Welcome", welcome);
 
   Promise.all(promises).then(() => {
     // Remove app-wide loading

@@ -1,7 +1,10 @@
+import { registerProcess, registerScript } from "../register";
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
 
-export function processVirology(root: HTMLElement): void {
+const page = "Infections";
+
+registerProcess(page, (root) => {
   const diseaseTable = root.querySelector<HTMLElement>(
     "#Simple_Diseases .wikitable"
   );
@@ -66,9 +69,9 @@ export function processVirology(root: HTMLElement): void {
   );
   symptomsBetterTable.className = "symptoms-ext tgh-btab wikitable";
   symptomsTable.replaceWith(symptomsBetterTable);
-}
+});
 
-export function virologyScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   // Init fuzzy search with elements
   const diseases = Array.from(
     root.querySelectorAll<HTMLElement>(".disease-ext tr:not(:first-child)")
@@ -96,9 +99,4 @@ export function virologyScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processVirology,
-  virologyScript,
-};
+});

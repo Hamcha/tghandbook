@@ -1,7 +1,10 @@
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
+import { registerProcess, registerScript } from "../register";
 
-export function processGhettochem(root: HTMLElement): void {
+const page = "Guide_to_Ghetto_Chemistry";
+
+registerProcess(page, (root) => {
   const grindableTable = root.querySelector<HTMLElement>(
     "#Grindables .wikitable"
   );
@@ -20,9 +23,9 @@ export function processGhettochem(root: HTMLElement): void {
   const grindableBetterTable = makeTable(["Chemical", "Sources"], grindables);
   grindableBetterTable.className = "grindable-ext tgh-btab wikitable";
   grindableTable.replaceWith(grindableBetterTable);
-}
+});
 
-export function ghettochemScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   // Init fuzzy search with elements
   const grindables = Array.from(
     root.querySelectorAll<HTMLElement>(".grindable-ext tr:not(:first-child)")
@@ -36,9 +39,4 @@ export function ghettochemScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processGhettochem,
-  ghettochemScript,
-};
+});

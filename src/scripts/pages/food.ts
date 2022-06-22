@@ -1,7 +1,10 @@
+import { registerProcess, registerScript } from "../register";
 import { parseTable, makeTable } from "../utils";
 import { registerSearchEntries } from "../search";
 
-export function processFood(root: HTMLElement): void {
+const page = "Guide_to_food";
+
+registerProcess(page, (root) => {
   // Set up the two kinds of tables and populate them
   const baseFoodTables: HTMLTableElement[] = [],
     foodRecipesTables: HTMLTableElement[] = [];
@@ -106,9 +109,9 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
   const betterCustomTable = makeTable(Object.keys(customFood[0]), customFood);
   betterCustomTable.className = "food-base-ext tgh-btab wikitable";
   customTable.replaceWith(betterCustomTable);
-}
+});
 
-export function foodScript(root: HTMLElement): void {
+registerScript(page, (root) => {
   // Add event to collapse subsections
   root.querySelectorAll(".bgus_nested_element").forEach((twistie) => {
     twistie.addEventListener("click", () => {
@@ -131,9 +134,4 @@ export function foodScript(root: HTMLElement): void {
       id,
     }))
   );
-}
-
-export default {
-  processFood,
-  foodScript,
-};
+});
