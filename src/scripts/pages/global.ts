@@ -121,4 +121,16 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
         span.classList.add("mw-headline-cont");
       }
     });
+
+  // Remove list of places
+  // Note: This selector sucks major dong but it's the best I can do
+  //       until tabs are implemented properly, thanks for understanding
+  const locationLink = root.querySelector<HTMLElement>(
+    ".tabs-tabbox a[title='Labor Camp']"
+  );
+  if (locationLink) {
+    findParent(locationLink, (node) =>
+      node.classList.contains("tabs-tabbox")
+    )?.remove();
+  }
 });
