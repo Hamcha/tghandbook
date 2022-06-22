@@ -13,7 +13,6 @@ registerProcess(page, (root) => {
     )
     .forEach((table) => {
       const critters = parseTable(table).map((row) => {
-        console.log(row);
         const critterBlock = document.createElement("td");
         critterBlock.innerHTML = `
 	<div class="critter-pic btab-pic">${row.$row0.innerHTML}</div>
