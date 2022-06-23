@@ -35,7 +35,7 @@ export function addHistoryEntry(page: string, hash: string) {
   history.pushState(
     { page, hash },
     "",
-    `${prefix}/${pageName}${hash ? `#${hash}` : ""}`
+    `${prefix}${pageName}${hash ? `#${hash}` : ""}`
   );
 }
 
