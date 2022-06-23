@@ -2,6 +2,7 @@ import speen from "@/assets/images/speen.svg";
 import { getPageHTML } from "../wiki";
 import { PAGE_VERSIONS, postProcessHTML } from "../scripts/index";
 import { process, script } from "../scripts/register";
+import { addHistoryEntry } from "../scripts/history";
 import cache from "../cache";
 import { nextAnimationFrame, delay } from "../utils";
 import { META } from "./sections";
@@ -250,6 +251,7 @@ export default class TabManager {
         return;
       }
       this.setActive(page);
+      addHistoryEntry(page, "");
     });
     const iconElement = document.createElement("img");
     iconElement.src = icon || unknown;

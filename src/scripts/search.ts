@@ -1,5 +1,6 @@
 import { nextAnimationFrame } from "../utils";
 import TabManager from "../ui/TabManager";
+import { addHistoryEntry } from "./history";
 
 interface SearchEntry {
   page: string;
@@ -19,34 +20,57 @@ export function registerSearchEntries(entries: SearchEntry[]): void {
   allEntries.push(...entries);
 }
 
+export function findEntry(page: string, name: string): SearchEntry {
+  return allEntries.find((entry) => entry.page === page && entry.name === name);
+}
+
+export function jumpTo(entry: SearchEntry, global: boolean) {
+  // If page is different jump to that
+  if (global) {
+    const currentPage =
+      document.querySelector<HTMLElement>(".page.active")?.dataset.tab;
+    if (currentPage !== entry.page) {
+      TabManager.instance.setActive(entry.page);
+    }
+  }
+
+  entry.element.scrollIntoView({
+    block: entry.alignment,
+    inline: "nearest",
+    behavior: "auto",
+  });
+  document
+    .querySelectorAll(".bgus_fz_selected")
+    .forEach((sel) => sel.classList.remove("bgus_fz_selected"));
+  entry.element.classList.add("bgus_fz_selected");
+}
+
+export function gotoPage(page: string, hash: string) {
+  // Exit early if no valid page is provided
+  if (!page) {
+    return false;
+  }
+
+  // Go to page
+  TabManager.instance.setActive(page);
+
+  // Check for entry if hash exists
+  if (hash) {
+    const entry = findEntry(page, hash);
+    if (entry) {
+      jumpTo(entry, false);
+    }
+  }
+  return true;
+}
+
 export function searchBox(): HTMLElement {
   // Fuzzy search box
   const resultList = document.createElement("ul");
   const searchBoxElem = document.createElement("div");
+  let results: (SearchEntry & { matches: string[] })[] = [];
   let selectedResult = 0;
-  let results = [];
   let global = false;
-
-  const jumpTo = (entry: SearchEntry) => {
-    // If page is different jump to that
-    if (global) {
-      const currentPage =
-        document.querySelector<HTMLElement>(".page.active").dataset.tab;
-      if (currentPage !== entry.page) {
-        TabManager.instance.setActive(entry.page);
-      }
-    }
-
-    entry.element.scrollIntoView({
-      block: entry.alignment,
-      inline: "nearest",
-      behavior: "auto",
-    });
-    document
-      .querySelectorAll(".bgus_fz_selected")
-      .forEach((sel) => sel.classList.remove("bgus_fz_selected"));
-    entry.element.classList.add("bgus_fz_selected");
-  };
 
   const setSelectedResult = (i) => {
     selectedResult = i;
@@ -54,7 +78,7 @@ export function searchBox(): HTMLElement {
       .querySelectorAll(".selected")
       .forEach((sel) => sel.classList.remove("selected"));
     resultList.children[i].classList.add("selected");
-    jumpTo(results[i]);
+    jumpTo(results[i], global);
   };
 
   const search = async (str: string, currentPage: string) => {
@@ -155,7 +179,8 @@ export function searchBox(): HTMLElement {
         li.appendChild(source);
       }
       li.addEventListener("click", () => {
-        jumpTo(elem);
+        jumpTo(elem, global);
+        addHistoryEntry(elem.page, elem.name);
         searchBoxElem.classList.add("bgus_hidden");
       });
       resultList.appendChild(li);
@@ -177,7 +202,9 @@ export function searchBox(): HTMLElement {
         return;
       case "Enter": // Enter - Jump to first result and hide bar
         if (results.length > 0) {
-          jumpTo(results[selectedResult]);
+          const res = results[selectedResult];
+          jumpTo(res, global);
+          addHistoryEntry(res.page, res.name);
         }
         searchBoxElem.classList.add("bgus_hidden");
         return;

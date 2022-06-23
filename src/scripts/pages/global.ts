@@ -24,9 +24,11 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
     editLink.parentElement.removeChild(editLink);
   });
 
-  // Make every link go to a new page
+  // Make every link go to a new page (if different pathname)
   root.querySelectorAll("a").forEach((a) => {
-    a.target = "_blank";
+    if (!a.href.includes(docname)) {
+      a.target = "_blank";
+    }
   });
 
   // Darken bgcolor

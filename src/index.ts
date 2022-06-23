@@ -1,7 +1,8 @@
 import TabManager from "./ui/TabManager";
-import sections, { META } from "./ui/sections";
+import sections from "./ui/sections";
 import { nextAnimationFrame } from "./utils";
-import { searchBox } from "./scripts/search";
+import { gotoPage, searchBox } from "./scripts/search";
+import { getCurrentPage } from "./scripts/history";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
 
@@ -72,8 +73,13 @@ async function load() {
     if (devSinglePage) {
       manager.setActive(devSinglePage[1]);
     } else {
-      manager.setActive("$Welcome");
-      manager.showSection("Medical");
+      const { path, hash } = getCurrentPage();
+
+      // Try to open page from URL, open landing page if fail
+      if (!gotoPage(path, hash)) {
+        manager.setActive("$Welcome");
+        manager.showSection("Medical");
+      }
     }
   });
 }
