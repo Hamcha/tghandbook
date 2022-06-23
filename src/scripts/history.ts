@@ -10,8 +10,9 @@ export function getCurrentPage() {
   // eslint-disable-next-line no-restricted-globals
   const { pathname, hash } = location;
 
-  // Strip first character
-  let path = pathname.substring(1);
+  // Strip prefix
+  const prefix = import.meta.env.VITE_PATH ?? "";
+  let path = pathname.substring(1 + prefix.length);
 
   if (path.startsWith("meta/")) {
     path = `$${path.substring(5)}`;
@@ -29,8 +30,13 @@ export function addHistoryEntry(page: string, hash: string) {
       pageName = `/meta/${page.substring(1)}`;
     }
   }
+  const prefix = import.meta.env.VITE_PATH ?? "";
   // eslint-disable-next-line no-restricted-globals
-  history.pushState({ page, hash }, "", pageName + (hash ? `#${hash}` : ""));
+  history.pushState(
+    { page, hash },
+    "",
+    `${prefix}/${pageName}${hash ? `#${hash}` : ""}`
+  );
 }
 
 export default { getCurrentPage };
