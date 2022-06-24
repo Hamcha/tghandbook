@@ -1,6 +1,5 @@
 div.special[data-tab="$Changelog"] {
   .tgh-change-entry {
-    font-size: 11pt;
     margin-bottom: 1rem;
 
     @media (min-width: 600px) {
@@ -67,7 +66,6 @@ div.special[data-tab="$Changelog"] {
   }
 
   .tgh-changes-end {
-    font-size: 12pt;
     text-align: center;
     border-top: 1px dashed #384e68;
     padding-top: 1rem;
