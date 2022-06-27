@@ -1,25 +1,8 @@
 import { $el, zipBy } from "../../utils";
 import { registerScript } from "../register";
 
-export interface Commit {
-  sha: string;
-  author: {
-    login: string;
-    avatar_url: string;
-  };
-  commit: {
-    author: {
-      name: string;
-      email: string;
-      date: string;
-    };
-    message: string;
-  };
-  html_url: string;
-}
-
 interface ChangelogEntry {
-  date: Date;
+  date: string;
   author: {
     name: string;
     avatar: string;
@@ -28,39 +11,14 @@ interface ChangelogEntry {
   url: string;
 }
 
-function parseChanges(commits: Commit[]): ChangelogEntry[] {
-  const clCommits = commits
-    // Filter out any commit that doesn't have a CL entry
-    .filter((cl) => cl.commit.message.includes("\n/CL"))
-    // Split multi-entry CL into their own mini-commits
-    .reduce<ChangelogEntry[]>((list, cl) => {
-      const message = cl.commit.message.split("\n").map((line) => line.trim());
-      const clStartIndex = message.indexOf("CL");
-      const clEndIndex = message.indexOf("/CL");
-      const entries = message
-        .splice(clStartIndex + 1, clEndIndex - clStartIndex - 1)
-        .map((entry) => ({
-          date: new Date(cl.commit.author.date),
-          author: {
-            name: cl.commit.author.name,
-            avatar: cl.author.avatar_url,
-          },
-          change: entry,
-          url: cl.html_url,
-        }));
-      return [...list, ...entries];
-    }, []);
-  return clCommits;
-}
-
 registerScript("$Changelog", async (root) => {
-  const changes = import.meta.CHANGELOG;
-  const changelogEntries = parseChanges(changes as Commit[]);
+  // @ts-expect-error This is replaced at compile time
+  const changes: ChangelogEntry[] = import.meta.CHANGELOG;
 
   const container = root.querySelector<HTMLElement>(".tgh-changes");
   // Group changes by date
-  const changesByDate = zipBy(changelogEntries, (ch) => {
-    const dateStr = ch.date.toISOString();
+  const changesByDate = zipBy(changes, (ch) => {
+    const dateStr = new Date(ch.date).toISOString();
     return dateStr.substring(0, dateStr.indexOf("T"));
   });
 
