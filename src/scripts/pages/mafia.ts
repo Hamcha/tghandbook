@@ -35,7 +35,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     roles.map((element, id) => ({
-      page: "Mafia",
+      page,
       name: element.querySelector(".role-name").textContent.trim(),
       element,
       alignment: "center",

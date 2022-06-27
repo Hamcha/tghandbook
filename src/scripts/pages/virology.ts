@@ -78,7 +78,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     diseases.map((element, id) => ({
-      page: "Infections",
+      page,
       name: element.querySelector(".disease-name").textContent.trim(),
       element,
       alignment: "center",
@@ -92,7 +92,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     symptoms.map((element, id) => ({
-      page: "Infections",
+      page,
       name: element.querySelector(".disease-name").textContent.trim(),
       element,
       alignment: "center",

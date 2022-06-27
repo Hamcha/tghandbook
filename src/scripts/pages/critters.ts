@@ -37,7 +37,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     roles.map((element, id) => ({
-      page: "Critters",
+      page,
       name: element.querySelector(".critter-name").textContent.trim(),
       element,
       alignment: "center",

@@ -32,7 +32,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     grindables.map((element, id) => ({
-      page: "Guide_to_Ghetto_Chemistry",
+      page,
       name: element.querySelector(".grindable-name").textContent.trim(),
       element,
       alignment: "center",

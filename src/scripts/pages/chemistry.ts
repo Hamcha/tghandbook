@@ -223,7 +223,7 @@ registerScript(page, (root) => {
         "table.wikitable > tbody > tr:not(:first-child) th .reagent-header"
       )
     ).map((element, id) => ({
-      page: "Guide_to_chemistry",
+      page,
       name: element.textContent.trim().replace(/\n.+$/gm, "").replace("▮", ""),
       element: element.parentElement,
       alignment: "center",

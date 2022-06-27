@@ -66,7 +66,7 @@ registerScript(page, (root) => {
   );
   registerSearchEntries(
     foodEntries.map((element, id) => ({
-      page: "Guide_to_drinks",
+      page,
       name: element.querySelector(".food-name").textContent.trim(),
       element,
       alignment: "center",
