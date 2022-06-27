@@ -9,6 +9,7 @@ import "./pages/drinks";
 import "./pages/ghettochem";
 import "./pages/mafia";
 import "./pages/critters";
+import "./pages/tourist";
 
 // Meta pages scripts
 import "./pages/welcome";
@@ -24,6 +25,7 @@ export const PAGE_VERSIONS = {
   Guide_to_Ghetto_Chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
   Mafia: "87d3bd9890395d4c01e435e895ac05aac3515047",
   Critters: "87d3bd9890395d4c01e435e895ac05aac3515047",
+  Guide_to_Restaurant: "2ac9162d72e2877191892ed4c737c023d5fc2964",
   $DEFAULT: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
 };
 
