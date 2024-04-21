@@ -1,3 +1,4 @@
+/* Icons */
 import chemistry from "@/assets/images/tab-icons/chemistry.svg";
 import medicine from "@/assets/images/tab-icons/medicine.svg";
 import plumbing from "@/assets/images/tab-icons/plumbing.svg";
@@ -52,6 +53,93 @@ import circuits from "@/assets/images/tab-icons/circuit.svg";
 import tourist from "@/assets/images/tab-icons/tourist.svg";
 import drink from "@/assets/images/tab-icons/drink.svg";
 
+/* Pages */
+import Guide_to_medicine from "@/data/pages/Guide_to_medicine";
+import Guide_to_chemistry from "@/data/pages/Guide_to_chemistry";
+import Guide_to_plumbing from "@/data/pages/Guide_to_plumbing";
+import Grenade from "@/data/pages/Grenade";
+import Infections from "@/data/pages/Infections";
+import Surgery from "@/data/pages/Surgery";
+import Guide_to_Traumas from "@/data/pages/Guide_to_Traumas";
+import Guide_to_Wounds from "@/data/pages/Guide_to_Wounds";
+import Guide_to_Ghetto_Chemistry from "@/data/pages/Guide_to_Ghetto_Chemistry";
+import Guide_to_construction from "@/data/pages/Guide_to_construction";
+import Machines from "@/data/pages/Machines";
+import Guide_to_power from "@/data/pages/Guide_to_power";
+import Solars from "@/data/pages/Solars";
+import Guide_to_the_Supermatter from "@/data/pages/Guide_to_the_Supermatter";
+import Guide_to_disposals from "@/data/pages/Guide_to_disposals";
+import Gas_turbine from "@/data/pages/Gas_turbine";
+import Guide_to_Atmospherics from "@/data/pages/Guide_to_Atmospherics";
+import Guide_to_Telecommunications from "@/data/pages/Guide_to_Telecommunications";
+import Guide_to_Research_and_Development from "@/data/pages/Guide_to_Research_and_Development";
+import Guide_to_robotics from "@/data/pages/Guide_to_robotics";
+import Guide_to_toxins from "@/data/pages/Guide_to_toxins";
+import Guide_to_xenobiology from "@/data/pages/Guide_to_xenobiology";
+import Guide_to_genetics from "@/data/pages/Guide_to_genetics";
+import Guide_to_cytology from "@/data/pages/Guide_to_cytology";
+import Guide_to_Circuits from "@/data/pages/Guide_to_Circuits";
+import Guide_to_food from "@/data/pages/Guide_to_food";
+import Guide_to_drinks from "@/data/pages/Guide_to_drinks";
+import Guide_to_Restaurant from "@/data/pages/Guide_to_Restaurant";
+import Guide_to_hydroponics from "@/data/pages/Guide_to_hydroponics";
+import Supply_crates from "@/data/pages/Supply_crates";
+import Auxiliary_Base_Construction_Area from "@/data/pages/Auxiliary_Base_Construction_Area";
+import Guide_to_security from "@/data/pages/Guide_to_security";
+import Space_Law from "@/data/pages/Space_Law";
+import Standard_Operating_Procedure from "@/data/pages/Standard_Operating_Procedure";
+import Guide_to_trials from "@/data/pages/Guide_to_trials";
+import Guide_to_Combat from "@/data/pages/Guide_to_Combat";
+import Traitor from "@/data/pages/Traitor";
+import Makeshift_weapons from "@/data/pages/Makeshift_weapons";
+import Syndicate_Items from "@/data/pages/Syndicate_Items";
+import Illicit_Access from "@/data/pages/Illicit_Access";
+import Revolutionary from "@/data/pages/Revolutionary";
+import Blood_Cult from "@/data/pages/Blood_Cult";
+import Nuclear_Operative from "@/data/pages/Nuclear_Operative";
+import Guide_to_malfunction from "@/data/pages/Guide_to_malfunction";
+import Xenos from "@/data/pages/Xenos";
+import Abductor from "@/data/pages/Abductor";
+import Families from "@/data/pages/Families";
+import Heretic from "@/data/pages/Heretic";
+import Rules from "@/data/pages/Rules";
+import AI_modules from "@/data/pages/AI_modules";
+import Hacking from "@/data/pages/Hacking";
+import Critters from "@/data/pages/Critters";
+import Guide_to_races from "@/data/pages/Guide_to_races";
+import Paper_Markdown from "@/data/pages/Paper_Markdown";
+import Songs from "@/data/pages/Songs";
+import Guide_to_Space_Exploration from "@/data/pages/Guide_to_Space_Exploration";
+import Mafia from "@/data/pages/Mafia";
+
+export interface ParsedPage {
+  title: string;
+  pageid: number;
+  revid: number;
+  text: WrappedString;
+  categories: WrappedString[];
+  links: WrappedString[];
+  templates: WrappedString[];
+  images: string[];
+  sections: WikiSection[];
+  displaytitle: string;
+}
+
+interface WrappedString {
+  "*": string;
+}
+
+interface WikiSection {
+  toclevel: number;
+  level: string;
+  line: string;
+  number: string;
+  index: string;
+  fromtitle: string;
+  byteoffset: number;
+  anchor: string;
+}
+
 export interface SectionInfo {
   name: string;
   tabs: TabInfo[];
@@ -61,6 +149,7 @@ export interface TabInfo {
   page: string;
   icon: string | null;
   text?: string;
+  data?: ParsedPage;
 }
 
 export const META = "$META";
@@ -69,94 +158,201 @@ const sections: SectionInfo[] = [
   {
     name: "Medical",
     tabs: [
-      { page: "Guide_to_medicine", icon: medicine },
-      { page: "Guide_to_chemistry", icon: chemistry },
-      { page: "Guide_to_plumbing", icon: plumbing },
-      { page: "Grenade", text: "nade", icon: grenade },
-      { page: "Infections", text: "virus", icon: virus },
-      { page: "Surgery", icon: surgery },
-      { page: "Guide_to_Traumas", text: "trauma", icon: trauma },
-      { page: "Guide_to_Wounds", text: "wound", icon: wound },
-      { page: "Guide_to_Ghetto_Chemistry", text: "ghetto", icon: ghetto },
+      { page: "Guide_to_medicine", icon: medicine, data: Guide_to_medicine },
+      { page: "Guide_to_chemistry", icon: chemistry, data: Guide_to_chemistry },
+      { page: "Guide_to_plumbing", icon: plumbing, data: Guide_to_plumbing },
+      { page: "Grenade", text: "nade", icon: grenade, data: Grenade },
+      { page: "Infections", text: "virus", icon: virus, data: Infections },
+      { page: "Surgery", icon: surgery, data: Surgery },
+      {
+        page: "Guide_to_Traumas",
+        text: "trauma",
+        icon: trauma,
+        data: Guide_to_Traumas,
+      },
+      {
+        page: "Guide_to_Wounds",
+        text: "wound",
+        icon: wound,
+        data: Guide_to_Wounds,
+      },
+      {
+        page: "Guide_to_Ghetto_Chemistry",
+        text: "ghetto",
+        icon: ghetto,
+        data: Guide_to_Ghetto_Chemistry,
+      },
     ],
   },
   {
     name: "Engineering",
     tabs: [
-      { page: "Guide_to_construction", icon: construction },
-      { page: "Machines", icon: machines },
-      { page: "Guide_to_power", text: "power", icon: power },
-      { page: "Solars", text: "solar", icon: solar },
-      { page: "Guide_to_the_Supermatter", text: "smatt", icon: supermatter },
+      { page: "Guide_to_construction", icon: construction, data: Surgery },
+      { page: "Machines", icon: machines, data: Guide_to_Traumas },
+      {
+        page: "Guide_to_power",
+        text: "power",
+        icon: power,
+        data: Guide_to_Wounds,
+      },
+      {
+        page: "Solars",
+        text: "solar",
+        icon: solar,
+        data: Guide_to_Ghetto_Chemistry,
+      },
+      {
+        page: "Guide_to_the_Supermatter",
+        text: "smatt",
+        icon: supermatter,
+        data: Surgery,
+      },
       {
         page: "Guide_to_disposals",
         text: "DISP",
         icon: null, // TODO: add icon
+        data: Guide_to_disposals,
       },
-      { page: "Gas_turbine", text: "TURB", icon: turbine },
-      { page: "Guide_to_Atmospherics", text: "atmos", icon: atmos },
-      { page: "Guide_to_Telecommunications", icon: tcomm, text: "tcomm" },
+      { page: "Gas_turbine", text: "TURB", icon: turbine, data: Gas_turbine },
+      {
+        page: "Guide_to_Atmospherics",
+        text: "atmos",
+        icon: atmos,
+        data: Guide_to_Atmospherics,
+      },
+      {
+        page: "Guide_to_Telecommunications",
+        icon: tcomm,
+        text: "tcomm",
+        data: Guide_to_Telecommunications,
+      },
     ],
   },
   {
     name: "Science",
     tabs: [
-      { page: "Guide_to_Research_and_Development", text: "R&D", icon: rnd },
-      { page: "Guide_to_robotics", icon: robo },
-      { page: "Guide_to_toxins", text: "toxin", icon: toxins },
-      { page: "Guide_to_xenobiology", text: "XBIO", icon: xeno },
-      { page: "Guide_to_genetics", icon: genetics },
-      { page: "Guide_to_cytology", text: "cyto", icon: cyto },
-      { page: "Guide_to_Circuits", text: "circ", icon: circuits },
+      {
+        page: "Guide_to_Research_and_Development",
+        text: "R&D",
+        icon: rnd,
+        data: Guide_to_Research_and_Development,
+      },
+      { page: "Guide_to_robotics", icon: robo, data: Guide_to_robotics },
+      {
+        page: "Guide_to_toxins",
+        text: "toxin",
+        icon: toxins,
+        data: Guide_to_toxins,
+      },
+      {
+        page: "Guide_to_xenobiology",
+        text: "XBIO",
+        icon: xeno,
+        data: Guide_to_xenobiology,
+      },
+      { page: "Guide_to_genetics", icon: genetics, data: Guide_to_genetics },
+      {
+        page: "Guide_to_cytology",
+        text: "cyto",
+        icon: cyto,
+        data: Guide_to_cytology,
+      },
+      {
+        page: "Guide_to_Circuits",
+        text: "circ",
+        icon: circuits,
+        data: Guide_to_Circuits,
+      },
       // { page: "Guide_to_Nanites", text: "nanite", icon: nanites },
     ],
   },
   {
     name: "Service",
     tabs: [
-      { page: "Guide_to_food", text: "food", icon: food },
-      { page: "Guide_to_drinks", text: "drnk", icon: drink },
-      { page: "Guide_to_Restaurant", text: "TOUR", icon: tourist },
-      { page: "Guide_to_hydroponics", icon: hydro },
-      { page: "Supply_crates", icon: crate },
-      { page: "Auxiliary_Base_Construction_Area", text: "aux", icon: aux },
+      { page: "Guide_to_food", text: "food", icon: food, data: Guide_to_food },
+      {
+        page: "Guide_to_drinks",
+        text: "drnk",
+        icon: drink,
+        data: Guide_to_drinks,
+      },
+      {
+        page: "Guide_to_Restaurant",
+        text: "TOUR",
+        icon: tourist,
+        data: Guide_to_Restaurant,
+      },
+      { page: "Guide_to_hydroponics", icon: hydro, data: Guide_to_hydroponics },
+      { page: "Supply_crates", icon: crate, data: Supply_crates },
+      {
+        page: "Auxiliary_Base_Construction_Area",
+        text: "aux",
+        icon: aux,
+        data: Auxiliary_Base_Construction_Area,
+      },
     ],
   },
   {
     name: "Security",
     tabs: [
-      { page: "Guide_to_security", text: "security", icon: security },
-      { page: "Space_Law", text: "space law", icon: law },
-      { page: "Standard_Operating_Procedure", text: "S.O.P.", icon: sop },
-      { page: "Guide_to_trials", text: "trials", icon: trial },
-      { page: "Guide_to_Combat", icon: combat },
+      {
+        page: "Guide_to_security",
+        text: "security",
+        icon: security,
+        data: Guide_to_security,
+      },
+      { page: "Space_Law", text: "space law", icon: law, data: Space_Law },
+      {
+        page: "Standard_Operating_Procedure",
+        text: "S.O.P.",
+        icon: sop,
+        data: Standard_Operating_Procedure,
+      },
+      {
+        page: "Guide_to_trials",
+        text: "trials",
+        icon: trial,
+        data: Guide_to_trials,
+      },
+      { page: "Guide_to_Combat", icon: combat, data: Guide_to_Combat },
     ],
   },
   {
     name: "Antag",
     tabs: [
-      { page: "Traitor", icon: traitor },
-      { page: "Makeshift_weapons", icon: weapons },
-      { page: "Syndicate_Items", text: "uplk", icon: uplink },
-      { page: "Illicit_Access", icon: access },
-      { page: "Revolutionary", text: "rev", icon: rev },
-      { page: "Blood_Cult", text: "cult", icon: cult },
-      { page: "Nuclear_Operative", text: "nuke", icon: nuke },
-      { page: "Guide_to_malfunction", icon: malf },
-      { page: "Xenos", text: "XENO", icon: xmorph },
-      { page: "Abductor", icon: abduction },
-      { page: "Families", icon: mafia },
+      { page: "Traitor", icon: traitor, data: Traitor },
+      { page: "Makeshift_weapons", icon: weapons, data: Makeshift_weapons },
+      {
+        page: "Syndicate_Items",
+        text: "uplk",
+        icon: uplink,
+        data: Syndicate_Items,
+      },
+      { page: "Illicit_Access", icon: access, data: Illicit_Access },
+      { page: "Revolutionary", text: "rev", icon: rev, data: Revolutionary },
+      { page: "Blood_Cult", text: "cult", icon: cult, data: Blood_Cult },
+      {
+        page: "Nuclear_Operative",
+        text: "nuke",
+        icon: nuke,
+        data: Nuclear_Operative,
+      },
+      { page: "Guide_to_malfunction", icon: malf, data: Guide_to_malfunction },
+      { page: "Xenos", text: "XENO", icon: xmorph, data: Xenos },
+      { page: "Abductor", icon: abduction, data: Abductor },
+      { page: "Families", icon: mafia, data: Families },
       {
         page: "Heretic",
         icon: null, // TODO: add icon
+        data: Heretic,
       },
     ],
   },
   {
     name: "Other",
     tabs: [
-      { page: "Rules", text: "rules", icon: rules },
-      { page: "AI_modules", text: "aimo", icon: aimod },
+      { page: "Rules", text: "rules", icon: rules, data: Rules },
+      { page: "AI_modules", text: "aimo", icon: aimod, data: AI_modules },
       /*
       {
         page: "Guide_to_Awesome_Miscellaneous_Stuff",
@@ -164,17 +360,22 @@ const sections: SectionInfo[] = [
         icon: tips,
       },
       */
-      { page: "Hacking", icon: hacking },
-      { page: "Critters", icon: critter },
-      { page: "Guide_to_races", icon: races },
+      { page: "Hacking", icon: hacking, data: Hacking },
+      { page: "Critters", icon: critter, data: Critters },
+      { page: "Guide_to_races", icon: races, data: Guide_to_races },
       {
         page: "Paper_Markdown",
         text: "PAPER",
         icon: null, // TODO: add icon
+        data: Paper_Markdown,
       },
-      { page: "Songs", icon: song },
-      { page: "Guide_to_Space_Exploration", icon: space },
-      { page: "Mafia", text: "mfia", icon: mafia },
+      { page: "Songs", icon: song, data: Songs },
+      {
+        page: "Guide_to_Space_Exploration",
+        icon: space,
+        data: Guide_to_Space_Exploration,
+      },
+      { page: "Mafia", text: "mfia", icon: mafia, data: Mafia },
     ],
   },
   {

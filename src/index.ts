@@ -57,10 +57,7 @@ async function load() {
 
       return section.tabs.map(async (tab) => {
         // Load page
-        await manager.openTab(section.name, tab.page, {
-          icon: tab.icon,
-          text: tab.text,
-        });
+        await manager.openTab(section.name, tab, {});
         // Remove icon from loading
         icons.removeChild(icons.querySelector(`img[data-tab='${tab.page}']`));
       });

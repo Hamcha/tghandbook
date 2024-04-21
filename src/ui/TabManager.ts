@@ -1,11 +1,10 @@
 import speen from "@/assets/images/speen.svg";
-import { getPageHTML } from "../wiki";
 import { PAGE_VERSIONS, postProcessHTML } from "../scripts/index";
 import { process, script } from "../scripts/register";
 import { addHistoryEntry } from "../scripts/history";
 import cache from "../cache";
 import { nextAnimationFrame, delay } from "../utils";
-import { META } from "./sections";
+import { META, TabInfo } from "./sections";
 
 import unknown from "@/assets/images/tab-icons/unknown.svg";
 import metaIcon from "@/assets/images/icon-meta.svg";
@@ -22,6 +21,7 @@ function initWaiting(elem: HTMLElement) {
 
 async function loadPage(
   page: string,
+  originalHTML: string,
   elem: HTMLElement,
   useCache: boolean
 ): Promise<HTMLElement> {
@@ -61,22 +61,11 @@ async function loadPage(
 
   // Fetch page content
   if (!html) {
-    console.log(`${page}: fetching`);
-    let retries = 0;
-    while (retries < 5) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        html = await getPageHTML(page);
-        break;
-      } catch (e) {
-        retries += 1;
-        // eslint-disable-next-line no-await-in-loop
-        await delay(1000);
-      }
-    }
+    // Use prefetched non-processed HTML
+    html = originalHTML;
 
-    // Convert relative links to absolute (and proxied)
-    html = html.replace(/"\/wiki/gi, '"//tgproxy.ovo.ovh/wiki');
+    // Convert relative links to absolute
+    html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
 
     await nextAnimationFrame();
 
@@ -233,14 +222,16 @@ export default class TabManager {
    */
   async openTab(
     section: string,
-    page: string,
-    options: {
-      icon?: string;
+    tab: TabInfo,
+    {
+      active,
+    }: {
       active?: boolean;
-      text?: string;
     }
   ): Promise<void> {
-    const { icon, active, text } = options;
+    const page = tab.page;
+    const icon = tab.icon;
+    const text = tab.text;
     // Create tab list item
     const tabListItem = document.createElement("div");
     tabListItem.className = "tab";
@@ -271,7 +262,12 @@ export default class TabManager {
       // Create tab entry
       this.sections[section].tabs[page] = { tabListItem, tabContentItem };
       this.sectionMap[page] = section;
-      await loadPage(page, tabContentItem, this.cacheEnabled);
+      await loadPage(
+        page,
+        tab.data?.text["*"],
+        tabContentItem,
+        this.cacheEnabled
+      );
       return;
     }
 
@@ -292,7 +288,12 @@ export default class TabManager {
     }
 
     // Start loading page for new tab
-    const elem = await loadPage(page, tabContentItem, this.cacheEnabled);
+    const elem = await loadPage(
+      page,
+      tab.data?.text["*"],
+      tabContentItem,
+      this.cacheEnabled
+    );
     // Since element can be replaced (when loading for the first time), make sure the reference is updated
     if (elem !== tabContentItem) {
       this.sections[section].tabs[page].tabContentItem = elem;

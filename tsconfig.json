@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "es2020",
+    "module": "esnext",
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@": ["."],
-      "~*": ["./src/*"]
+      "@": [
+        "."
+      ],
+      "~*": [
+        "./src/*"
+      ]
     }
   }
 }
