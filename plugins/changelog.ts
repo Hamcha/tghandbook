@@ -1,6 +1,6 @@
 import fs from "fs";
 import https from "https";
-import { Plugin } from "node_modules/vite/dist/node/index";
+import { Plugin } from "vite";
 
 export interface Commit {
   sha: string;
@@ -88,7 +88,7 @@ async function getChangelog(): Promise<string> {
           resp.on("end", () => {
             resolve(data);
           });
-        }
+        },
       )
       .on("error", (err) => {
         reject(err);
@@ -101,6 +101,7 @@ async function getChangelog(): Promise<string> {
 
 export default function createPlugin(): Plugin {
   return {
+    name: "Changelog",
     enforce: "pre",
     async transform(code) {
       if (code.includes("import.meta.CHANGELOG")) {
