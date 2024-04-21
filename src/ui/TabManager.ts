@@ -1,13 +1,12 @@
-import speen from "@/assets/images/speen.svg";
-import { PAGE_VERSIONS, postProcessHTML } from "../scripts/index";
-import { process, script } from "../scripts/register";
-import { addHistoryEntry } from "../scripts/history";
-import cache from "../cache";
-import { nextAnimationFrame, delay } from "../utils";
-import { META, TabInfo } from "./sections";
+import "../scripts/index.ts";
+import { process, script } from "../scripts/register.ts";
+import { addHistoryEntry } from "../scripts/history.ts";
+import { nextAnimationFrame } from "../utils.ts";
+import { META, TabInfo } from "./sections.ts";
 
-import unknown from "@/assets/images/tab-icons/unknown.svg";
-import metaIcon from "@/assets/images/icon-meta.svg";
+import unknown from "@assets/images/tab-icons/unknown.svg";
+import metaIcon from "@assets/images/icon-meta.svg";
+import speen from "@assets/images/speen.svg";
 
 function initWaiting(elem: HTMLElement) {
   // Add spinner
@@ -23,7 +22,6 @@ async function loadPage(
   page: string,
   originalHTML: string,
   elem: HTMLElement,
-  useCache: boolean
 ): Promise<HTMLElement> {
   // Meta pages don't need loading, they are baked in.
   // However they might have scripts we want to run.
@@ -33,66 +31,26 @@ async function loadPage(
     return elem;
   }
 
-  let html: string | null = null;
-  const key = `page:${page}`;
-
   const wrapper = document.createElement("div");
   wrapper.className = "wrapper";
 
-  // Check cache for pre-processed page
-  if (useCache) {
-    try {
-      const cachedPage = await cache.get<string>(key);
-      if (cachedPage) {
-        // Get expected version
-        const expectedVersion =
-          page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
-        if (cachedPage.version === expectedVersion) {
-          console.log(`${page}: found cached entry`);
-          html = cachedPage.value;
-        } else {
-          console.log(`${page}: found outdated cache entry`);
-        }
-      }
-    } catch (e) {
-      console.log(`${page}: failed to retrieve cache entry:`, e);
-    }
-  }
+  // Use prefetched non-processed HTML
+  let html = originalHTML;
 
-  // Fetch page content
-  if (!html) {
-    // Use prefetched non-processed HTML
-    html = originalHTML;
+  // Convert relative links to absolute
+  html = html.replace(/"\/wiki/gi, '"https://tgstation13.org/wiki');
 
-    // Convert relative links to absolute
-    html = html.replace(/"\/wiki/gi, '"//tgstation13.org/wiki');
+  await nextAnimationFrame();
 
-    await nextAnimationFrame();
+  // Set as HTML content and run HTML manipulations on it
+  wrapper.innerHTML = html;
 
-    // Set as HTML content and run HTML manipulations on it
-    wrapper.innerHTML = html;
-
-    console.log(`${page}: processing`);
-    try {
-      process(page, wrapper);
-    } catch (e) {
-      console.error(`Error processing page: ${page}`);
-      console.error(e);
-    }
-
-    // Get version to set
-    const version =
-      page in PAGE_VERSIONS ? PAGE_VERSIONS[page] : PAGE_VERSIONS.$DEFAULT;
-
-    // Save result to cache
-    cache.set(key, wrapper.innerHTML, version).then(() => {
-      console.log(`${page}: saved to cache`);
-    });
-  } else {
-    // Set cached content as HTML
-    wrapper.innerHTML = html;
-
-    postProcessHTML(elem, page); // noop in prod, used in dev for testing candidate DOM changes
+  console.log(`${page}: processing`);
+  try {
+    process(page, wrapper);
+  } catch (e) {
+    console.error(`Error processing page: ${page}`);
+    console.error(e);
   }
 
   elem.innerHTML = wrapper.outerHTML;
@@ -117,23 +75,16 @@ export default class TabManager {
   static instance: TabManager;
 
   sectionListContainer: HTMLElement;
-
   tabListContainer: HTMLElement;
-
   tabContentContainer: HTMLElement;
-
   sections: Record<string, Section> = {};
-
   sectionMap: Record<string, string> = {};
-
   loading = false;
-
-  cacheEnabled = true;
 
   constructor(
     sectionlist: HTMLElement,
     tablist: HTMLElement,
-    tabcontent: HTMLElement
+    tabcontent: HTMLElement,
   ) {
     this.sectionListContainer = sectionlist;
     this.tabListContainer = tablist;
@@ -147,15 +98,15 @@ export default class TabManager {
    */
   setLoading(value: boolean): void {
     if (value) {
-      document.getElementById("app").classList.add("waiting");
+      document.getElementById("app")?.classList.add("waiting");
       initWaiting(this.tabContentContainer);
       const spinnerContainer = this.tabContentContainer.querySelector(".speen");
-      spinnerContainer.appendChild(
-        document.createTextNode("Loading wiki pages")
+      spinnerContainer?.appendChild(
+        document.createTextNode("Loading wiki pages"),
       );
     } else {
-      document.getElementById("app").classList.remove("waiting");
-      const elem = this.tabContentContainer.querySelector(".speen");
+      document.getElementById("app")!.classList.remove("waiting");
+      const elem = this.tabContentContainer.querySelector(".speen")!;
       this.tabContentContainer.removeChild(elem);
     }
   }
@@ -227,7 +178,7 @@ export default class TabManager {
       active,
     }: {
       active?: boolean;
-    }
+    },
   ): Promise<void> {
     const page = tab.page;
     const icon = tab.icon;
@@ -256,18 +207,13 @@ export default class TabManager {
     if (page.startsWith("$")) {
       const tabContentItem =
         this.tabContentContainer.querySelector<HTMLDivElement>(
-          `div[data-tab='${page}']`
-        );
+          `div[data-tab='${page}']`,
+        )!;
 
       // Create tab entry
       this.sections[section].tabs[page] = { tabListItem, tabContentItem };
       this.sectionMap[page] = section;
-      await loadPage(
-        page,
-        tab.data?.text["*"],
-        tabContentItem,
-        this.cacheEnabled
-      );
+      await loadPage(page, tab.data?.text["*"] || "", tabContentItem);
       return;
     }
 
@@ -290,9 +236,8 @@ export default class TabManager {
     // Start loading page for new tab
     const elem = await loadPage(
       page,
-      tab.data?.text["*"],
+      tab.data?.text["*"] || "",
       tabContentItem,
-      this.cacheEnabled
     );
     // Since element can be replaced (when loading for the first time), make sure the reference is updated
     if (elem !== tabContentItem) {

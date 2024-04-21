@@ -1,144 +1,116 @@
 /* Icons */
-import chemistry from "@/assets/images/tab-icons/chemistry.svg";
-import medicine from "@/assets/images/tab-icons/medicine.svg";
-import plumbing from "@/assets/images/tab-icons/plumbing.svg";
-import grenade from "@/assets/images/tab-icons/grenade.svg";
-import genetics from "@/assets/images/tab-icons/genetics.svg";
-import virus from "@/assets/images/tab-icons/virus.svg";
-import surgery from "@/assets/images/tab-icons/surgery.svg";
-import trauma from "@/assets/images/tab-icons/trauma.svg";
-import wound from "@/assets/images/tab-icons/wound.svg";
-import ghetto from "@/assets/images/tab-icons/ghetto.svg";
-import construction from "@/assets/images/tab-icons/construction.svg";
-import machines from "@/assets/images/tab-icons/machines.svg";
-import power from "@/assets/images/tab-icons/power.svg";
-import solar from "@/assets/images/tab-icons/solar.svg";
-import supermatter from "@/assets/images/tab-icons/supermatter.svg";
-import turbine from "@/assets/images/tab-icons/turbine.svg";
-import atmos from "@/assets/images/tab-icons/atmos.svg";
-import tcomm from "@/assets/images/tab-icons/tcomm.svg";
-import rnd from "@/assets/images/tab-icons/rnd.svg";
-import toxins from "@/assets/images/tab-icons/toxins.svg";
-import xeno from "@/assets/images/tab-icons/xeno.svg";
-import rules from "@/assets/images/tab-icons/rules.svg";
-import aimod from "@/assets/images/tab-icons/aimod.svg";
-import critter from "@/assets/images/tab-icons/critter.svg";
-import races from "@/assets/images/tab-icons/races.svg";
-import food from "@/assets/images/tab-icons/food.svg";
-import hydro from "@/assets/images/tab-icons/hydro.svg";
-import song from "@/assets/images/tab-icons/song.svg";
-import crate from "@/assets/images/tab-icons/crate.svg";
-import space from "@/assets/images/tab-icons/space.svg";
-import aux from "@/assets/images/tab-icons/auxbase.svg";
-import robo from "@/assets/images/tab-icons/robo.svg";
-import security from "@/assets/images/tab-icons/security.svg";
-import law from "@/assets/images/tab-icons/law.svg";
-import sop from "@/assets/images/tab-icons/sop.svg";
-import trial from "@/assets/images/tab-icons/trial.svg";
-import traitor from "@/assets/images/tab-icons/traitor.svg";
-import hacking from "@/assets/images/tab-icons/hacking.svg";
-import weapons from "@/assets/images/tab-icons/weapons.svg";
-import uplink from "@/assets/images/tab-icons/uplink.svg";
-import rev from "@/assets/images/tab-icons/rev.svg";
-import cult from "@/assets/images/tab-icons/cult.svg";
-import nuke from "@/assets/images/tab-icons/nuke.svg";
-import malf from "@/assets/images/tab-icons/malf.svg";
-import combat from "@/assets/images/tab-icons/combat.svg";
-import access from "@/assets/images/tab-icons/access.svg";
-import xmorph from "@/assets/images/tab-icons/xmorph.svg";
-import abduction from "@/assets/images/tab-icons/abduction.svg";
-import mafia from "@/assets/images/tab-icons/mafia.svg";
-import cyto from "@/assets/images/tab-icons/cyto.svg";
-import circuits from "@/assets/images/tab-icons/circuit.svg";
-import tourist from "@/assets/images/tab-icons/tourist.svg";
-import drink from "@/assets/images/tab-icons/drink.svg";
+import chemistry from "@assets/images/tab-icons/chemistry.svg";
+import medicine from "@assets/images/tab-icons/medicine.svg";
+import plumbing from "@assets/images/tab-icons/plumbing.svg";
+import grenade from "@assets/images/tab-icons/grenade.svg";
+import genetics from "@assets/images/tab-icons/genetics.svg";
+import virus from "@assets/images/tab-icons/virus.svg";
+import surgery from "@assets/images/tab-icons/surgery.svg";
+import trauma from "@assets/images/tab-icons/trauma.svg";
+import wound from "@assets/images/tab-icons/wound.svg";
+import ghetto from "@assets/images/tab-icons/ghetto.svg";
+import construction from "@assets/images/tab-icons/construction.svg";
+import machines from "@assets/images/tab-icons/machines.svg";
+import power from "@assets/images/tab-icons/power.svg";
+import solar from "@assets/images/tab-icons/solar.svg";
+import supermatter from "@assets/images/tab-icons/supermatter.svg";
+import turbine from "@assets/images/tab-icons/turbine.svg";
+import atmos from "@assets/images/tab-icons/atmos.svg";
+import tcomm from "@assets/images/tab-icons/tcomm.svg";
+import rnd from "@assets/images/tab-icons/rnd.svg";
+import toxins from "@assets/images/tab-icons/toxins.svg";
+import xeno from "@assets/images/tab-icons/xeno.svg";
+import rules from "@assets/images/tab-icons/rules.svg";
+import aimod from "@assets/images/tab-icons/aimod.svg";
+import critter from "@assets/images/tab-icons/critter.svg";
+import races from "@assets/images/tab-icons/races.svg";
+import food from "@assets/images/tab-icons/food.svg";
+import hydro from "@assets/images/tab-icons/hydro.svg";
+import song from "@assets/images/tab-icons/song.svg";
+import crate from "@assets/images/tab-icons/crate.svg";
+import space from "@assets/images/tab-icons/space.svg";
+import aux from "@assets/images/tab-icons/auxbase.svg";
+import robo from "@assets/images/tab-icons/robo.svg";
+import security from "@assets/images/tab-icons/security.svg";
+import law from "@assets/images/tab-icons/law.svg";
+import sop from "@assets/images/tab-icons/sop.svg";
+import trial from "@assets/images/tab-icons/trial.svg";
+import traitor from "@assets/images/tab-icons/traitor.svg";
+import hacking from "@assets/images/tab-icons/hacking.svg";
+import weapons from "@assets/images/tab-icons/weapons.svg";
+import uplink from "@assets/images/tab-icons/uplink.svg";
+import rev from "@assets/images/tab-icons/rev.svg";
+import cult from "@assets/images/tab-icons/cult.svg";
+import nuke from "@assets/images/tab-icons/nuke.svg";
+import malf from "@assets/images/tab-icons/malf.svg";
+import combat from "@assets/images/tab-icons/combat.svg";
+import access from "@assets/images/tab-icons/access.svg";
+import xmorph from "@assets/images/tab-icons/xmorph.svg";
+import abduction from "@assets/images/tab-icons/abduction.svg";
+import mafia from "@assets/images/tab-icons/mafia.svg";
+import cyto from "@assets/images/tab-icons/cyto.svg";
+import circuits from "@assets/images/tab-icons/circuit.svg";
+import tourist from "@assets/images/tab-icons/tourist.svg";
+import drink from "@assets/images/tab-icons/drink.svg";
 
 /* Pages */
-import Guide_to_medicine from "@/data/pages/Guide_to_medicine";
-import Guide_to_chemistry from "@/data/pages/Guide_to_chemistry";
-import Guide_to_plumbing from "@/data/pages/Guide_to_plumbing";
-import Grenade from "@/data/pages/Grenade";
-import Infections from "@/data/pages/Infections";
-import Surgery from "@/data/pages/Surgery";
-import Guide_to_Traumas from "@/data/pages/Guide_to_Traumas";
-import Guide_to_Wounds from "@/data/pages/Guide_to_Wounds";
-import Guide_to_Ghetto_Chemistry from "@/data/pages/Guide_to_Ghetto_Chemistry";
-import Guide_to_construction from "@/data/pages/Guide_to_construction";
-import Machines from "@/data/pages/Machines";
-import Guide_to_power from "@/data/pages/Guide_to_power";
-import Solars from "@/data/pages/Solars";
-import Guide_to_the_Supermatter from "@/data/pages/Guide_to_the_Supermatter";
-import Guide_to_disposals from "@/data/pages/Guide_to_disposals";
-import Gas_turbine from "@/data/pages/Gas_turbine";
-import Guide_to_Atmospherics from "@/data/pages/Guide_to_Atmospherics";
-import Guide_to_Telecommunications from "@/data/pages/Guide_to_Telecommunications";
-import Guide_to_Research_and_Development from "@/data/pages/Guide_to_Research_and_Development";
-import Guide_to_robotics from "@/data/pages/Guide_to_robotics";
-import Guide_to_toxins from "@/data/pages/Guide_to_toxins";
-import Guide_to_xenobiology from "@/data/pages/Guide_to_xenobiology";
-import Guide_to_genetics from "@/data/pages/Guide_to_genetics";
-import Guide_to_cytology from "@/data/pages/Guide_to_cytology";
-import Guide_to_Circuits from "@/data/pages/Guide_to_Circuits";
-import Guide_to_food from "@/data/pages/Guide_to_food";
-import Guide_to_drinks from "@/data/pages/Guide_to_drinks";
-import Guide_to_Restaurant from "@/data/pages/Guide_to_Restaurant";
-import Guide_to_hydroponics from "@/data/pages/Guide_to_hydroponics";
-import Supply_crates from "@/data/pages/Supply_crates";
-import Auxiliary_Base_Construction_Area from "@/data/pages/Auxiliary_Base_Construction_Area";
-import Guide_to_security from "@/data/pages/Guide_to_security";
-import Space_Law from "@/data/pages/Space_Law";
-import Standard_Operating_Procedure from "@/data/pages/Standard_Operating_Procedure";
-import Guide_to_trials from "@/data/pages/Guide_to_trials";
-import Guide_to_Combat from "@/data/pages/Guide_to_Combat";
-import Traitor from "@/data/pages/Traitor";
-import Makeshift_weapons from "@/data/pages/Makeshift_weapons";
-import Syndicate_Items from "@/data/pages/Syndicate_Items";
-import Illicit_Access from "@/data/pages/Illicit_Access";
-import Revolutionary from "@/data/pages/Revolutionary";
-import Blood_Cult from "@/data/pages/Blood_Cult";
-import Nuclear_Operative from "@/data/pages/Nuclear_Operative";
-import Guide_to_malfunction from "@/data/pages/Guide_to_malfunction";
-import Xenos from "@/data/pages/Xenos";
-import Abductor from "@/data/pages/Abductor";
-import Families from "@/data/pages/Families";
-import Heretic from "@/data/pages/Heretic";
-import Rules from "@/data/pages/Rules";
-import AI_modules from "@/data/pages/AI_modules";
-import Hacking from "@/data/pages/Hacking";
-import Critters from "@/data/pages/Critters";
-import Guide_to_races from "@/data/pages/Guide_to_races";
-import Paper_Markdown from "@/data/pages/Paper_Markdown";
-import Songs from "@/data/pages/Songs";
-import Guide_to_Space_Exploration from "@/data/pages/Guide_to_Space_Exploration";
-import Mafia from "@/data/pages/Mafia";
-
-export interface ParsedPage {
-  title: string;
-  pageid: number;
-  revid: number;
-  text: WrappedString;
-  categories: WrappedString[];
-  links: WrappedString[];
-  templates: WrappedString[];
-  images: string[];
-  sections: WikiSection[];
-  displaytitle: string;
-}
-
-interface WrappedString {
-  "*": string;
-}
-
-interface WikiSection {
-  toclevel: number;
-  level: string;
-  line: string;
-  number: string;
-  index: string;
-  fromtitle: string;
-  byteoffset: number;
-  anchor: string;
-}
+import Guide_to_medicine from "@pages/Guide_to_medicine.json";
+import Guide_to_chemistry from "@pages/Guide_to_chemistry.json";
+import Guide_to_plumbing from "@pages/Guide_to_plumbing.json";
+import Grenade from "@pages/Grenade.json";
+import Infections from "@pages/Infections.json";
+import Surgery from "@pages/Surgery.json";
+import Guide_to_Traumas from "@pages/Guide_to_Traumas.json";
+import Guide_to_Wounds from "@pages/Guide_to_Wounds.json";
+import Guide_to_Ghetto_Chemistry from "@pages/Guide_to_Ghetto_Chemistry.json";
+import Guide_to_construction from "@pages/Guide_to_construction.json";
+import Machines from "@pages/Machines.json";
+import Guide_to_power from "@pages/Guide_to_power.json";
+import Solars from "@pages/Solars.json";
+import Guide_to_the_Supermatter from "@pages/Guide_to_the_Supermatter.json";
+import Guide_to_disposals from "@pages/Guide_to_disposals.json";
+import Gas_turbine from "@pages/Gas_turbine.json";
+import Guide_to_Atmospherics from "@pages/Guide_to_Atmospherics.json";
+import Guide_to_Telecommunications from "@pages/Guide_to_Telecommunications.json";
+import Guide_to_Research_and_Development from "@pages/Guide_to_Research_and_Development.json";
+import Guide_to_robotics from "@pages/Guide_to_robotics.json";
+import Guide_to_toxins from "@pages/Guide_to_toxins.json";
+import Guide_to_xenobiology from "@pages/Guide_to_xenobiology.json";
+import Guide_to_genetics from "@pages/Guide_to_genetics.json";
+import Guide_to_cytology from "@pages/Guide_to_cytology.json";
+import Guide_to_Circuits from "@pages/Guide_to_Circuits.json";
+import Guide_to_food from "@pages/Guide_to_food.json";
+import Guide_to_drinks from "@pages/Guide_to_drinks.json";
+import Guide_to_Restaurant from "@pages/Guide_to_Restaurant.json";
+import Guide_to_hydroponics from "@pages/Guide_to_hydroponics.json";
+import Supply_crates from "@pages/Supply_crates.json";
+import Auxiliary_Base_Construction_Area from "@pages/Auxiliary_Base_Construction_Area.json";
+import Guide_to_security from "@pages/Guide_to_security.json";
+import Space_Law from "@pages/Space_Law.json";
+import Standard_Operating_Procedure from "@pages/Standard_Operating_Procedure.json";
+import Guide_to_trials from "@pages/Guide_to_trials.json";
+import Guide_to_Combat from "@pages/Guide_to_Combat.json";
+import Traitor from "@pages/Traitor.json";
+import Makeshift_weapons from "@pages/Makeshift_weapons.json";
+import Syndicate_Items from "@pages/Syndicate_Items.json";
+import Illicit_Access from "@pages/Illicit_Access.json";
+import Revolutionary from "@pages/Revolutionary.json";
+import Blood_Cult from "@pages/Blood_Cult.json";
+import Nuclear_Operative from "@pages/Nuclear_Operative.json";
+import Guide_to_malfunction from "@pages/Guide_to_malfunction.json";
+import Xenos from "@pages/Xenos.json";
+import Abductor from "@pages/Abductor.json";
+import Families from "@pages/Families.json";
+import Heretic from "@pages/Heretic.json";
+import Rules from "@pages/Rules.json";
+import AI_modules from "@pages/AI_modules.json";
+import Hacking from "@pages/Hacking.json";
+import Critters from "@pages/Critters.json";
+import Guide_to_races from "@pages/Guide_to_races.json";
+import Paper_Markdown from "@pages/Paper_Markdown.json";
+import Songs from "@pages/Songs.json";
+import Guide_to_Space_Exploration from "@pages/Guide_to_Space_Exploration.json";
+import Mafia from "@pages/Mafia.json";
 
 export interface SectionInfo {
   name: string;
@@ -187,25 +159,29 @@ const sections: SectionInfo[] = [
   {
     name: "Engineering",
     tabs: [
-      { page: "Guide_to_construction", icon: construction, data: Surgery },
-      { page: "Machines", icon: machines, data: Guide_to_Traumas },
+      {
+        page: "Guide_to_construction",
+        icon: construction,
+        data: Guide_to_construction,
+      },
+      { page: "Machines", icon: machines, data: Machines },
       {
         page: "Guide_to_power",
         text: "power",
         icon: power,
-        data: Guide_to_Wounds,
+        data: Guide_to_power,
       },
       {
         page: "Solars",
         text: "solar",
         icon: solar,
-        data: Guide_to_Ghetto_Chemistry,
+        data: Solars,
       },
       {
         page: "Guide_to_the_Supermatter",
         text: "smatt",
         icon: supermatter,
-        data: Surgery,
+        data: Guide_to_the_Supermatter,
       },
       {
         page: "Guide_to_disposals",

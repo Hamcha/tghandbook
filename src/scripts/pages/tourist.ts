@@ -26,10 +26,10 @@ function orderToItem(order: TouristOrder) {
 registerProcess(page, (root) => {
   // Transform tourist table
   // The usual tricks don't work here, this table is extra funky
-  const touristTable = root.querySelector("#Tourists_and_orders .wikitable");
+  const touristTable = root.querySelector("#Tourists_and_orders .wikitable")!;
 
   const tourists: TouristEntry[] = [];
-  let currentTourist: TouristEntry = null;
+  let currentTourist: TouristEntry;
   let noFood = false;
   touristTable.querySelectorAll("tr").forEach((row) => {
     const cells = Array.from(row.querySelectorAll("td"));
@@ -43,7 +43,7 @@ registerProcess(page, (root) => {
         tourists.push(currentTourist);
       }
       currentTourist = {
-        name: cells[0].textContent.trim(),
+        name: cells[0].textContent?.trim() || "",
         icons: Array.from(cells[0].querySelectorAll<HTMLImageElement>("img")),
         foods: [],
         drinks: [],
@@ -74,7 +74,7 @@ registerProcess(page, (root) => {
       });
     }
   });
-  if (currentTourist != null) {
+  if (currentTourist) {
     tourists.push(currentTourist);
   }
 
@@ -88,7 +88,7 @@ registerProcess(page, (root) => {
       ]),
       Food: makeDOM("td", ...tourist.foods.map(orderToItem)),
       Drinks: makeDOM("td", ...tourist.drinks.map(orderToItem)),
-    }))
+    })),
   );
   betterTouristTable.className = "tourist-ext tgh-btab wikitable";
 
@@ -98,16 +98,16 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   const tourists = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".tourist-ext > tbody > tr:not(:first-child)"
-    )
+      ".tourist-ext > tbody > tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     tourists.map((element, id) => ({
       page,
-      name: element.querySelector(".tourist-name").textContent.trim(),
+      name: element.querySelector(".tourist-name")?.textContent?.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

@@ -1,7 +1,7 @@
 import path from "path";
 import { defineConfig } from "vite";
 //import { VitePWA } from "vite-plugin-pwa";
-import changelog from "./plugins/changelog";
+import changelog from "./plugins/changelog.js";
 
 export default defineConfig({
   plugins: [
@@ -15,7 +15,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src"),
-      "@": path.resolve(__dirname),
+      "@assets": path.resolve(__dirname, "./assets"),
+      "@pages": path.resolve(__dirname, "./data/pages"),
     },
   },
 });

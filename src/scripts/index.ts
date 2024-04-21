@@ -15,27 +15,12 @@ import "./pages/tourist";
 import "./pages/welcome";
 import "./pages/changelog";
 
-// This is used for cache busting when userscript changes significantly.
-// Only change it when making changes to the processHTML scripts!
-export const PAGE_VERSIONS = {
-  Infections: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-  Guide_to_food: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-  Guide_to_drinks: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-  Guide_to_chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-  Guide_to_Ghetto_Chemistry: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-  Mafia: "87d3bd9890395d4c01e435e895ac05aac3515047",
-  Critters: "87d3bd9890395d4c01e435e895ac05aac3515047",
-  Guide_to_Restaurant: "2ac9162d72e2877191892ed4c737c023d5fc2964",
-  $DEFAULT: "f7599d8e6598d2eca4aa9869262d0681983a95ec",
-};
-
 const MAX_WIDTH = 440;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function postProcessHTML(root: HTMLElement, docname: string): void {
+export function postProcessHTML(_root: HTMLElement, docname: string): void {
   // This should be noop unless we're testing changes before committing them to processHTML
   document.querySelectorAll("img[width]").forEach((img) => {
-    const width = img.getAttribute("width");
+    const width = img.getAttribute("width")!;
 
     // Don't care if they are not absolutely sized
     if (width.includes("%")) {
@@ -55,6 +40,5 @@ export function postProcessHTML(root: HTMLElement, docname: string): void {
 }
 
 export default {
-  PAGE_VERSIONS,
   postProcessHTML,
 };

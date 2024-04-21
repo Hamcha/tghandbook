@@ -18,6 +18,7 @@ export function stripStart(str: string, start: string): string {
 }
 
 // https://stackoverflow.com/a/2947012
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type DOMParam = string | Record<string, any> | [string, ...DOMParam[]];
 
 export function makeDOM(...desc: [string, ...DOMParam[]]): HTMLElement {
@@ -60,7 +61,7 @@ export const $el = makeDOM;
 // zipBy groups element of an array into a tuple list for a given classifier function
 export function zipBy<T>(
   arr: T[],
-  classifier: (elem: T) => string
+  classifier: (elem: T) => string,
 ): Record<string, T[]> {
   const out: Record<string, T[]> = {};
   arr.forEach((elem) => {

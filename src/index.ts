@@ -1,42 +1,37 @@
-import TabManager from "./ui/TabManager";
-import sections from "./ui/sections";
-import { nextAnimationFrame } from "./utils";
-import { gotoPage, searchBox } from "./scripts/search";
-import { getCurrentPage } from "./scripts/history";
+import TabManager from "./ui/TabManager.ts";
+import sections from "./ui/sections.ts";
+import { nextAnimationFrame } from "./utils.ts";
+import { gotoPage, searchBox } from "./scripts/search.ts";
+import { getCurrentPage } from "./scripts/history.ts";
 
-import unknown from "@/assets/images/tab-icons/unknown.svg";
+import unknown from "@assets/images/tab-icons/unknown.svg";
 
 // Enable single page mode for developing scripts
 // const devSinglePage = ["Medical", "Infections"];
 const devSinglePage = null;
 
 async function load() {
-  const sectionListContainer = document.getElementById("section-list");
-  const tabListContainer = document.getElementById("tab-list");
-  const tabContentContainer = document.getElementById("tabs");
+  const sectionListContainer = document.getElementById("section-list")!;
+  const tabListContainer = document.getElementById("tab-list")!;
+  const tabContentContainer = document.getElementById("tabs")!;
   const manager = new TabManager(
     sectionListContainer,
     tabListContainer,
-    tabContentContainer
+    tabContentContainer,
   );
   manager.setLoading(true);
 
   // De-comment to disable caching and force processing
   // manager.cacheEnabled = false;
 
-  // If using single page we're probably in development mode so disable caching
-  if (devSinglePage) {
-    manager.cacheEnabled = false;
-  }
-
   await nextAnimationFrame();
 
   // Add loading "bar"
-  const spinnerContainer = document.querySelector("#tabs > .speen");
+  const spinnerContainer = document.querySelector("#tabs > .speen")!;
   const icons = document.createElement("div");
   icons.className = "loading-icons";
 
-  let promises = [];
+  let promises: Promise<void>[] = [];
   if (devSinglePage != null) {
     manager.createSection(devSinglePage[0]);
     promises = [manager.openTab(devSinglePage[0], devSinglePage[1], {})];
@@ -48,7 +43,7 @@ async function load() {
         iconElement.src = tab.icon || unknown;
         iconElement.title = tab.page.replace(/_/gi, " ");
         icons.appendChild(iconElement);
-      })
+      }),
     );
     spinnerContainer.appendChild(icons);
 
@@ -59,7 +54,7 @@ async function load() {
         // Load page
         await manager.openTab(section.name, tab, {});
         // Remove icon from loading
-        icons.removeChild(icons.querySelector(`img[data-tab='${tab.page}']`));
+        icons.querySelector(`img[data-tab="${tab.page}"]`)?.remove();
       });
     });
   }
@@ -80,6 +75,7 @@ async function load() {
     }
   });
 }
+
 if ("serviceWorker" in navigator) {
   const x = import.meta.env.VITE_SUBDIR
     ? `${import.meta.env.VITE_SUBDIR}/sw.js`
@@ -103,6 +99,6 @@ document.body.appendChild(searchBox());
 // Add revision info
 document
   .getElementById("tgh-version")
-  .appendChild(
-    document.createTextNode(import.meta.env.VITE_APP_REVISION || "unknown")
+  ?.appendChild(
+    document.createTextNode(import.meta.env.VITE_APP_REVISION || "unknown"),
   );

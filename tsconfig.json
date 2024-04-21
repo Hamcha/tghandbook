@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "esnext",
+    "module": "nodenext",
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "paths": {
-      "@": [
-        "."
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@pages/*": [
+        "data/pages/*"
       ],
       "~*": [
-        "./src/*"
+        "src/*"
       ]
     }
-  }
+  },
+  "include": [
+    "vite.config.ts",
+  ]
 }
