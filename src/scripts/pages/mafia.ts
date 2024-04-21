@@ -30,16 +30,16 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   const roles = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".role-ext > tbody > tr:not(:first-child)"
-    )
+      ".role-ext > tbody > tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     roles.map((element, id) => ({
       page,
-      name: element.querySelector(".role-name").textContent.trim(),
+      name: element.querySelector(".role-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

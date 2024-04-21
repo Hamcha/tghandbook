@@ -9,7 +9,7 @@ registerProcess(page, (root) => {
   // Only process tables with a valid header
   Array.from(tables)
     .filter((table) =>
-      table.querySelector("th:nth-child(2)")?.textContent?.includes("Name")
+      table.querySelector("th:nth-child(2)")?.textContent?.includes("Name"),
     )
     .forEach((table) => {
       const critters = parseTable(table).map((row) => {
@@ -32,16 +32,16 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   const roles = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".critter-ext > tbody > tr:not(:first-child)"
-    )
+      ".critter-ext > tbody > tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     roles.map((element, id) => ({
       page,
-      name: element.querySelector(".critter-name").textContent.trim(),
+      name: element.querySelector(".critter-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

@@ -20,7 +20,7 @@ export function registerSearchEntries(entries: SearchEntry[]): void {
   allEntries.push(...entries);
 }
 
-export function findEntry(page: string, name: string): SearchEntry {
+export function findEntry(page: string, name: string): SearchEntry | undefined {
   return allEntries.find((entry) => entry.page === page && entry.name === name);
 }
 
@@ -174,7 +174,7 @@ export function searchBox(): HTMLElement {
         const source = document.createElement("span");
         source.className = "source";
         source.appendChild(
-          document.createTextNode(elem.page.replace(/_/g, " "))
+          document.createTextNode(elem.page.replace(/_/g, " ")),
         );
         li.appendChild(source);
       }
@@ -222,7 +222,7 @@ export function searchBox(): HTMLElement {
         if (sel.value !== oldValue) {
           const currentPage =
             document.querySelector<HTMLElement>(".page.active");
-          search(sel.value, currentPage.dataset.tab);
+          search(sel.value, currentPage?.dataset.tab || "");
           oldValue = sel.value;
         }
     }

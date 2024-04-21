@@ -29,7 +29,7 @@ registerProcess(page, (root) => {
   const touristTable = root.querySelector("#Tourists_and_orders .wikitable")!;
 
   const tourists: TouristEntry[] = [];
-  let currentTourist: TouristEntry;
+  let currentTourist: TouristEntry | null = null;
   let noFood = false;
   touristTable.querySelectorAll("tr").forEach((row) => {
     const cells = Array.from(row.querySelectorAll("td"));
@@ -59,7 +59,7 @@ registerProcess(page, (root) => {
     }
     // Next 2 rows are food
     if (!noFood && cells.length > 1) {
-      currentTourist.foods.push({
+      currentTourist?.foods.push({
         icon: cells[0].innerHTML,
         name: cells[1].innerHTML,
       });
@@ -68,7 +68,7 @@ registerProcess(page, (root) => {
     }
     // Next 2 rows (where existing) are drinks
     if (cells.length > 1) {
-      currentTourist.drinks.push({
+      currentTourist?.drinks.push({
         icon: cells[0].innerHTML,
         name: cells[1].innerHTML,
       });

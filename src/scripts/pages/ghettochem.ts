@@ -6,8 +6,8 @@ const page = "Guide_to_Ghetto_Chemistry";
 
 registerProcess(page, (root) => {
   const grindableTable = root.querySelector<HTMLElement>(
-    "#Grindables .wikitable"
-  );
+    "#Grindables .wikitable",
+  )!;
   const grindables = parseTable(grindableTable).map((row) => {
     const grindableBlock = document.createElement("td");
     grindableBlock.innerHTML = `
@@ -28,15 +28,15 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   // Init fuzzy search with elements
   const grindables = Array.from(
-    root.querySelectorAll<HTMLElement>(".grindable-ext tr:not(:first-child)")
+    root.querySelectorAll<HTMLElement>(".grindable-ext tr:not(:first-child)"),
   );
   registerSearchEntries(
     grindables.map((element, id) => ({
       page,
-      name: element.querySelector(".grindable-name").textContent.trim(),
+      name: element.querySelector(".grindable-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

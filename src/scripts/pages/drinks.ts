@@ -8,7 +8,7 @@ registerProcess(page, (root) => {
   const mixDrinks: HTMLTableElement[] = [],
     junkDrinks: HTMLTableElement[] = [];
   root.querySelectorAll<HTMLTableElement>(".wikitable").forEach((table) => {
-    const row = table.querySelector("tr");
+    const row = table.querySelector("tr")!;
     // Make sure one of the rows is the picture (so we don't get random tables)
     if (!row.innerHTML.includes("Picture")) {
       return;
@@ -61,16 +61,16 @@ registerScript(page, (root) => {
   // Init fuzzy search with elements
   const foodEntries = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child), .junk-ext tr:not(:first-child)"
-    )
+      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child), .junk-ext tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     foodEntries.map((element, id) => ({
       page,
-      name: element.querySelector(".food-name").textContent.trim(),
+      name: element.querySelector(".food-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

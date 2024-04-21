@@ -1,5 +1,5 @@
 import { registerProcess, registerScript } from "../register";
-import { parseTable, makeTable } from "../utils";
+import { parseTable, makeTable, TableData } from "../utils";
 import { registerSearchEntries } from "../search";
 
 const page = "Guide_to_food";
@@ -9,7 +9,7 @@ registerProcess(page, (root) => {
   const baseFoodTables: HTMLTableElement[] = [],
     foodRecipesTables: HTMLTableElement[] = [];
   root.querySelectorAll<HTMLTableElement>(".wikitable").forEach((table) => {
-    const row = table.querySelector("tr");
+    const row = table.querySelector("tr")!;
     // Make sure one of the rows is the picture (so we don't get random tables)
     if (!row.innerHTML.includes("Picture")) {
       return;
@@ -26,14 +26,15 @@ registerProcess(page, (root) => {
   });
 
   baseFoodTables.forEach((table) => {
-    const headers = table
-      .querySelector("tr")
-      .querySelectorAll<HTMLTableRowElement>("th,td");
+    const headers =
+      table
+        .querySelector("tr")
+        ?.querySelectorAll<HTMLTableRowElement>("th,td") ?? [];
     const title = headers[1].innerText.trim();
     const process = headers[2].innerText.trim();
-    const foods = [];
+    const foods: TableData = [];
     table.querySelectorAll("tr:not(:first-child)").forEach((row) => {
-      const fields = row.querySelectorAll("th,td");
+      const fields = row.querySelectorAll<HTMLElement>("th,td");
       const foodBlock = document.createElement("td");
       foodBlock.innerHTML = `<div class="food-block">
 <div class="food-pic btab-pic">${fields[0].innerHTML}</div>
@@ -51,8 +52,8 @@ registerProcess(page, (root) => {
   });
 
   const recipeBookTable = root.querySelector<HTMLElement>(
-    `#Recipe_Books .wikitable`
-  );
+    `#Recipe_Books .wikitable`,
+  )!;
   const recipeBook = parseTable(recipeBookTable).map((row) => {
     const bookBlock = document.createElement("td");
     bookBlock.innerHTML = `<div class="food-pic btab-pic">${row["Picture"].innerHTML}</div>
@@ -67,9 +68,10 @@ registerProcess(page, (root) => {
   recipeBookTable.replaceWith(betterBookTable);
 
   foodRecipesTables.forEach((table) => {
-    const headers = table
-      .querySelector("tr")
-      .querySelectorAll<HTMLTableRowElement>("td,th");
+    const headers =
+      table
+        .querySelector("tr")
+        ?.querySelectorAll<HTMLTableRowElement>("td,th") ?? [];
     const picture = headers[0].innerText.trim();
     const title = headers[1].innerText.trim();
     const ingredients = headers[2].innerText.trim();
@@ -98,12 +100,11 @@ ${"Notes" in row ? `<p class="notes">${row["Notes"].innerHTML}</p>` : ""}
   });
 
   const customTable = root.querySelector<HTMLElement>(
-    `#Custom_Recipes .wikitable`
-  );
+    `#Custom_Recipes .wikitable`,
+  )!;
   const customFood = parseTable(customTable).map((row) => {
-    row[
-      "Custom food"
-    ].innerHTML = `<div class="food-name">${row["Custom food"].innerHTML}</div>`;
+    row["Custom food"].innerHTML =
+      `<div class="food-name">${row["Custom food"].innerHTML}</div>`;
     return row;
   });
   const betterCustomTable = makeTable(Object.keys(customFood[0]), customFood);
@@ -122,16 +123,16 @@ registerScript(page, (root) => {
   // Init fuzzy search with elements
   const foodEntries = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child), .recipe-ext tr:not(:first-child)"
-    )
+      ".drink-ext tr:not(:first-child), .food-base-ext tr:not(:first-child), .food-ext tr:not(:first-child), .recipe-ext tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     foodEntries.map((element, id) => ({
       page,
-      name: element.querySelector(".food-name").textContent.trim(),
+      name: element.querySelector(".food-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

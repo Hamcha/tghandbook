@@ -9,16 +9,19 @@ function expandPage(root: HTMLElement) {
   });
 
   // Hide buttons
-  root.querySelector<HTMLElement>(".action_buttons").style.display = "none";
+  root.querySelector<HTMLElement>(".action_buttons")!.style.display = "none";
 
   // Remove vertical centering
   root.classList.remove("center");
 }
 
 registerScript("$Welcome", (root) => {
-  const buttonContainer = root.querySelector<HTMLElement>(".action_buttons");
+  const buttonContainer = root.querySelector<HTMLElement>(".action_buttons")!;
   root.querySelectorAll<HTMLDivElement>("div[data-name]").forEach((sec) => {
     const { name } = sec.dataset;
+    if (!name) {
+      return;
+    }
     const button = document.createElement("button");
     button.className = "pretty-button";
     button.appendChild(document.createTextNode(name));

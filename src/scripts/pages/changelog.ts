@@ -15,7 +15,7 @@ registerScript("$Changelog", async (root) => {
   // @ts-expect-error This is replaced at compile time
   const changes: ChangelogEntry[] = import.meta.CHANGELOG;
 
-  const container = root.querySelector<HTMLElement>(".tgh-changes");
+  const container = root.querySelector<HTMLElement>(".tgh-changes")!;
   // Group changes by date
   const changesByDate = zipBy(changes, (ch) => {
     const dateStr = new Date(ch.date).toISOString();
@@ -31,7 +31,7 @@ registerScript("$Changelog", async (root) => {
 
       const changesByAuthor = zipBy(
         changesByDate[date],
-        (ch) => ch.author.name
+        (ch) => ch.author.name,
       );
 
       Object.keys(changesByAuthor).forEach((author) => {
@@ -68,8 +68,8 @@ registerScript("$Changelog", async (root) => {
                   "🔗",
                 ],
               ];
-            })
-          )
+            }),
+          ),
         );
       });
     });

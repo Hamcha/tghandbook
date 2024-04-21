@@ -6,8 +6,8 @@ const page = "Infections";
 
 registerProcess(page, (root) => {
   const diseaseTable = root.querySelector<HTMLElement>(
-    "#Simple_Diseases .wikitable"
-  );
+    "#Simple_Diseases .wikitable",
+  )!;
   const diseases = parseTable(diseaseTable).map((row) => {
     const diseaseBlock = document.createElement("td");
     diseaseBlock.innerHTML = `
@@ -28,13 +28,13 @@ registerProcess(page, (root) => {
   diseaseTable.replaceWith(diseaseBetterTable);
 
   const symptomsTable = root.querySelector<HTMLElement>(
-    "#Symptoms_Table .wikitable"
-  );
+    "#Symptoms_Table .wikitable",
+  )!;
   const symptoms = parseTable(symptomsTable)
     .sort(
       (a, b) =>
-        parseInt(a["Level"].textContent, 10) -
-        parseInt(b["Level"].textContent, 10)
+        parseInt(a["Level"].textContent || "0", 10) -
+        parseInt(b["Level"].textContent || "0", 10),
     )
     .map((row) => {
       const symptomBlock = document.createElement("td");
@@ -65,7 +65,7 @@ registerProcess(page, (root) => {
     });
   const symptomsBetterTable = makeTable(
     ["Symptom", "Stats", "Thresholds"],
-    symptoms
+    symptoms,
   );
   symptomsBetterTable.className = "symptoms-ext tgh-btab wikitable";
   symptomsTable.replaceWith(symptomsBetterTable);
@@ -74,29 +74,29 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   // Init fuzzy search with elements
   const diseases = Array.from(
-    root.querySelectorAll<HTMLElement>(".disease-ext tr:not(:first-child)")
+    root.querySelectorAll<HTMLElement>(".disease-ext tr:not(:first-child)"),
   );
   registerSearchEntries(
     diseases.map((element, id) => ({
       page,
-      name: element.querySelector(".disease-name").textContent.trim(),
+      name: element.querySelector(".disease-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
   const symptoms = Array.from(
     root.querySelectorAll<HTMLElement>(
-      ".symptoms-ext > tbody > tr:not(:first-child)"
-    )
+      ".symptoms-ext > tbody > tr:not(:first-child)",
+    ),
   );
   registerSearchEntries(
     symptoms.map((element, id) => ({
       page,
-      name: element.querySelector(".disease-name").textContent.trim(),
+      name: element.querySelector(".disease-name")?.textContent!.trim() || "",
       element,
       alignment: "center",
       id,
-    }))
+    })),
   );
 });

@@ -5,7 +5,7 @@
  */
 export function findParent(
   base: HTMLElement,
-  matchFn: (candidate: HTMLElement) => boolean
+  matchFn: (candidate: HTMLElement) => boolean,
 ): HTMLElement | null {
   let parent = base.parentElement;
   while (parent != null) {
@@ -27,8 +27,8 @@ export type TableData = TableRowData[];
 export function parseTable(table: HTMLElement): TableData {
   const [headerRow, ...valueRows] = Array.from(table.querySelectorAll("tr"));
   const headers = Array.from(
-    headerRow.querySelectorAll<HTMLTableRowElement>("th")
-  ).map((th) => th.textContent.trim());
+    headerRow.querySelectorAll<HTMLTableRowElement>("th"),
+  ).map((th) => th.textContent!.trim());
   return valueRows.map((tr) => {
     const obj = {};
     tr.querySelectorAll<HTMLElement>("td,th").forEach((val, i) => {
@@ -48,7 +48,7 @@ export function parseTable(table: HTMLElement): TableData {
 export function makeTable(
   headers: string[],
   data: TableData,
-  decorator?: (data: TableRowData, tr: HTMLTableRowElement) => void
+  decorator?: (data: TableRowData, tr: HTMLTableRowElement) => void,
 ): HTMLTableElement {
   const table = document.createElement("table");
   if (data.length < 1) {
@@ -67,7 +67,7 @@ export function makeTable(
   data.forEach((row) => {
     const tableRow = document.createElement("tr");
     headers.forEach((key, index) => {
-      let cell = null;
+      let cell: HTMLElement | null = null;
       if (row[key].tagName === "TD" || row[key].tagName === "TH") {
         cell = row[key];
       } else {

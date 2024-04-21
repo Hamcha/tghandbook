@@ -10,7 +10,7 @@ registerProcess(page, (root) => {
   // Ideally I'd like a <p> or something on every part, wrapping it completely, but for now let's just kill 'em
   root
     .querySelectorAll(
-      "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2), .tooltiptext"
+      "table.wikitable > tbody > tr:not(:first-child) > td:nth-child(2), .tooltiptext",
     )
     .forEach((td) => {
       const tmp = td.cloneNode() as HTMLElement;
@@ -23,12 +23,12 @@ registerProcess(page, (root) => {
           tmp.append(el);
         }
       });
-      td.parentNode.replaceChild(tmp, td);
+      td.parentNode!.replaceChild(tmp, td);
     });
 
   // Enrich "x part" with checkboxes and parts
   Array.from(root.querySelectorAll("td"))
-    .filter((el) => el.textContent.indexOf(" part") >= 0)
+    .filter((el) => el.textContent!.indexOf(" part") >= 0)
     .forEach((el) => {
       el.innerHTML = el.innerHTML.replace(
         /((\d+)\s+(?:parts?|units?))(.*?(?:<\/a>|\n|$))/gi,
@@ -37,20 +37,20 @@ registerProcess(page, (root) => {
             reagent.includes("</a>") ? "bgus_part_tooltip" : ""
           }" data-amount="${amount}"><input type="checkbox" class='bgus_checkbox bgus_hidden'/> <span class="bgus_part_label" data-src="${text}">${text}</span></label>${reagent.replace(
             /(<a .+?<\/a>)/gi,
-            '<span class="bgus_nobreak bgus_nested_element">$1<span class="bgus_twistie"></span></span>'
-          )}`
+            '<span class="bgus_nobreak bgus_nested_element">$1<span class="bgus_twistie"></span></span>',
+          )}`,
       );
     });
 
   // Wrap every recipe with extra metadata
   root.querySelectorAll<HTMLElement>(".bgus_part").forEach((el) => {
-    if ("parts" in el.parentElement.dataset) {
-      el.parentElement.dataset.parts = (
-        parseInt(el.parentElement.dataset.parts, 10) +
-        parseInt(el.dataset.amount, 10)
+    if ("parts" in el.parentElement!.dataset) {
+      el.parentElement!.dataset.parts = (
+        parseInt(el.parentElement!.dataset.parts || "0", 10) +
+        parseInt(el.dataset.amount || "0", 10)
       ).toString();
     } else {
-      el.parentElement.dataset.parts = el.dataset.amount;
+      el.parentElement!.dataset.parts = el.dataset.amount;
     }
   });
 
@@ -60,8 +60,8 @@ registerProcess(page, (root) => {
     .forEach((row) => {
       const sectionEl = findParent(
         row,
-        (sel) => "name" in sel.dataset && sel.dataset.name !== ""
-      );
+        (sel) => "name" in sel.dataset && sel.dataset.name !== "",
+      )!;
       const section = sectionEl.dataset.name;
       if (row.querySelector("td") === null) {
         // Remove unused rows if found
@@ -71,19 +71,19 @@ registerProcess(page, (root) => {
             th.classList.add("table-head");
             return;
           }
-          th.parentElement.removeChild(th);
+          th.parentElement!.removeChild(th);
         });
         return;
       }
       const rows = Array.from(row.querySelectorAll("td")).slice(1);
-      let conditions: HTMLTableCellElement = null;
-      let explosive: HTMLTableCellElement = null;
-      let ph: HTMLTableCellElement = null;
-      let treatment: HTMLTableCellElement = null;
-      let desc: HTMLTableCellElement = null;
-      let metabolism: HTMLTableCellElement = null;
-      let overdose: HTMLTableCellElement = null;
-      let addiction: HTMLTableCellElement = null;
+      let conditions: HTMLTableCellElement | null = null;
+      let explosive: HTMLTableCellElement | null = null;
+      let ph: HTMLTableCellElement | null = null;
+      let treatment: HTMLTableCellElement | null = null;
+      let desc: HTMLTableCellElement | null = null;
+      let metabolism: HTMLTableCellElement | null = null;
+      let overdose: HTMLTableCellElement | null = null;
+      let addiction: HTMLTableCellElement | null = null;
       // Handle special cases
       switch (section) {
         case "Components":
@@ -108,13 +108,11 @@ registerProcess(page, (root) => {
           // All fields
           [ph, treatment, desc, metabolism, overdose, addiction] = rows;
       }
-      const title = row.querySelector("th");
+      const title = row.querySelector("th")!;
       // Split chem name from ph related info
       const purity = title.querySelector("p");
       const purityData = purity?.innerHTML;
-      if (purity) {
-        title.removeChild(purity);
-      }
+      purity?.remove();
       let content = `<div class="reagent-header btab-name">${title.innerHTML}</div>`;
       if (purityData) {
         content += `<p class="ph-data">${stripStart(purityData, "<br>")}</p>`;
@@ -145,14 +143,14 @@ registerProcess(page, (root) => {
       }
       title.classList.add("reagent-ext");
       title.innerHTML = content;
-      if (desc) desc.parentElement.removeChild(desc);
-      if (treatment) treatment.parentElement.removeChild(treatment);
-      if (metabolism) metabolism.parentElement.removeChild(metabolism);
-      if (conditions) conditions.parentElement.removeChild(conditions);
-      if (explosive) explosive.parentElement.removeChild(explosive);
-      if (overdose) overdose.parentElement.removeChild(overdose);
-      if (addiction) addiction.parentElement.removeChild(addiction);
-      if (ph) ph.parentElement.removeChild(ph);
+      desc?.remove();
+      treatment?.remove();
+      metabolism?.remove();
+      conditions?.remove();
+      explosive?.remove();
+      overdose?.remove();
+      addiction?.remove();
+      ph?.remove();
     });
 
   // Set every table to be "better" format
@@ -164,13 +162,13 @@ registerProcess(page, (root) => {
 registerScript(page, (root) => {
   // Add event to autofill child checkboxes
   root
-    .querySelectorAll(".bgus_part_tooltip > .bgus_checkbox")
-    .forEach((box: HTMLInputElement) => {
-      const tooltip = box.parentElement.nextElementSibling;
+    .querySelectorAll<HTMLInputElement>(".bgus_part_tooltip > .bgus_checkbox")
+    .forEach((box) => {
+      const tooltip = box.parentElement!.nextElementSibling;
       box.addEventListener("click", () => {
         tooltip
-          .querySelectorAll(".bgus_checkbox")
-          .forEach((el: HTMLInputElement) => {
+          ?.querySelectorAll<HTMLInputElement>(".bgus_checkbox")
+          .forEach((el) => {
             el.checked = box.checked;
           });
       });
@@ -184,19 +182,28 @@ registerScript(page, (root) => {
   });
 
   const setPartSize = (labels, ml) => {
-    labels.forEach((el) => {
-      const part = el.parentElement.dataset.amount;
-      const total = el.parentElement.parentElement.dataset.parts;
+    labels.forEach((el: HTMLElement) => {
+      const parent = el.parentElement!;
+      const part = parseFloat(parent.dataset.amount || "0");
+      const total = parseFloat(parent.parentElement!.dataset.parts || "0");
       const amt = Math.ceil(ml * (part / total));
       el.innerHTML = `${amt} ml`;
       // Lookup tooltips
-      let next = el.parentElement.nextElementSibling;
+      let next = parent.nextElementSibling;
       while (next) {
         if (next.classList.contains("tooltip")) {
-          const sublabels = [];
-          next.querySelector(".tooltiptext").childNodes.forEach((ch) => {
+          const sublabels: HTMLElement[] = [];
+          next.querySelector(".tooltiptext")?.childNodes.forEach((ch) => {
+            // Must be an element
+            if (!(ch instanceof Element)) {
+              return;
+            }
             if (ch.classList && ch.classList.contains("bgus_part")) {
-              sublabels.push(ch.querySelector(".bgus_part_label"));
+              const label = ch.querySelector<HTMLElement>(".bgus_part_label");
+              if (!label) {
+                return;
+              }
+              sublabels.push(label);
             }
           });
           setPartSize(sublabels, amt);
@@ -213,22 +220,24 @@ registerScript(page, (root) => {
   // Init fuzzy search with elements
   const el = Array.from(
     root.querySelectorAll<HTMLElement>(
-      "table.wikitable > tbody > tr:not(:first-child)"
-    )
+      "table.wikitable > tbody > tr:not(:first-child)",
+    ),
+  );
+
+  const elements = Array.from(
+    root.querySelectorAll<HTMLElement>(
+      "table.wikitable > tbody > tr:not(:first-child) th .reagent-header",
+    ),
   );
 
   registerSearchEntries(
-    Array.from(
-      root.querySelectorAll<HTMLElement>(
-        "table.wikitable > tbody > tr:not(:first-child) th .reagent-header"
-      )
-    ).map((element, id) => ({
+    elements.map((element, id) => ({
       page,
-      name: element.textContent.trim().replace(/\n.+$/gm, "").replace("▮", ""),
-      element: element.parentElement,
+      name: element.textContent!.trim().replace(/\n.+$/gm, "").replace("▮", ""),
+      element: element.parentElement!,
       alignment: "center",
       id,
-    }))
+    })),
   );
 
   document.body.addEventListener("keydown", (ev) => {
@@ -238,8 +247,8 @@ registerScript(page, (root) => {
         case "KeyC": {
           root.classList.toggle("bgus_cbox");
           root
-            .querySelectorAll(".bgus_checkbox:checked")
-            .forEach((sel: HTMLInputElement) => {
+            .querySelectorAll<HTMLInputElement>(".bgus_checkbox:checked")
+            .forEach((sel) => {
               sel.checked = false;
             });
           break;
@@ -248,21 +257,21 @@ registerScript(page, (root) => {
         // SHIFT+B = Set whole size (beaker?) for parts/units
         case "KeyB": {
           const size = parseInt(
-            prompt("Write target ml (0 to reset)", "90"),
-            10
+            prompt("Write target ml (0 to reset)", "90") || "0",
+            10,
           );
           if (Number.isNaN(size) || size <= 0) {
             // Reset to parts/unit
             root
-              .querySelectorAll(".bgus_part_label")
-              .forEach((sel: HTMLElement) => {
-                sel.innerHTML = sel.dataset.src;
+              .querySelectorAll<HTMLElement>(".bgus_part_label")
+              .forEach((sel) => {
+                sel.innerHTML = sel.dataset.src || "";
               });
             return;
           }
           setPartSize(
             root.querySelectorAll("td > .bgus_part > .bgus_part_label"),
-            +size
+            +size,
           );
           break;
         }
@@ -278,7 +287,7 @@ registerScript(page, (root) => {
   el.forEach((element) => {
     element.querySelectorAll<HTMLElement>(".ph").forEach((ph) => {
       // Prepare table
-      const extras = [];
+      const extras: string[] = [];
       const table = document.createElement("table");
       const tableHeaderRow = document.createElement("tr");
       const tableValueRow = document.createElement("tr");

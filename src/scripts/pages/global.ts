@@ -21,7 +21,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
 
   // Remove edit links
   root.querySelectorAll(".mw-editsection").forEach((editLink) => {
-    editLink.parentElement.removeChild(editLink);
+    editLink.parentElement!.removeChild(editLink);
   });
 
   // Make every link go to a new page (if different pathname)
@@ -33,7 +33,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
 
   // Darken bgcolor
   root.querySelectorAll("*[bgcolor]").forEach((td) => {
-    let bgcolor = td.getAttribute("bgcolor");
+    let bgcolor = td.getAttribute("bgcolor") ?? "";
     // Shitty way to detect if it's hex or not
     // Basically, none of the css colors long 6 letters only use hex letters
     // THANK FUCKING GOD
@@ -53,7 +53,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
 
   // Lighten fgcolors
   root.querySelectorAll("*[color]").forEach((td) => {
-    let color = td.getAttribute("color");
+    let color = td.getAttribute("color") ?? "";
     if (color.length === 6 && !Number.isNaN(parseInt(color, 16))) {
       color = `#${color}`;
     }
@@ -64,7 +64,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
   root.querySelectorAll("table[width]").forEach((td) => {
     td.setAttribute("width", "100%");
   });
-  root.querySelectorAll("table[style]").forEach((td: HTMLTableElement) => {
+  root.querySelectorAll<HTMLTableElement>("table[style]").forEach((td) => {
     if (td.style.width !== "") {
       td.style.width = "100%";
     }
@@ -76,14 +76,14 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
     .forEach((img) => {
       const row = findParent(img, (el) => el instanceof HTMLTableRowElement);
       const td = document.createElement("td");
-      row.appendChild(td);
+      row?.appendChild(td);
     });
 
   // Fuck #toctitle
   const toc = root.querySelector("#toc");
   if (toc) {
-    const tocHeader = toc.querySelector("h2");
-    toc.parentNode.insertBefore(tocHeader, toc);
+    const tocHeader = toc.querySelector("h2")!;
+    toc.parentNode!.insertBefore(tocHeader, toc);
     const tocTitle = toc.querySelector("#toctitle");
     if (tocTitle != null) {
       toc.removeChild(tocTitle);
@@ -92,7 +92,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
 
   // Group headers and content so stickies don't overlap
   root.querySelectorAll("h1,h2,h3").forEach((h3) => {
-    const parent = h3.parentNode;
+    const parent = h3.parentNode!;
     const div = document.createElement("div");
     parent.insertBefore(div, h3);
     while (h3.nextSibling && !isHeader(h3.nextSibling.nodeName)) {
@@ -100,7 +100,7 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
       parent.removeChild(sibling);
       div.appendChild(sibling);
     }
-    h3.parentNode.removeChild(h3);
+    h3.remove();
     div.insertBefore(h3, div.firstChild);
     div.className = "mw-headline-cont";
   });
@@ -108,24 +108,24 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
   // Move id from header to container, if one is found
   root
     .querySelectorAll<HTMLElement>(
-      "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline"
+      "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline",
     )
     .forEach((span) => {
       // Find nearest container
       const container = findParent(span, (el) =>
-        el.classList.contains("mw-headline-cont")
+        el.classList.contains("mw-headline-cont"),
       );
       if (
         container &&
         container.querySelectorAll<HTMLElement>(
-          "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline"
+          "h1 .mw-headline, h2 .mw-headline, h3 .mw-headline",
         ).length === 1
       ) {
         container.id = span.id;
         span.id += "-span";
-        container.dataset.name = span.textContent;
+        container.dataset.name = span.textContent || undefined;
       } else {
-        span.dataset.name = span.textContent;
+        span.dataset.name = span.textContent || undefined;
         span.classList.add("mw-headline-cont");
       }
     });
@@ -134,28 +134,28 @@ registerProcess(GLOBAL, function (root: HTMLElement, docname: string): void {
   // Note: This selector sucks major dong but it's the best I can do
   //       until tabs are implemented properly, thanks for understanding
   const locationLink = root.querySelector<HTMLElement>(
-    ".tabs-tabbox a[title='Labor Camp']"
+    ".tabs-tabbox a[title='Labor Camp']",
   );
   if (locationLink) {
     findParent(locationLink, (node) =>
-      node.classList.contains("tabs-tabbox")
+      node.classList.contains("tabs-tabbox"),
     )?.remove();
   }
 });
 
 registerScript(GLOBAL, (root, docname) => {
   const el = Array.from(
-    root.querySelectorAll<HTMLElement>(".mw-headline-cont[id][data-name]")
+    root.querySelectorAll<HTMLDivElement>(".mw-headline-cont[id][data-name]"),
   );
 
   // Init fuzzy search with headlines
   registerSearchEntries(
-    el.map((element: HTMLDivElement, id) => ({
+    el.map((element, id) => ({
       id,
       page: docname,
-      name: element.dataset.name.trim(),
+      name: element.dataset.name?.trim() || "",
       element,
       alignment: "start",
-    }))
+    })),
   );
 });
