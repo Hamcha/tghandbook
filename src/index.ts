@@ -4,12 +4,6 @@ import { nextAnimationFrame } from "./utils.ts";
 import { gotoPage, searchBox } from "./scripts/search.ts";
 import { getCurrentPage } from "./scripts/history.ts";
 
-import unknown from "@assets/images/tab-icons/unknown.svg";
-
-// Enable single page mode for developing scripts
-// const devSinglePage = ["Medical", "Infections"];
-const devSinglePage = null;
-
 async function load() {
   const sectionListContainer = document.getElementById("section-list")!;
   const tabListContainer = document.getElementById("tab-list")!;
@@ -21,57 +15,27 @@ async function load() {
   );
   manager.setLoading(true);
 
-  // De-comment to disable caching and force processing
-  // manager.cacheEnabled = false;
-
   await nextAnimationFrame();
 
-  // Add loading "bar"
-  const spinnerContainer = document.querySelector("#tabs > .speen")!;
-  const icons = document.createElement("div");
-  icons.className = "loading-icons";
+  const promises = sections.flatMap((section) => {
+    manager.createSection(section.name);
 
-  let promises: Promise<void>[] = [];
-  if (devSinglePage != null) {
-    manager.createSection(devSinglePage[0]);
-    promises = [manager.openTab(devSinglePage[0], devSinglePage[1], {})];
-  } else {
-    sections.forEach((section) =>
-      section.tabs.forEach((tab) => {
-        const iconElement = document.createElement("img");
-        iconElement.dataset.tab = tab.page;
-        iconElement.src = tab.icon || unknown;
-        iconElement.title = tab.page.replace(/_/gi, " ");
-        icons.appendChild(iconElement);
-      }),
-    );
-    spinnerContainer.appendChild(icons);
-
-    promises = sections.flatMap((section) => {
-      manager.createSection(section.name);
-
-      return section.tabs.map(async (tab) => {
-        // Load page
-        await manager.openTab(section.name, tab, {});
-        // Remove icon from loading
-        icons.querySelector(`img[data-tab="${tab.page}"]`)?.remove();
-      });
+    return section.tabs.map(async (tab) => {
+      // Load page
+      await manager.openTab(section.name, tab, {});
     });
-  }
+  });
 
   Promise.all(promises).then(() => {
     // Remove app-wide loading
     manager.setLoading(false);
-    if (devSinglePage) {
-      manager.setActive(devSinglePage[1]);
-    } else {
-      const { path, hash } = getCurrentPage();
 
-      // Try to open page from URL, open landing page if fail
-      if (!gotoPage(path, hash)) {
-        manager.setActive("$Welcome");
-        manager.showSection("Medical");
-      }
+    const { path, hash } = getCurrentPage();
+
+    // Try to open page from URL, open landing page if fail
+    if (!gotoPage(path, hash)) {
+      manager.setActive("$Welcome");
+      manager.showSection("Medical");
     }
   });
 }
