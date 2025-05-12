@@ -50,18 +50,21 @@ export function gotoPage(page: string, hash: string) {
   if (!page) {
     return false;
   }
+  try {
+    // Go to page
+    TabManager.instance.setActive(page);
 
-  // Go to page
-  TabManager.instance.setActive(page);
-
-  // Check for entry if hash exists
-  if (hash) {
-    const entry = findEntry(page, hash);
-    if (entry) {
-      jumpTo(entry, false);
+    // Check for entry if hash exists
+    if (hash) {
+      const entry = findEntry(page, hash);
+      if (entry) {
+        jumpTo(entry, false);
+      }
     }
+    return true;
+  } catch (err) {
+    return false;
   }
-  return true;
 }
 
 export function searchBox(): HTMLElement {
