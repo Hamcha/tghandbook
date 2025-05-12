@@ -45,11 +45,11 @@ async function loadPage(
   // Set as HTML content and run HTML manipulations on it
   wrapper.innerHTML = html;
 
-  console.log(`${page}: загружен`);
+  console.log(`${page}: processing`);
   try {
     process(page, wrapper);
   } catch (e) {
-    console.error(`Ошибка загрузки страницы: ${page}`);
+    console.error(`Error processing page: ${page}`);
     console.error(e);
   }
 
